@@ -1,0 +1,146 @@
+@charset "UTF-8";
+
+.background-color-smart-detector {
+    background-color: black;
+}
+
+.rodape {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.main-content {
+    min-height: 1000px;
+    margin-top: 90px;
+}
+
+.divisor_horizontal {
+    border: 2px solid;
+    width: 100%;
+}
+
+.divisor_horizontal_small {
+    border: 1px solid;
+    width: 100%;
+}
+
+.card-title {
+    margin: 2% 4%;
+    padding-bottom: 2%;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 2px solid;
+}
+
+.card-local {
+    padding-bottom: 2%;
+    font-style: italic;
+}
+
+.paginate_link_activated {
+    background-color:black; 
+    color: white;
+}
+
+.paginate_link_activated:hover {
+    background-color: #424242; 
+    color: white;
+}
+
+.paginate_link {
+    color: black;
+}
+
+.paginate_link:hover {
+    color: #424242;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #ccc; /* Cor de fundo */
+    border-top: 5px solid black; /* Cor do efeito */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+  
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner-center {
+    display: grid;
+    place-items: center;
+    margin-top: 3%;
+}
+
+.btn-close-custom {
+    font-size: 1rem;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.692); /* fundo escuro translúcido */
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 18px;
+    text-align: center;
+    padding: 0;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.btn-close-custom:hover {
+    color: gray;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-button {
+    font-size: 11px;
+    background-color: white;
+    color: black;
+    padding: 8px 16px;
+    border: 1px solid;
+    cursor: pointer;
+    border-radius: 4px 4px 0 0;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 100%;
+    width: auto;
+    border: 1px solid #ccc;
+    border-top: none;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    white-space: nowrap;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown.show .dropdown-content {
+    display: block;
+}
