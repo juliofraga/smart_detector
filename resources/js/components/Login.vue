@@ -3,45 +3,30 @@
         <div class="row justify-content-center">
             <div class="col-md-8 mt-5">
                 <div class="card mt-5">
-                    <div class="card-header bg-dark text-white">Login</div>
+                    <div class="card-header bg-dark text-white">Informe suas credenciais</div>
                     <div class="card-body">
                         <form method="POST" action="" @submit.prevent="login($event)">
                             <input type="hidden" name="_token" :value="csrf_token">
-                            <div class="form-group row">
+                            <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input id="email" type="email" class="form-control" name="email" value="" required autocomplete="email" autofocus v-model="email">
+                                        <input id="email" type="email" class="form-control" name="email" value="" required autofocus v-model="email">
                                         <label class="form-label">E-mail*</label>
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong></strong>
-                                        </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row mt-3">
+                            <div class="form-group mt-3">
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password" v-model="password">
+                                        <input id="password" type="password" class="form-control" name="password" required v-model="password">
                                         <label class="form-label">Senha*</label>
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="form-group row mt-3">
-                                <div class="col-md-12">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember">
-                                        <label class="form-check-label" for="remember">
-                                            Lembrar-me
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>-->
-                            <div class="form-group row mb-0 mt-3">
+                            <div class="form-group mt-3">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn btn-dark text-white w-100">
-                                            Login
-                                        </button>
+                                        <button type="submit" class="btn-dark w-100">Acessar</button>
                                     </div>
                                 </div>
                             </div>
@@ -82,12 +67,8 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.error) {
-                            if (data.status == 428) {
-                                window.location.href = "/login/update-password";
-                            } else {
-                                this.statusLogin = 'erro';
-                                this.details.message = data.error;
-                            }
+                            this.statusLogin = 'erro';
+                            this.details.message = data.error;
                         } else {
                             if (data.token) {
                                 document.cookie = 'token=' + data.token + ':SameSite=Lax';
