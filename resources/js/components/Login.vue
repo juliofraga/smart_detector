@@ -30,11 +30,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row mb-0 mt-2">
-                                <!--<alert-component type="danger" :details="details" title="Erro ao tentar acessar o sistema" v-if="statusLogin == 'erro'"></alert-component>-->
-                            </div>
                         </form>
                     </div>
+                </div>
+                <div class="form-group mt-3">
+                    <alert-component type="danger" :details="details" title="Erro ao tentar acessar o sistema" v-if="statusLogin == 'error'"></alert-component>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
             return {
                 email: '',
                 password: '',
-                details: {message: 'erro'},
+                details: {message: 'error'},
                 statusLogin: ''
             }
         },
@@ -67,7 +67,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.error) {
-                            this.statusLogin = 'erro';
+                            this.statusLogin = 'error';
                             this.details.message = data.error;
                         } else {
                             if (data.token) {
