@@ -24,7 +24,7 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
-    public function rules() 
+    public function rules(): array 
     {
         return [
             'name' => 'required',
@@ -33,7 +33,7 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    public function feedback() 
+    public function feedback(): array 
     {
         return [
             'required' => 'O campo :attribute é obrigatório',
@@ -41,7 +41,7 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    public function getJWTIdentifier()
+    public function getJWTIdentifier(): string
     {
         return $this->getKey();
     }
