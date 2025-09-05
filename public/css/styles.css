@@ -197,3 +197,8 @@ body {
 .badge-success {
     background-color: #0a912b;
 }
+
+.row-list:hover {
+    background-color: #1c1d1d;
+    cursor: pointer;
+}

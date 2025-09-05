@@ -18,12 +18,22 @@
             placeholder="Buscar por nome ou e-mail"
             classSearch="user"
         ></search-component>
-        <div class="row mt-3" v-if="status != ''">
-            <div class="col col-12">
-                <alert-component type="danger" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'error'"></alert-component>
-                <alert-component type="success" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'success'"></alert-component>
-            </div>
-        </div>
+        <list-component
+            :title="{
+                id: {title: 'ID', length:'hidden', type:'text'},
+                name: {title: 'Nome', length: '3', type:'text'},
+                email: {title: 'E-mail', length: '4', type:'text'},               
+                profile: {title: 'Perfil', length: '2', type:'text'},
+                last_access: {title: 'Último Acesso', length: '2', type:'datetime'},
+                editar: {title: 'Editar', length: '1', type: 'buttonModal', modalId: '#modalAtualizarUsuario'},
+                updated_at: {title: 'Última Atualização', length: 'hidden', type: 'datetime'},
+                created_at: {title: 'Data de Criação', length: 'hidden', type: 'datetime'}
+            }" 
+            :data="users.data"
+            :status="status"
+            :feedbackMessage="feedbackMessage"
+            :feedbackTitle="feedbackTitle"
+        ></list-component>
         <!-- Modal para adicionar usuários -->
         <modal-component id="modalAdicionarUsuario" title="Adicionar Usuário">
             <template v-slot:conteudo>
@@ -142,7 +152,7 @@
                                 this.status = 'success';
                                 this.feedbackTitle = "Usuário adicionado com sucesso";
                                 utils.closeModal('modalAdicionarUsuario');
-                                //this.loadUserList();
+                                this.loadUserList();
                                 this.cleanAddUserFormData();
                             })
                             .catch(errors => {
@@ -153,8 +163,9 @@
                                     mensagem: errors.response.data.message,
                                     data: errors.response.data.errors
                                 };
+                                this.cleanFeedbackMessage();
                             })
-                        this.cleanFeedbackMessage();
+                        
                     }
                 }
             },
@@ -171,7 +182,35 @@
                     this.feedbackTitle = '';
                     this.status = '';
                 }, 10000);
-            }
+            },
+            setUrlFilter(url) {
+                this.urlFilter = url;
+            },
+            loadUserList() {
+                let url = this.urlBase + '?' + this.urlPaginate + this.urlFilter;
+                axios.get(url)
+                    .then(response => {
+                        this.users = response.data;
+                        this.loaded = true;
+                    })
+                    .catch(errors => {
+                        if (errors.response.status == 500) {
+                            this.feedbackTitle = "Erro no servidor";
+                            this.status = 'error';
+                            this.feedbackMessage = {message: "Desculpe, não conseguimos processar a sua requisição, tente novamente ou entre em contato com a equipe de suporte"}
+                        } else {
+                            this.feedbackTitle = "Houve um erro";
+                            this.status = 'error';
+                            this.feedbackMessage = errors;
+                        }
+                    })
+                this.cleanFeedbackMessage();                    
+            },
+        },
+        mounted() {
+            EventBus.$on("loadUserList", this.loadUserList)
+            EventBus.$on("setUrlFilter", this.setUrlFilter);
+            this.loadUserList();
         }
     }
 </script>

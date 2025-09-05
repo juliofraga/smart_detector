@@ -30,9 +30,33 @@ const store = new Vuex.Store({
 Vue.component('alert-component', require('./components/Alert.vue').default);
 Vue.component('login-component', require('./components/Login.vue').default);
 Vue.component('home-component', require('./components/Home.vue').default);
+Vue.component('list-component', require('./components/List.vue').default);
 Vue.component('modal-component', require('./components/Modal.vue').default);
 Vue.component('search-component', require('./components/Search.vue').default);
 Vue.component('users-component', require('./components/Users.vue').default);
+
+Vue.filter('formatProfile', function(valor) {
+    let profile = {
+        'admin': 'Administrador',
+        'user': 'Usuário'
+    };
+    return profile[valor];
+});
+
+Vue.filter('formatDateTime', function(valor){
+    if (!valor) {
+        return '-';
+    }
+    valor = valor.split(' ');
+    let data;
+    let dataFormatada;
+
+    data = valor[0];
+    data = data.split('-');
+    dataFormatada = data[2] + '/' + data[1] + '/' + data[0];
+
+    return dataFormatada + ' - ' + valor[1];
+})
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
