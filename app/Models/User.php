@@ -28,7 +28,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return [
             'name' => 'required',
-            'email' => 'required|unique:users,login',
+            'email' => 'required|unique:users,email',
             'password' => 'required',
         ];
     }
@@ -37,7 +37,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return [
             'required' => 'O campo :attribute é obrigatório',
-            'login.unique' => 'Este login já está cadastrado no nosso sistema, informe outro.'
+            'email.unique' => 'Este e-mail já está cadastrado no nosso sistema, informe outro.'
         ];
     }
 

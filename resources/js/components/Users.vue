@@ -18,6 +18,12 @@
             placeholder="Buscar por nome ou e-mail"
             classSearch="user"
         ></search-component>
+        <div class="row mt-3" v-if="status != ''">
+            <div class="col col-12">
+                <alert-component type="danger" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'error'"></alert-component>
+                <alert-component type="success" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'success'"></alert-component>
+            </div>
+        </div>
         <!-- Modal para adicionar usuários -->
         <modal-component id="modalAdicionarUsuario" title="Adicionar Usuário">
             <template v-slot:conteudo>
@@ -103,6 +109,7 @@
                 urlFilter: '',
                 status: '',
                 feedbackMessage: {},
+                feedbackTitle: '',
                 name: '',
                 email: '',
                 password: '',
@@ -111,12 +118,60 @@
                 repeatPasswordUpdate: '',
                 profile: '',
                 profileUpdate: '',
-                feedbackTitle: '',
                 loaded: false
             }
         },
         methods: {
-            
+            save() {
+                if (utils.fieldsValidate(['name', 'email', 'profile', 'password', 'repeatPassword'], this)) {
+                    if (this.password != this.repeatPassword) {
+                        document.getElementById('repeatPassword').classList.add('is-invalid');
+                    } else {
+                        if (document.getElementById('repeatPassword').classList.contains('is-invalid')) {
+                            document.getElementById('repeatPassword').classList.remove('is-invalid');
+                        }
+                        let data = {
+                            name: this.name,
+                            email: this.email,
+                            profile: this.profile,
+                            password: this.password
+                        };
+                        let url = this.urlBase + '/store';
+                        axios.post(url, data)
+                            .then(response => {
+                                this.status = 'success';
+                                this.feedbackTitle = "Usuário adicionado com sucesso";
+                                utils.closeModal('modalAdicionarUsuario');
+                                //this.loadUserList();
+                                this.cleanAddUserFormData();
+                            })
+                            .catch(errors => {
+                                this.status = 'error';
+                                this.feedbackTitle = "Erro ao adicionar usuário";
+                                utils.closeModal('modalAdicionarUsuario');
+                                this.feedbackMessage = {
+                                    mensagem: errors.response.data.message,
+                                    data: errors.response.data.errors
+                                };
+                            })
+                        this.cleanFeedbackMessage();
+                    }
+                }
+            },
+            cleanAddUserFormData() {
+                this.name = '';
+                this.email = '';
+                this.password = '';
+                this.profile= '';
+                this.repeatPassword = '';
+            },
+            cleanFeedbackMessage() {
+                setTimeout(() => {
+                    this.feedbackMessage =  {};
+                    this.feedbackTitle = '';
+                    this.status = '';
+                }, 10000);
+            }
         }
     }
 </script>
