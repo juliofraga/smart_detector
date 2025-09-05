@@ -18,22 +18,23 @@
             placeholder="Buscar por nome ou e-mail"
             classSearch="user"
         ></search-component>
-        <list-component
+        <table-component
             :title="{
-                id: {title: 'ID', length:'hidden', type:'text'},
-                name: {title: 'Nome', length: '3', type:'text'},
-                email: {title: 'E-mail', length: '4', type:'text'},               
-                profile: {title: 'Perfil', length: '2', type:'text'},
-                last_access: {title: 'Último Acesso', length: '2', type:'datetime'},
-                editar: {title: 'Editar', length: '1', type: 'buttonModal', modalId: '#modalAtualizarUsuario'},
-                updated_at: {title: 'Última Atualização', length: 'hidden', type: 'datetime'},
-                created_at: {title: 'Data de Criação', length: 'hidden', type: 'datetime'}
+                id: {title: 'ID', hidden: 'true', type:'text'},
+                name: {title: 'Nome', hidden: 'false', type:'text'},
+                email: {title: 'E-mail', hidden: 'false', type:'text'},               
+                profile: {title: 'Perfil', hidden: 'false', type:'text'},
+                last_access: {title: 'Último Acesso', hidden: 'false', type:'datetime'},
+                editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalAtualizarUsuario'},
+                updated_at: {title: 'Última Atualização', hidden: 'true', type: 'datetime'},
+                created_at: {title: 'Data de Criação', hidden: 'true', type: 'datetime'},
+                
             }" 
             :data="users.data"
             :status="status"
             :feedbackMessage="feedbackMessage"
             :feedbackTitle="feedbackTitle"
-        ></list-component>
+        ></table-component>
         <!-- Modal para adicionar usuários -->
         <modal-component id="modalAdicionarUsuario" title="Adicionar Usuário">
             <template v-slot:conteudo>

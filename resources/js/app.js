@@ -30,7 +30,7 @@ const store = new Vuex.Store({
 Vue.component('alert-component', require('./components/Alert.vue').default);
 Vue.component('login-component', require('./components/Login.vue').default);
 Vue.component('home-component', require('./components/Home.vue').default);
-Vue.component('list-component', require('./components/List.vue').default);
+Vue.component('table-component', require('./components/Table.vue').default);
 Vue.component('modal-component', require('./components/Modal.vue').default);
 Vue.component('search-component', require('./components/Search.vue').default);
 Vue.component('users-component', require('./components/Users.vue').default);
