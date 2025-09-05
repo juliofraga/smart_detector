@@ -30,6 +30,9 @@ const store = new Vuex.Store({
 Vue.component('alert-component', require('./components/Alert.vue').default);
 Vue.component('login-component', require('./components/Login.vue').default);
 Vue.component('home-component', require('./components/Home.vue').default);
+Vue.component('modal-component', require('./components/Modal.vue').default);
+Vue.component('search-component', require('./components/Search.vue').default);
+Vue.component('users-component', require('./components/Users.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
