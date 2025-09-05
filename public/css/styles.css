@@ -144,3 +144,57 @@
 .dropdown.show .dropdown-content {
     display: block;
 }
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.card {
+    background-color: #1e1e1e;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+.card h5 {
+    color: #ffffff;
+}
+    
+.highlight {
+    color: #9da1a1;
+}
+ 
+.table-dark-custom {
+    background-color: #1e1e1e;
+}
+
+.table-dark-custom thead {
+    background-color: #2a2a2a;
+    color: rgb(202, 199, 199);
+}
+
+.table-dark-custom tbody {
+    background-color: #2a2a2a;
+    color: white;
+}
+
+.table-dark-custom tbody tr:hover {
+    background-color: #4e4d4d !important;
+    cursor: pointer;
+    transition: background-color 0.2s ease; /* Transição suave */
+    color: white;
+  }
+ 
+.badge-danger {
+    background-color: #dc3545;
+}
+    
+.badge-warning {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.badge-info {
+    background-color: #0dcaf0;
+}
