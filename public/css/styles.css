@@ -147,7 +147,6 @@
 
 body {
     background-color: #121212;
-    color: #e0e0e0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .card {
@@ -195,6 +194,6 @@ body {
     color: #000;
 }
 
-.badge-info {
-    background-color: #0dcaf0;
+.badge-success {
+    background-color: #0a912b;
 }

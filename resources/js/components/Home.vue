@@ -39,8 +39,8 @@
                             <tr>
                                 <th>Descrição</th>
                                 <th>IP Origem</th>
-                                <th>Classificação</th>
                                 <th>Tipo</th>
+                                <th>Classificação</th>
                                 <th>Data/Hora</th>
                             </tr>
                         </thead>
@@ -48,29 +48,29 @@
                             <tr>
                                 <td>Lorem ipsum dolor sit amet consectetur adipiscing elit.</td>
                                 <td>192.168.0.15</td>
-                                <td><span class="text-danger">Alto</span></td>
-                                <td><span class="badge badge-danger">Brute Force</span></td>
+                                <td>Brute Force</td>
+                                <td><span class="badge badge-danger">ALTO RISCO</span></td>
                                 <td>2025-08-28 19:22</td>
                             </tr>
                             <tr>
                                 <td>Lorem ipsum dolor sit amet consectetur adipiscing elit.</td>
                                 <td>201.55.23.87</td>
-                                <td><span class="text-warning">Médio</span></td>
-                                <td><span class="badge badge-warning">SQL Injection</span></td>
+                                <td>SQL Injection</td>
+                                <td><span class="badge badge-warning">MÉDIO RISCO</span></td>
                                 <td>2025-08-28 19:22</td>
                             </tr>
                             <tr>
                                 <td>Lorem ipsum dolor sit amet consectetur adipiscing elit.</td>
                                 <td>45.12.98.10</td>
-                                <td><span class="text-warning">Médio</span></td>
-                                <td><span class="badge badge-info">Acesso</span></td>
+                                <td>Acesso</td>
+                                <td><span class="badge badge-warning">MÉDIO RISCO</span></td>
                                 <td>2025-08-28 19:22</td>
                             </tr>
                             <tr>
                                 <td>Lorem ipsum dolor sit amet consectetur adipiscing elit.</td>
                                 <td>177.45.90.1</td>
-                                <td><span class="text-success">Baixo</span></td>
-                                <td><span class="badge badge-danger">XSS</span></td>
+                                <td>XSS</td>
+                                <td><span class="badge badge-success">BAIXO RISCO</span></td>
                                 <td>2025-08-28 19:22</td>
                             </tr>
                         </tbody>

@@ -26,7 +26,7 @@
                             <div class="form-group mt-3">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn-dark w-100">Acessar</button>
+                                        <button type="submit" class="btn btn-md btn-dark w-100">Acessar</button>
                                     </div>
                                 </div>
                             </div>
