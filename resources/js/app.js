@@ -32,8 +32,11 @@ Vue.component('login-component', require('./components/Login.vue').default);
 Vue.component('home-component', require('./components/Home.vue').default);
 Vue.component('table-component', require('./components/Table.vue').default);
 Vue.component('modal-component', require('./components/Modal.vue').default);
+Vue.component('no-itens-component', require('./components/NoItens.vue').default);
 Vue.component('search-component', require('./components/Search.vue').default);
 Vue.component('users-component', require('./components/Users.vue').default);
+Vue.component('paginate-component', require('./components/Paginate.vue').default);
+Vue.component('spinner-component', require('./components/Spinner.vue').default);
 
 Vue.filter('formatProfile', function(valor) {
     let profile = {
@@ -56,7 +59,16 @@ Vue.filter('formatDateTime', function(valor){
     dataFormatada = data[2] + '/' + data[1] + '/' + data[0];
 
     return dataFormatada + ' - ' + valor[1];
-})
+});
+
+Vue.filter('formatNextPrevButton', function(valor) {
+    if (valor === '&laquo; Previous') {
+        return '<< Anterior';
+    } else if (valor === 'Next &raquo;') {
+        return 'Próximo >>';
+    }
+    return valor;
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -18,23 +18,64 @@
             placeholder="Buscar por nome ou e-mail"
             classSearch="user"
         ></search-component>
-        <table-component
-            :title="{
-                id: {title: 'ID', hidden: 'true', type:'text'},
-                name: {title: 'Nome', hidden: 'false', type:'text'},
-                email: {title: 'E-mail', hidden: 'false', type:'text'},               
-                profile: {title: 'Perfil', hidden: 'false', type:'text'},
-                last_access: {title: 'Último Acesso', hidden: 'false', type:'datetime'},
-                editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalAtualizarUsuario'},
-                updated_at: {title: 'Última Atualização', hidden: 'true', type: 'datetime'},
-                created_at: {title: 'Data de Criação', hidden: 'true', type: 'datetime'},
-                
-            }" 
-            :data="users.data"
-            :status="status"
-            :feedbackMessage="feedbackMessage"
-            :feedbackTitle="feedbackTitle"
-        ></table-component>
+        <div v-if="Object.keys(users.data).length > 0">
+            <table-component
+                :title="{
+                    id: {title: 'ID', hidden: 'true', type:'text'},
+                    name: {title: 'Nome', hidden: 'false', type:'text'},
+                    email: {title: 'E-mail', hidden: 'false', type:'text'},               
+                    profile: {title: 'Perfil', hidden: 'false', type:'text'},
+                    last_access: {title: 'Último Acesso', hidden: 'false', type:'datetime'},
+                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalAtualizarUsuario'},
+                    updated_at: {title: 'Última Atualização', hidden: 'true', type: 'datetime'},
+                    created_at: {title: 'Data de Criação', hidden: 'true', type: 'datetime'},
+                    
+                }" 
+                :data="users.data"
+                :status="status"
+                :feedbackMessage="feedbackMessage"
+                :feedbackTitle="feedbackTitle"
+            ></table-component>
+        </div>
+        <div v-else-if="loaded === true">
+            <no-itens-component></no-itens-component>
+        </div>
+        <div v-else-if="loaded === false">
+            <spinner-component></spinner-component>
+        </div>
+        <div class="row mt-4">
+            <div class="col col-10">
+                <paginate-component>
+                    <li v-for="l, key in users.links" :key="key" :class="l.active ? 'page-item active' : 'page-item'" @click="paginate(l)">
+                        <div v-if="l.active">
+                            <a class="page-link paginate_link_activated" v-html="l.label" 
+                            v-if="
+                                key == users.current_page || 
+                                key == users.current_page - 1 || 
+                                key == users.current_page + 1 || 
+                                key == 0 ||
+                                (users.current_page == 1 && key == 3) ||
+                                key == users.last_page + 1 || 
+                                (users.current_page == users.last_page && key == users.last_page - 2)"
+                        ></a>
+                        </div>
+                        <div v-else>
+                            <a class="page-link paginate_link" 
+                            v-if="
+                                key == users.current_page || 
+                                key == users.current_page - 1 || 
+                                key == users.current_page + 1 || 
+                                key == 0 ||
+                                (users.current_page == 1 && key == 3) ||
+                                key == users.last_page + 1 || 
+                                (users.current_page == users.last_page && key == users.last_page - 2)"
+                        >{{ l.label | formatNextPrevButton }}</a>
+                        </div>
+                        
+                    </li>
+                </paginate-component>
+            </div>
+        </div>
         <!-- Modal para adicionar usuários -->
         <modal-component id="modalAdicionarUsuario" title="Adicionar Usuário">
             <template v-slot:conteudo>
@@ -206,6 +247,12 @@
                         }
                     })
                 this.cleanFeedbackMessage();                    
+            },
+            paginate(l) {
+                if (l.url){
+                    this.urlPaginate = l.url.split('?')[1];
+                    this.loadUserList();
+                }
             },
         },
         mounted() {
