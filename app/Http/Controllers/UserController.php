@@ -60,4 +60,10 @@ class UserController extends Controller
             }
         });
     }
+
+    public static function registerUserLogin(string $email) 
+    {
+        $now = date('Y-m-d H:i:s');
+        User::where('email', $email)->update(['last_access' => $now]);
+    }
 }

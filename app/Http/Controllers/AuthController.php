@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\LoginError;
 use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\UserController;
 
 class AuthController extends Controller
 {
@@ -28,6 +29,7 @@ class AuthController extends Controller
         $token = auth('api')->attempt(['email' => $email, 'password' => $password]);
         if ($token) {
             $loginError->resetErrors();
+            UserController::registerUserLogin($email);
             return response()->json(['token' => $token]);
         } else {
             $loginError = LoginError::firstOrCreate(['user_id' => $user->id]);
