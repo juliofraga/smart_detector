@@ -32,12 +32,12 @@ class UserController extends Controller
         }
     }
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         return $this->paginate($request, null, ['name', 'asc']);
     }
 
-    public function paginate(Request $request, int $qtd = null, array $order) 
+    public function paginate(Request $request, int $qtd = null, array $order): JsonResponse
     {
         $by = $order[0];
         $direction = $order[1];
@@ -50,7 +50,7 @@ class UserController extends Controller
         return response()->json($data, 200);
     }
 
-    public function filter(string $filters) 
+    public function filter(string $filters): void
     {
         $filters = explode(';', $filters);
         $this->model = User::where(function ($query) use ($filters) {
@@ -61,7 +61,7 @@ class UserController extends Controller
         });
     }
 
-    public static function registerUserLogin(string $email) 
+    public static function registerUserLogin(string $email): void
     {
         $now = date('Y-m-d H:i:s');
         User::where('email', $email)->update(['last_access' => $now]);
