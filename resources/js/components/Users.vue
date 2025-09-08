@@ -222,9 +222,23 @@
             </template>
             <template v-slot:rodape>
                 <button type="button" class="btn btn-success text-white" @click="update()">Atualizar</button>
-                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalConfirmarDeletar">Deletar</button> 
+                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalConfirmarDeletar">Deletar</button> 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>                            
             </template>
+        </modal-component>
+        <!-- Modal para confirmar remoção de usuário -->
+        <modal-component id="modalConfirmarDeletar" title="Você tem certeza?">
+            <template v-slot:conteudo>
+                <div class="row">
+                    <div class="col col-6">
+                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal" @click="showModal('modalAtualizarUsuario')">Não</button>
+                    </div>
+                    <div class="col col-6">
+                        <button type="button" class="btn btn-danger text-white w-100" @click="deleteUser()">Sim</button>
+                    </div>
+                </div>
+            </template>
+            <template v-slot:rodape></template>
         </modal-component>
     </div>
 </template>
@@ -330,6 +344,25 @@
                         })
                 }
             },
+            deleteUser() {
+                let url = this.urlBase + '/delete/' + this.$store.state.item.id;
+                axios.delete(url)
+                    .then(response => {
+                        this.status = 'success';
+                        this.feedbackTitle = "Usuário deletado com sucesso";
+                        utils.closeModal('modalConfirmarDeletar');
+                        this.loadUserList();
+                    })
+                    .catch(errors => {
+                        this.status = 'error';
+                        this.feedbackTitle = "Erro ao deletar usuário";
+                        utils.closeModal('modalConfirmarDeletar');
+                        this.feedbackMessage = {
+                            message: errors.response.data.message,
+                            data: errors.response.data.errors
+                        };
+                    })
+            },
             cleanAddUserFormData() {
                 this.name = '';
                 this.email = '';
@@ -372,6 +405,9 @@
                     this.urlPaginate = l.url.split('?')[1];
                     this.loadUserList();
                 }
+            },
+            showModal(modal) {
+                utils.showModal(modal);
             },
         },
         mounted() {

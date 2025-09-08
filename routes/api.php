@@ -23,6 +23,7 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
         Route::post('/store', 'UserController@store');
         Route::get('/', 'UserController@index');
         Route::patch('/update/{id}', 'UserController@update');
+        Route::delete('/delete/{id}', 'UserController@destroy');
     });
     Route::post('logout', 'AuthController@logout');
     Route::post('me', 'AuthController@me');

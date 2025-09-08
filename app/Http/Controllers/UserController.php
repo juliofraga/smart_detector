@@ -48,7 +48,16 @@ class UserController extends Controller
         }
         $update = empty($except) ? $user->update($request->all()) : $user->update($request->except($except));
         return $update ? response()->json($user, 201) : response()->json(['error' => 'Falha ao atualizar o registro.'], 500);
+    }
 
+    public function destroy(int $id)
+    {
+        $model = $this->model->find($id);
+        if (!$model) {
+            return response()->json(['error' => 'Usuário não encontrado'], 404);
+        }
+        $delete = $model->delete();
+        return $delete ? response()->json(['message' => 'Usuário deletado com sucesso'], 200) : response()->json(['error' => 'Falha ao deletar usuário.'], 500);
     }
 
     public function index(Request $request): JsonResponse
