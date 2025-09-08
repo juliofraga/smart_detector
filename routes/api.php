@@ -22,6 +22,7 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::prefix('user')->group(function () {
         Route::post('/store', 'UserController@store');
         Route::get('/', 'UserController@index');
+        Route::patch('/update/{id}', 'UserController@update');
     });
     Route::post('logout', 'AuthController@logout');
     Route::post('me', 'AuthController@me');

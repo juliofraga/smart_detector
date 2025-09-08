@@ -147,6 +147,85 @@
                 <button type="button" class="btn btn-success text-white" @click="save()">Salvar</button>
             </template>
         </modal-component>
+        <!-- Modal para atualizar usuários -->
+        <modal-component id="modalAtualizarUsuario" title="Atualizar Usuário">
+            <template v-slot:conteudo>
+                <div class="form-group">
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="nameUpdate" name="nameUpdate" placeholder="Nome*" v-model="$store.state.item.name">
+                                <label class="form-label">Nome*</label>
+                                <div id="invalidFeedbackNameUpdate" class="invalid-feedback">
+                                    Informe o nome completo.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="emailUpdate" name="emailUpdate" placeholder="E-mail*" v-model="$store.state.item.email" readonly>
+                                <label class="form-label">E-mail*</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <select class="form-control" id="profileUpdate" name="profileUpdate" placeholder="Perfil*" style="background-color: white;" v-model="$store.state.item.profile">
+                                    <option value="admin">Administrador</option>
+                                    <option value="user">Usuário</option>
+                                </select>
+                                <label class="form-label">Perfil*</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="passwordUpdate" name="passwordUpdate" placeholder="Senha*" v-model="passwordUpdate">
+                                <label class="form-label">Senha*</label>
+                                <div id="invalidFeedbackPasswordUpdate" class="invalid-feedback">
+                                    Informe a senha.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="repeatPasswordUpdate" name="repeatPasswordUpdate" placeholder="Repetir Senha*" v-model="repeatPasswordUpdate">
+                                <label class="form-label">Repetir Senha*</label>
+                                <div id="invalidFeedbackRepeatPasswordUpdate" class="invalid-feedback">
+                                    Esta senha não confere com a senha digitada no campo anterior ou está vazio.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="form-label"><i>Último acesso: {{ $store.state.item.last_access | formatDateTime}}</i></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="form-label"><i>Data de criação: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="form-label"><i>Última atualização: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-success text-white" @click="update()">Atualizar</button>
+                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalConfirmarDeletar">Deletar</button> 
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>                            
+            </template>
+        </modal-component>
     </div>
 </template>
 
@@ -210,6 +289,45 @@
                             })
                         
                     }
+                }
+            },
+            update() {
+                if (this.$store.state.item.name == ''){
+                    document.getElementById('nameUpdate').classList.add('is-invalid');
+                } else if (this.passwordUpdate != this.repeatPasswordUpdate) {
+                    document.getElementById('repeatPasswordUpdate').classList.add('is-invalid');
+                } else if (this.$store.state.item.profile == '') {
+                    document.getElementById('profileUpdate').classList.add('is-invalid');
+                } else {
+                    if (document.getElementById('nameUpdate').classList.contains('is-invalid')) {
+                        document.getElementById('nameUpdate').classList.remove('is-invalid');
+                    }
+                    if (document.getElementById('repeatPasswordUpdate').classList.contains('is-invalid')) {
+                        document.getElementById('repeatPasswordUpdate').classList.remove('is-invalid');
+                    }
+                    let data = {
+                        name: this.$store.state.item.name,
+                        email: this.$store.state.item.email,
+                        profile: this.$store.state.item.profile,
+                        password: this.passwordUpdate
+                    };
+                    let url = this.urlBase + '/update/' + this.$store.state.item.id;
+                    axios.patch(url, data)
+                        .then(response => {
+                            this.status = 'success';
+                            this.feedbackTitle = "Usuário atualizado com sucesso";
+                            utils.closeModal('modalAtualizarUsuario');
+                            this.loadUserList();
+                        })
+                        .catch(errors => {
+                            this.status = 'error';
+                            this.feedbackTitle = "Erro ao atualizar usuário";
+                            utils.closeModal('modalAtualizarUsuario');
+                            this.feedbackMessage = {
+                                message: errors.response.data.message,
+                                data: errors.response.data.errors
+                            };
+                        })
                 }
             },
             cleanAddUserFormData() {

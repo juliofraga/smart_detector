@@ -61,6 +61,23 @@ Vue.filter('formatDateTime', function(valor){
     return dataFormatada + ' - ' + valor[1];
 });
 
+Vue.filter('formatDateTimeStamp', function(valor){
+    if (!valor) {
+        return '-';
+    }
+    valor = valor.split('T');
+    
+    let data = valor[0];
+    let hora = valor[1];
+    let dataFormatada;
+
+    data = data.split('-');
+    dataFormatada = data[2] + '/' + data[1] + '/' + data[0];
+
+    hora = hora.split('.')[0];
+    return dataFormatada + ' - ' + hora;
+})
+
 Vue.filter('formatNextPrevButton', function(valor) {
     if (valor === '&laquo; Previous') {
         return '<< Anterior';

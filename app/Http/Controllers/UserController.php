@@ -32,6 +32,25 @@ class UserController extends Controller
         }
     }
 
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $except = [];
+        if ($request->password) {
+            $request->merge([
+                'password' => bcrypt($request->password)
+            ]);
+        } else {
+            $except[] = 'password';
+        }
+        $user = $this->model->find($id);
+        if (!$user) {
+            return response()->json(['error' => 'Usuário não encontrado'], 404);
+        }
+        $update = empty($except) ? $user->update($request->all()) : $user->update($request->except($except));
+        return $update ? response()->json($user, 201) : response()->json(['error' => 'Falha ao atualizar o registro.'], 500);
+
+    }
+
     public function index(Request $request): JsonResponse
     {
         return $this->paginate($request, null, ['name', 'asc']);
