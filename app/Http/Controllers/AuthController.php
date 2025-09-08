@@ -20,7 +20,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'Usuário não cadastrado no sistema'], 401);
         }
         $loginError = LoginError::where('user_id', $user->id)->first();
-        if ($loginError->isBlocked()) {
+        if ($loginError && $loginError->isBlocked()) {
             if ($this->BlockedByTime($loginError->blocked_at)) {
                 return response()->json(['error' => 'Conta temporariamente bloqueada, tente novamente mais tarde'], 403);
             }
@@ -28,7 +28,9 @@ class AuthController extends Controller
 
         $token = auth('api')->attempt(['email' => $email, 'password' => $password]);
         if ($token) {
-            $loginError->resetErrors();
+            if ($loginError) {
+                $loginError->resetErrors();
+            }
             UserController::registerUserLogin($email);
             return response()->json(['token' => $token]);
         } else {
