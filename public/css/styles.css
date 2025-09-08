@@ -39,24 +39,6 @@
     font-style: italic;
 }
 
-.paginate_link_activated {
-    background-color:black; 
-    color: white;
-}
-
-.paginate_link_activated:hover {
-    background-color: #424242; 
-    color: white;
-}
-
-.paginate_link {
-    color: black;
-}
-
-.paginate_link:hover {
-    color: #424242;
-}
-
 .spinner {
     width: 50px;
     height: 50px;
@@ -201,4 +183,21 @@ body {
 .row-list:hover {
     background-color: #1c1d1d;
     cursor: pointer;
+}
+
+.dark-pagination {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+.dark-pagination:hover {
+    color: #1e1e1e;
+}
+
+.dark-paginantion-active {
+    color: #1e1e1e;
+}
+
+.dark-paginantion-active:hover {
+    color: #1e1e1e;
 }

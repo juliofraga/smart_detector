@@ -41,7 +41,7 @@ class UserController extends Controller
     {
         $by = $order[0];
         $direction = $order[1];
-        $qtd = $qtd ?? 20;
+        $qtd = $qtd ?? 3;
         $data = [];
         if($request->has('filter')) {
             $this->filter($request->filter);

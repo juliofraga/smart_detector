@@ -46,9 +46,9 @@
         <div class="row mt-4">
             <div class="col col-10">
                 <paginate-component>
-                    <li v-for="l, key in users.links" :key="key" :class="l.active ? 'page-item active' : 'page-item'" @click="paginate(l)">
+                    <li v-for="l, key in users.links" :key="key" class="page-item" @click="paginate(l)">
                         <div v-if="l.active">
-                            <a class="page-link paginate_link_activated" v-html="l.label" 
+                            <a class="page-link dark-paginantion-active" v-html="l.label" 
                             v-if="
                                 key == users.current_page || 
                                 key == users.current_page - 1 || 
@@ -60,15 +60,16 @@
                         ></a>
                         </div>
                         <div v-else>
-                            <a class="page-link paginate_link" 
+                            <a class="page-link dark-pagination" 
                             v-if="
-                                key == users.current_page || 
+                                l.url != null && 
+                                (key == users.current_page || 
                                 key == users.current_page - 1 || 
                                 key == users.current_page + 1 || 
                                 key == 0 ||
                                 (users.current_page == 1 && key == 3) ||
                                 key == users.last_page + 1 || 
-                                (users.current_page == users.last_page && key == users.last_page - 2)"
+                                (users.current_page == users.last_page && key == users.last_page - 2))"
                         >{{ l.label | formatNextPrevButton }}</a>
                         </div>
                         
