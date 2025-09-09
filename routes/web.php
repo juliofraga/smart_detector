@@ -20,8 +20,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::middleware(['auth', 'admin'])->group(function() {
+Route::middleware('auth')->group(function() {
     Route::get('/usuarios', function () {
         return view('/users');
-    })->name('users');
+    })->middleware('admin')->name('users');
+    Route::get('/minha-conta', function () {
+        return view('/my-account');
+    })->name('my-account');
 });
