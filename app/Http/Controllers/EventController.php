@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -28,7 +29,7 @@ class EventController extends Controller
             $this->deleteNewEventsFile();
             $this->saveEventData();
         }
-        return response()->json($this->getLatestEvents(), 200);
+        return response()->json($this->getLatestEvents(100), 200);
     }
 
     public function save($data): void
@@ -69,8 +70,12 @@ class EventController extends Controller
         }
     }
 
-    public function getLatestEvents(): Collection
+    public function getLatestEvents(int $qtd): Collection
     {
-        return $this->model->orderBy('event_date_time', 'desc')->take(50)->get();
+        return $this->model
+                    ->whereDate('event_date_time', Carbon::today())
+                    ->orderBy('event_date_time', 'desc')
+                    ->take($qtd)
+                    ->get();
     }
 }
