@@ -32,7 +32,7 @@ class EventController extends Controller
         return response()->json($this->getLatestEvents(100), 200);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $request->validate(Event::rules(), Event::feedback());
         $event = $this->model->create($request->all());
