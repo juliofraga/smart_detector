@@ -82,9 +82,41 @@
 </template>
 
 <script>
+    import * as utils from '../utils/functions';
     export default {
+        data() {
+            return {
+                events: {data: {}},
+                urlBase: utils.API_URL + '/api/v1/event',
+                status: '',
+                feedbackMessage: {},
+                feedbackTitle: '',
+                loaded: false,
+            }
+        },
+        methods: {
+            loadEventList() {
+                let url = this.urlBase;
+                axios.get(url)
+                    .then(response => {
+                        this.events = response.data;
+                        this.loaded = true;
+                    })
+                    .catch(errors => {
+                        if (errors.response.status == 500) {
+                            this.feedbackTitle = "Erro no servidor";
+                            this.status = 'error';
+                            this.feedbackMessage = {message: "Desculpe, não conseguimos processar a sua requisição, tente novamente ou entre em contato com a equipe de suporte"}
+                        } else {
+                            this.feedbackTitle = "Houve um erro";
+                            this.status = 'error';
+                            this.feedbackMessage = errors;
+                        }
+                    })                  
+            },
+        },
         mounted() {
-            console.log('Component mounted.')
+            this.loadEventList();
         }
     }
 </script>
