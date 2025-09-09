@@ -32,6 +32,17 @@ class EventController extends Controller
         return response()->json($this->getLatestEvents(100), 200);
     }
 
+    public function store(Request $request)
+    {
+        $request->validate(Event::rules(), Event::feedback());
+        $event = $this->model->create($request->all());
+        if ($event) {
+            return response()->json($event, 201);
+        } else {
+            return response()->json(['error' => 'Falha ao criar o registro.'], 500);
+        }
+    }
+
     public function save($data): void
     {
         $this->model->create($data);
