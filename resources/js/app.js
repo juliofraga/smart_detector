@@ -29,6 +29,7 @@ const store = new Vuex.Store({
 
 Vue.component('account-component', require('./components/Account.vue').default);
 Vue.component('alert-component', require('./components/Alert.vue').default);
+Vue.component('event-summary-component', require('./components/EventSummary.vue').default);
 Vue.component('login-component', require('./components/Login.vue').default);
 Vue.component('home-component', require('./components/Home.vue').default);
 Vue.component('table-component', require('./components/Table.vue').default);
