@@ -35,6 +35,7 @@
                 :status="status"
                 :feedbackMessage="feedbackMessage"
                 :feedbackTitle="feedbackTitle"
+                sectionTitle="Usuários Cadastrados"
             ></table-component>
         </div>
         <div v-else-if="loaded === true">

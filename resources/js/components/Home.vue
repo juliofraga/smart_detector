@@ -7,7 +7,21 @@
             </div>
             <div v-if="Object.keys(events.data).length > 0">
                 <event-summary-component :events="events"></event-summary-component>
-                <div class="card p-3">
+                <table-component
+                    :title="{
+                        description: {title: 'Descrição', hidden: 'false', type:'text'},
+                        ip_address: {title: 'IP Origem', hidden: 'false', type:'text'},
+                        type: {title: 'Tipo', hidden: 'false', type:'text'},               
+                        threat_classification: {title: 'Classificação', hidden: 'false', type:'text-badge-classification'},
+                        event_date_time: {title: 'Data/Hora', hidden: 'false', type:'timestamp'}                    
+                    }" 
+                    :data="events.data"
+                    :status="status"
+                    :feedbackMessage="feedbackMessage"
+                    :feedbackTitle="feedbackTitle"
+                    sectionTitle="Eventos Recentes"
+                ></table-component>
+                <!--<div class="card p-3">
                     <h5 class="mb-3">Eventos Recentes</h5>
                     <div class="table-responsive">
                         <table class="table table-dark-custom table-hover align-middle">
@@ -52,7 +66,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div>-->
             </div>
             <div v-else-if="loaded === true">
                 <no-itens-component></no-itens-component>

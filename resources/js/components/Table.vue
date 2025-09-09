@@ -6,6 +6,7 @@
         <alert-component type="danger" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'error'"></alert-component>
         <alert-component type="success" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'success'"></alert-component>
         <div class="card p-3 mt-3">
+            <h5 class="mb-3">{{ sectionTitle }}</h5>
             <div class="table-responsive">
                 <table class="table table-dark-custom table-hover align-middle">
                     <thead>
@@ -16,15 +17,8 @@
                     </thead>
                     <tbody>
                         <tr v-for="(obj, key) in filteredData" :key="key">
-                            <td scope="row" v-for="(value, keyValue) in obj" :key="keyValue" v-if="title[keyValue].hidden == 'false'">
-                                <span 
-                                    v-if="
-                                        title[keyValue].type == 'text' && 
-                                        title[keyValue].hidden == 'false' && 
-                                        keyValue != 'profile'
-                                    "
-                                    class="text-white"
-                                >
+                            <td scope="row" v-for="(value, keyValue) in obj" :key="keyValue" v-if="title[keyValue].hidden == 'false'" style="height:80px;">
+                                <span v-if="title[keyValue].type == 'text' && title[keyValue].hidden == 'false' && keyValue != 'profile'" class="text-white">
                                     {{ value }}
                                 </span>
 
@@ -34,6 +28,22 @@
 
                                 <span v-if="title[keyValue].type == 'datetime' && title[keyValue].hidden == 'false'" class="text-white">
                                     {{ value | formatDateTime }}
+                                </span>
+
+                                <span v-if="title[keyValue].type == 'timestamp' && title[keyValue].hidden == 'false'" class="text-white">
+                                    {{ value | formatDateTimeStamp }}
+                                </span>
+
+                                <span v-if="title[keyValue].type == 'text-badge-classification' && value == 'Baixa' && title[keyValue].hidden == 'false'" class="badge badge-success w-100">
+                                    {{ value }}
+                                </span>
+
+                                <span v-if="title[keyValue].type == 'text-badge-classification' && value == 'Média' && title[keyValue].hidden == 'false'" class="badge badge-warning w-100">
+                                    {{ value }}
+                                </span>
+
+                                <span v-if="title[keyValue].type == 'text-badge-classification' && value == 'Alta' && title[keyValue].hidden == 'false'" class="badge badge-danger w-100">
+                                    {{ value }}
                                 </span>
 
                                 <button 
@@ -63,7 +73,7 @@
             return {
             }
         },
-        props: ['title', 'data', 'status', 'feedbackTitle', 'feedbackMessage', 'classList'],
+        props: ['title', 'data', 'status', 'feedbackTitle', 'feedbackMessage', 'classList', 'sectionTitle'],
         methods: {
             setStore(obj) {
                 this.$store.state.item = obj;
