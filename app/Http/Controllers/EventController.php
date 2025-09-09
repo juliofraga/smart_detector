@@ -4,43 +4,73 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Collection;
 
 class EventController extends Controller
 {
     private $model;
-    private $jsonFiles;
+    private $newEvents;
+    private $eventData = [];
 
     public function __construct(Event $event)
     {
         $this->model = $event;
     }
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        $this->listJsonFiles();
-        $this->lerJsonFiles();
+        $this->listNewEvents();
+        if ($this->newEvents) {
+            $this->readNewEvents();
+            $this->deleteNewEventsFile();
+            $this->saveEventData();
+        }
+        return response()->json($this->getLatestEvents(), 200);
     }
 
-    public function listJsonFiles()
+    public function save($data): void
+    {
+        $this->model->create($data);
+    }
+
+    public function saveEventData(): void
+    {
+        foreach ($this->eventData as $data) {
+            $this->save($data);
+        }
+    }
+
+    public function listNewEvents(): void
     {
         $files = Storage::files('public');
-        $this->jsonFiles = array_filter($files, function ($file) {
+        $this->newEvents = array_filter($files, function ($file) {
             return pathinfo($file, PATHINFO_EXTENSION) === 'json';
         });
     }
 
-    public function lerJsonFiles()
+    public function readNewEvents(): void
     {
-        foreach ($this->jsonFiles as $file) {
-            $content = Storage::get($file);
-            $data = json_decode($content, true);
-            foreach ($data as $d) {
-                foreach ($d as $key => $value) {
-                    
-                }
+        foreach ($this->newEvents as $event) {
+            $content = Storage::get($event);
+            $arrayData = json_decode($content, true);
+            foreach ($arrayData as $data) {
+                $this->eventData[] = $data;
             }
         }
+    }
+
+    public function deleteNewEventsFile(): void
+    {
+        foreach ($this->newEvents as $event) {
+            Storage::delete($event);
+        }
+    }
+
+    public function getLatestEvents(): Collection
+    {
+        return $this->model->orderBy('event_date_time', 'desc')->take(50)->get();
     }
 }
