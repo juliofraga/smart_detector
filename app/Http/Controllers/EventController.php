@@ -68,8 +68,10 @@ class EventController extends Controller
         foreach ($this->newEvents as $event) {
             $content = Storage::get($event);
             $arrayData = json_decode($content, true);
-            foreach ($arrayData as $data) {
-                $this->eventData[] = $data;
+            if (is_array($arrayData)) {
+                foreach ($arrayData as $data) {
+                    $this->eventData[] = $data;
+                }
             }
         }
     }
@@ -88,5 +90,15 @@ class EventController extends Controller
                     ->orderBy('event_date_time', 'desc')
                     ->take($qtd)
                     ->get();
+    }
+
+    public function getNewEvents(int $id)
+    {
+        $data = $this->model->where('id', '>', $id)->get();
+        if ($data) {
+            return response()->json($data, 201);
+        } else {
+            return response()->json(['message' => 'Sem novos registros'], 201);
+        }
     }
 }

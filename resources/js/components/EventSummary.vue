@@ -32,24 +32,25 @@
 <script>
     export default {
         props: ['events'],
-        data() {
-            return {
-                today: 0,
-                high: 0,
-                medium: 0,
-                low: 0
+        computed: {
+            today() {
+                return this.events.data ? this.events.data.length : 0;
+            },
+            high() {
+                return this.events.data 
+                    ? this.events.data.filter(item => item.threat_classification === "Alta").length 
+                    : 0;
+            },
+            medium() {
+                return this.events.data 
+                    ? this.events.data.filter(item => item.threat_classification === "Média").length 
+                    : 0;
+            },
+            low() {
+                return this.events.data 
+                    ? this.events.data.filter(item => item.threat_classification === "Baixa").length 
+                    : 0;
             }
-        },
-        methods: {
-            calcEvents() {
-                this.today = this.events.data.length;
-                this.high = this.events.data.filter(item => item.threat_classification === "Alta").length;
-                this.medium = this.events.data.filter(item => item.threat_classification === "Média").length;
-                this.low = this.events.data.filter(item => item.threat_classification === "Baixa").length;
-            }
-        },
-        mounted() {
-            this.calcEvents();
         }
     }
 </script>

@@ -39,7 +39,7 @@
             ></table-component>
         </div>
         <div v-else-if="loaded === true">
-            <no-itens-component></no-itens-component>
+            <no-itens-component message="Nenhum usuário encontrado"></no-itens-component>
         </div>
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>

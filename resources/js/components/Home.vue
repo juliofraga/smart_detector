@@ -23,7 +23,7 @@
                 ></table-component>
             </div>
             <div v-else-if="loaded === true">
-                <no-itens-component></no-itens-component>
+                <no-itens-component message="Não há eventos registrados na data de hoje"></no-itens-component>
             </div>
             <div v-else-if="loaded === false">
                 <spinner-component></spinner-component>
@@ -43,6 +43,7 @@
                 feedbackMessage: {},
                 feedbackTitle: '',
                 loaded: false,
+                lastId: 0,
             }
         },
         methods: {
@@ -51,23 +52,43 @@
                 axios.get(url)
                     .then(response => {
                         this.events = response;
+                        this.lastId = Math.max(...this.events.data.map(e => e.id));
                         this.loaded = true;
                     })
                     .catch(errors => {
-                        if (errors.response.status == 500) {
-                            this.feedbackTitle = "Erro no servidor";
-                            this.status = 'error';
-                            this.feedbackMessage = {message: "Desculpe, não conseguimos processar a sua requisição, tente novamente ou entre em contato com a equipe de suporte"}
-                        } else {
-                            this.feedbackTitle = "Houve um erro";
-                            this.status = 'error';
-                            this.feedbackMessage = errors;
-                        }
+                        this.feedbackTitle = "Houve um erro";
+                        this.status = 'error';
+                        this.feedbackMessage = errors;
                     })                  
             },
+            getNewEvents() {
+                let url = this.urlBase + '/get-new-events/' + this.lastId;
+                axios.get(url)
+                    .then(response => {
+                        if (response.data.length > 0) {
+                            const merged = [...this.events.data, ...response.data].reduce((acc, current) => {
+                                if (!acc.some(item => item.id === current.id)) {
+                                    acc.push(current);
+                                }
+                                return acc;
+                            }, [])
+                            .sort((a, b) => new Date(b.event_date_time) - new Date(a.event_date_time));
+                            this.events = {data: merged};
+                            this.lastId = Math.max(...this.events.data.map(e => e.id));
+                        }
+                    })
+                    .catch(errors => {
+                        this.feedbackTitle = "Houve um erro";
+                        this.status = 'error';
+                        this.feedbackMessage = errors;
+                    }) 
+            }
         },
         mounted() {
             this.loadEventList();
+            setInterval(() => {
+                this.getNewEvents();
+            }, 10000);
         }
     }
 </script>
