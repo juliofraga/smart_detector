@@ -24,7 +24,7 @@ class UserController extends Controller
                 'password' => bcrypt($request->password)
             ]);
         }
-        $user = User::create($request->all());
+        $user = $this->model->create($request->all());
         if ($user) {
             return response()->json($user, 201);
         } else {

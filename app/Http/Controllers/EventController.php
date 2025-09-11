@@ -92,7 +92,7 @@ class EventController extends Controller
                     ->get();
     }
 
-    public function getNewEvents(int $id)
+    public function getNewEvents(int $id): JsonResponse
     {
         $data = $this->model->where('id', '>', $id)->get();
         if ($data) {
