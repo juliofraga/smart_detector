@@ -25,11 +25,7 @@ class UserController extends Controller
             ]);
         }
         $user = $this->model->create($request->all());
-        if ($user) {
-            return response()->json($user, 201);
-        } else {
-            return response()->json(['error' => 'Falha ao criar o registro.'], 500);
-        }
+        return parent::response($user);
     }
 
     public function update(Request $request, int $id): JsonResponse
@@ -44,20 +40,20 @@ class UserController extends Controller
         }
         $user = $this->model->find($id);
         if (!$user) {
-            return response()->json(['error' => 'Usuário não encontrado'], 404);
+            return parent::responseDataNotFound();
         }
         $update = empty($except) ? $user->update($request->all()) : $user->update($request->except($except));
-        return $update ? response()->json($user, 201) : response()->json(['error' => 'Falha ao atualizar o registro.'], 500);
+        return parent::responseOther($update, 'update');
     }
 
     public function destroy(int $id)
     {
         $model = $this->model->find($id);
         if (!$model) {
-            return response()->json(['error' => 'Usuário não encontrado'], 404);
+            return parent::responseDataNotFound();
         }
         $delete = $model->delete();
-        return $delete ? response()->json(['message' => 'Usuário deletado com sucesso'], 200) : response()->json(['error' => 'Falha ao deletar usuário.'], 500);
+        return parent::responseOther($delete, 'delete');
     }
 
     public function index(Request $request): JsonResponse
@@ -75,7 +71,7 @@ class UserController extends Controller
             $this->filter($request->filter);
         }
         $data = $this->model->orderby($by, $direction)->paginate($qtd);
-        return response()->json($data, 200);
+        return parent::responseGeneric($data);
     }
 
     public function filter(string $filters): void

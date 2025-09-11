@@ -17,12 +17,12 @@ class AuthController extends Controller
         $password = $request->password;
         $user = User::where('email', $email)->first();
         if (!$user) {
-            return response()->json(['error' => 'Usuário não cadastrado no sistema'], 401);
+            return parent::responseGeneric('Usuário não cadastrado no sistema', 401, 'error');
         }
         $loginError = LoginError::where('user_id', $user->id)->first();
         if ($loginError && $loginError->isBlocked()) {
             if ($this->BlockedByTime($loginError->blocked_at)) {
-                return response()->json(['error' => 'Conta temporariamente bloqueada, tente novamente mais tarde'], 403);
+                return parent::responseGeneric('Conta temporariamente bloqueada, tente novamente mais tarde', 403, 'error');
             }
         }
 
@@ -32,22 +32,22 @@ class AuthController extends Controller
                 $loginError->resetErrors();
             }
             UserController::registerUserLogin($email);
-            return response()->json(['token' => $token]);
+            return parent::responseGeneric($token, 201, 'token');
         } else {
             $loginError = LoginError::firstOrCreate(['user_id' => $user->id]);
             if ($loginError->error_count >= 5) {
                 $loginError->block();
-                return response()->json(['error' => 'Sua conta foi temporariamente bloqueada, tente novamente mais tarde'], 403);
+                return parent::responseGeneric('Sua conta foi temporariamente bloqueada, tente novamente mais tarde', 403, 'error');
             }
             $loginError->incrementErrorCount();
-            return response()->json(['error' => 'Credenciais Inválidas'], 401);
+            return parent::responseGeneric('Credenciais Inválidas', 401, 'error');
         }
     }
 
     public function logout(): JsonResponse
     {
         auth('api')->logout();
-        return response()->json(['message' => 'Logout realizado com sucesso']);
+        return parent::responseGeneric('Logout realizado com sucesso');
     }
 
     public function me(): JsonResponse

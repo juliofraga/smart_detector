@@ -29,18 +29,14 @@ class EventController extends Controller
             $this->deleteNewEventsFile();
             $this->saveEventData();
         }
-        return response()->json($this->getLatestEvents(100), 200);
+        return parent::responseGeneric($this->getLatestEvents(100));
     }
 
     public function store(Request $request): JsonResponse
     {
         $request->validate(Event::rules(), Event::feedback());
         $event = $this->model->create($request->all());
-        if ($event) {
-            return response()->json($event, 201);
-        } else {
-            return response()->json(['error' => 'Falha ao criar o registro.'], 500);
-        }
+        return parent::response($event);
     }
 
     public function save($data): void
@@ -96,9 +92,9 @@ class EventController extends Controller
     {
         $data = $this->model->where('id', '>', $id)->get();
         if ($data) {
-            return response()->json($data, 201);
+            return parent::responseGeneric($data);
         } else {
-            return response()->json(['message' => 'Sem novos registros'], 201);
+            return parent::responseGeneric('Sem novos registros');
         }
     }
 }
