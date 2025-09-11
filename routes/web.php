@@ -20,12 +20,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::middleware('auth')->group(function() {
-    Route::get('/usuarios', function () {
-        return view('/users');
-    })->middleware('admin')->name('users');
-    Route::get('/minha-conta', function () {
-        return view('/my-account');
-    })->name('my-account');
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/usuarios', 'UserController@show')->middleware('admin')->name('users');
+    Route::get('/minha-conta', 'UserController@showMyAccount')->name('my-account');
 });

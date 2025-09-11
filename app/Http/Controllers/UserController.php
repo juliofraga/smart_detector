@@ -89,6 +89,16 @@ class UserController extends Controller
         });
     }
 
+    public function show()
+    {
+        return view('/users');
+    }
+
+    public function showMyAccount()
+    {
+        return view('/my-account');
+    }
+
     public static function registerUserLogin(string $email): void
     {
         $now = date('Y-m-d H:i:s');
