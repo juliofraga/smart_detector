@@ -52,7 +52,9 @@
                 axios.get(url)
                     .then(response => {
                         this.events = response;
-                        this.lastId = Math.max(...this.events.data.map(e => e.id));
+                        if (response.data.length > 0) {
+                            this.lastId = Math.max(...this.events.data.map(e => e.id));
+                        }
                         this.loaded = true;
                     })
                     .catch(errors => {
@@ -63,6 +65,9 @@
             },
             getNewEvents() {
                 let url = this.urlBase + '/get-new-events/' + this.lastId;
+                if (this.lastId == 0) {
+                    url = this.urlBase;
+                }
                 axios.get(url)
                     .then(response => {
                         if (response.data.length > 0) {
