@@ -283,7 +283,7 @@
                             profile: this.profile,
                             password: this.password
                         };
-                        let url = this.urlBase + '/store';
+                        let url = this.urlBase;
                         axios.post(url, data)
                             .then(response => {
                                 this.status = 'success';
@@ -326,7 +326,7 @@
                         profile: this.$store.state.item.profile,
                         password: this.passwordUpdate
                     };
-                    let url = this.urlBase + '/update/' + this.$store.state.item.id;
+                    let url = this.urlBase + '/' + this.$store.state.item.id;
                     axios.patch(url, data)
                         .then(response => {
                             this.status = 'success';
@@ -346,7 +346,7 @@
                 }
             },
             deleteUser() {
-                let url = this.urlBase + '/delete/' + this.$store.state.item.id;
+                let url = this.urlBase + '/' + this.$store.state.item.id;
                 axios.delete(url)
                     .then(response => {
                         this.status = 'success';

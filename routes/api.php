@@ -20,18 +20,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::prefix('user')->middleware('admin')->group(function () {
-        Route::post('/store', 'UserController@store');
+        Route::post('/', 'UserController@store');
         Route::get('/', 'UserController@index');
-        Route::patch('/update/{id}', 'UserController@update');
-        Route::delete('/delete/{id}', 'UserController@destroy');
+        Route::patch('/{id}', 'UserController@update');
+        Route::delete('/{id}', 'UserController@destroy');
     });
     Route::prefix('event')->group(function () {
         Route::get('/', 'EventController@index');
-        Route::post('/store', 'EventController@store');
-        Route::get('/get-new-events/{id}', 'EventController@getNewEvents')->middleware('throttle:new-events');
+        Route::post('/', 'EventController@store');
+        Route::get('/new/{id}', 'EventController@getNewEvents')->middleware('throttle:new-events');
     });
     Route::post('logout', 'AuthController@logout');
-    Route::post('me', 'AuthController@me');
+    Route::get('me', 'AuthController@me');
 });
 
 Route::post('login', 'AuthController@login');

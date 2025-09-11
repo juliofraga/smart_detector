@@ -64,7 +64,7 @@
                     })                  
             },
             getNewEvents() {
-                let url = this.urlBase + '/get-new-events/' + this.lastId;
+                let url = this.urlBase + '/new/' + this.lastId;
                 if (this.lastId == 0) {
                     url = this.urlBase;
                 }
