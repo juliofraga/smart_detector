@@ -7,25 +7,7 @@
             </div>
             <div v-if="Object.keys(events.data).length > 0">
                 <event-summary-component :events="events"></event-summary-component>
-                <table-component
-                    :title="{
-                        description: {title: 'Descrição', hidden: 'false', type:'text'},
-                        ip_address: {title: 'IP Origem', hidden: 'false', type:'text'},
-                        type: {title: 'Tipo', hidden: 'false', type:'text'},               
-                        threat_classification: {title: 'Classificação', hidden: 'false', type:'text-badge-classification'},
-                        event_date_time: {title: 'Data/Hora', hidden: 'false', type:'timestamp'},
-                        id: {hidden: 'true'},
-                        ai_analysys: {hidden: 'true'},
-                        geographical_origin: {hidden: 'true'},
-                        request: {hidden: 'true'},
-                        detalhes: {title: 'Detalhes', hidden: 'false', type: 'buttonModal', modalId: '#modalEventDetail', buttonType: 'view'}
-                    }" 
-                    :data="events.data"
-                    :status="status"
-                    :feedbackMessage="feedbackMessage"
-                    :feedbackTitle="feedbackTitle"
-                    sectionTitle="Eventos Recentes"
-                ></table-component>
+                <event-table-component :data="events.data" title="Eventos Recentes"></event-table-component>
             </div>
             <div v-else-if="loaded === true">
                 <no-itens-component message="Não há eventos registrados na data de hoje"></no-itens-component>
