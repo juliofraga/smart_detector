@@ -6,8 +6,6 @@ use App\Models\Event;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
 
 class EventController extends Controller
