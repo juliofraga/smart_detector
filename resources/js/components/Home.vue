@@ -14,6 +14,10 @@
                         type: {title: 'Tipo', hidden: 'false', type:'text'},               
                         threat_classification: {title: 'Classificação', hidden: 'false', type:'text-badge-classification'},
                         event_date_time: {title: 'Data/Hora', hidden: 'false', type:'timestamp'},
+                        id: {hidden: 'true'},
+                        ai_analysys: {hidden: 'true'},
+                        geographical_origin: {hidden: 'true'},
+                        request: {hidden: 'true'},
                         detalhes: {title: 'Detalhes', hidden: 'false', type: 'buttonModal', modalId: '#modalEventDetail', buttonType: 'view'}
                     }" 
                     :data="events.data"
@@ -30,8 +34,57 @@
                 <spinner-component></spinner-component>
             </div>
         </div>
-        <modal-component id="modalEventDetail" options="modal-dialog-centered modal-lg" title="Detalhes do Evento">
-            <template v-slot:conteudo></template>
+        <modal-component id="modalEventDetail" options="modal-dialog-centered modal-xl" title="Detalhes do Evento">
+            <template v-slot:conteudo>
+                <!-- Descrição -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-secondary">Descrição</label>
+                    <div class="p-3 bg-secondary rounded text-light" style="max-height: 120px; overflow-y: auto;">
+                        Tentativa de injeção SQL detectada no endpoint de login, com múltiplos parâmetros suspeitos.
+                    </div>
+                </div>
+                <!-- Classificação e Tipo -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-secondary">Tipo de Ameaça</label>
+                        <input type="text" class="form-control bg-secondary text-light border-0" value="SQL Injection" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-secondary">Classificação</label>
+                        <input type="text" class="form-control bg-secondary text-light border-0" value="Alta" readonly>
+                    </div>
+                </div>
+                <!-- IP e Origem -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-secondary">IP</label>
+                        <input type="text" class="form-control bg-secondary text-light border-0" value="192.168.0.25" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-secondary">Origem Geográfica</label>
+                        <input type="text" class="form-control bg-secondary text-light border-0" value="São Paulo, BR" readonly>
+                    </div>
+                </div>
+                <!-- Data e Request -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-secondary">Request</label>
+                        <input type="text" class="form-control bg-secondary text-light border-0" value="POST /api/login" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-secondary">Data e Hora</label>
+                        <input type="text" class="form-control bg-secondary text-light border-0" value="2025-09-12 08:23:17" readonly>
+                    </div>
+                </div>
+                <!-- Análise IA -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold text-secondary">Análise da IA</label>
+                    <div class="p-3 bg-secondary rounded text-light" style="max-height: 150px; overflow-y: auto;">
+                        O padrão identificado corresponde a uma tentativa automatizada de exploração de vulnerabilidades de login. 
+                        A probabilidade de ataque real é de 87%. Recomendação: bloquear IP temporariamente e revisar logs de acesso.
+                    </div>
+                </div>
+            </template>
         </modal-component>
     </div>
 </template>
