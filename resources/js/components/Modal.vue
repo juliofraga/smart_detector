@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" :id="id" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+        <div :class="['modal-dialog', options]">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">{{ title }}</h5>
@@ -19,6 +19,13 @@
 
 <script>
     export default {
-        props: ['id', 'title']
+        props: {
+            id: String,
+            title: String,
+            options: {
+                type: String,
+                default: ''
+            }
+        }
     }
 </script>

@@ -26,7 +26,7 @@
                     email: {title: 'E-mail', hidden: 'false', type:'text'},               
                     profile: {title: 'Perfil', hidden: 'false', type:'text'},
                     last_access: {title: 'Último Acesso', hidden: 'false', type:'datetime'},
-                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalAtualizarUsuario'},
+                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalAtualizarUsuario', buttonType: 'edit'},
                     updated_at: {title: 'Última Atualização', hidden: 'true', type: 'datetime'},
                     created_at: {title: 'Data de Criação', hidden: 'true', type: 'datetime'},
                     
@@ -228,7 +228,7 @@
             </template>
         </modal-component>
         <!-- Modal para confirmar remoção de usuário -->
-        <modal-component id="modalConfirmarDeletar" title="Você tem certeza?">
+        <modal-component id="modalConfirmarDeletar" options="modal-dialog-centered modal-sm" title="Você tem certeza?">
             <template v-slot:conteudo>
                 <div class="row">
                     <div class="col col-6">

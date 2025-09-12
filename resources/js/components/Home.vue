@@ -13,7 +13,8 @@
                         ip_address: {title: 'IP Origem', hidden: 'false', type:'text'},
                         type: {title: 'Tipo', hidden: 'false', type:'text'},               
                         threat_classification: {title: 'Classificação', hidden: 'false', type:'text-badge-classification'},
-                        event_date_time: {title: 'Data/Hora', hidden: 'false', type:'timestamp'}                    
+                        event_date_time: {title: 'Data/Hora', hidden: 'false', type:'timestamp'},
+                        detalhes: {title: 'Detalhes', hidden: 'false', type: 'buttonModal', modalId: '#modalEventDetail', buttonType: 'view'}
                     }" 
                     :data="events.data"
                     :status="status"
@@ -29,6 +30,9 @@
                 <spinner-component></spinner-component>
             </div>
         </div>
+        <modal-component id="modalEventDetail" options="modal-dialog-centered modal-lg" title="Detalhes do Evento">
+            <template v-slot:conteudo></template>
+        </modal-component>
     </div>
 </template>
 
