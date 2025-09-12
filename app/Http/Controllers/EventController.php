@@ -13,8 +13,7 @@ use Carbon\Carbon;
 class EventController extends Controller
 {
     private $model;
-    private $newEvents;
-    private $eventData = [];
+    private $qtdEvent= 100;
 
     public function __construct(Event $event)
     {
@@ -23,13 +22,12 @@ class EventController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        $this->listNewEvents();
-        if ($this->newEvents) {
-            $this->readNewEvents();
-            $this->deleteNewEventsFile();
-            $this->saveEventData();
-        }
-        return parent::responseGeneric($this->getLatestEvents(100));
+        $data = $this->model
+                    ->whereDate('event_date_time', Carbon::today())
+                    ->orderBy('event_date_time', 'desc')
+                    ->take($this->qtdEvent)
+                    ->get();
+        return parent::responseGeneric($data);
     }
 
     public function store(Request $request): JsonResponse
@@ -37,55 +35,6 @@ class EventController extends Controller
         $request->validate(Event::rules(), Event::feedback());
         $event = $this->model->create($request->all());
         return parent::response($event);
-    }
-
-    public function save($data): void
-    {
-        $this->model->create($data);
-    }
-
-    public function saveEventData(): void
-    {
-        foreach ($this->eventData as $data) {
-            $this->save($data);
-        }
-    }
-
-    public function listNewEvents(): void
-    {
-        $files = Storage::files('public');
-        $this->newEvents = array_filter($files, function ($file) {
-            return pathinfo($file, PATHINFO_EXTENSION) === 'json';
-        });
-    }
-
-    public function readNewEvents(): void
-    {
-        foreach ($this->newEvents as $event) {
-            $content = Storage::get($event);
-            $arrayData = json_decode($content, true);
-            if (is_array($arrayData)) {
-                foreach ($arrayData as $data) {
-                    $this->eventData[] = $data;
-                }
-            }
-        }
-    }
-
-    public function deleteNewEventsFile(): void
-    {
-        foreach ($this->newEvents as $event) {
-            Storage::delete($event);
-        }
-    }
-
-    public function getLatestEvents(int $qtd): Collection
-    {
-        return $this->model
-                    ->whereDate('event_date_time', Carbon::today())
-                    ->orderBy('event_date_time', 'desc')
-                    ->take($qtd)
-                    ->get();
     }
 
     public function getNewEvents(int $id): JsonResponse
