@@ -2,54 +2,17 @@
     <div class="container">
         <modal-component id="modalEventDetail" options="modal-dialog-centered modal-xl" title="Detalhes do Evento">
             <template v-slot:conteudo>
-                <!-- Descrição -->
+                <!-- Botão nova aba  -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold text-secondary">Descrição</label>
-                    <div class="p-3 bg-secondary rounded text-light" style="max-height: 120px; overflow-y: auto;">
-                        {{ $store.state.item.description }}
-                    </div>
+                    <a class="btn btn-sm btn-outline-light border-0" target="_blank" :href="`/evento/${$store.state.item.id}`">
+                        Nova Aba
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5"/>
+                            <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0z"/>
+                        </svg>
+                    </a>
                 </div>
-                <!-- Classificação e Tipo -->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold text-secondary">Tipo de Ameaça</label>
-                        <input type="text" class="form-control bg-secondary text-light border-0" v-model="$store.state.item.type" readonly>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold text-secondary">Classificação de Risco</label>
-                        <input type="text" class="form-control bg-success text-light border-0" v-model="$store.state.item.threat_classification" readonly v-if="$store.state.item.threat_classification == 'Baixa'">
-                        <input type="text" class="form-control bg-danger text-light border-0" v-model="$store.state.item.threat_classification" readonly v-else-if="$store.state.item.threat_classification == 'Alta'">
-                        <input type="text" class="form-control bg-warning border-0" v-model="$store.state.item.threat_classification" readonly v-else-if="$store.state.item.threat_classification == 'Média'">
-                        <input type="text" class="form-control bg-secondary text-light border-0" v-model="$store.state.item.threat_classification" readonly v-else>
-                    </div>
-                </div>
-                <!-- IP e Origem -->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold text-secondary">IP de Origem</label>
-                        <input type="text" class="form-control bg-secondary text-light border-0" v-model="$store.state.item.ip_address" readonly>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold text-secondary">Origem Geográfica</label>
-                        <input type="text" class="form-control bg-secondary text-light border-0" v-model="$store.state.item.geographical_origin" readonly>
-                    </div>
-                </div>
-                <!-- Data e Request -->
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold text-secondary">Request</label>
-                        <input type="text" class="form-control bg-secondary text-light border-0" v-model="$store.state.item.request" readonly>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold text-secondary">Data e Hora</label>
-                        <input type="text" class="form-control bg-secondary text-light border-0" v-model="$store.state.item.event_date_time" readonly>
-                    </div>
-                </div>
-                <!-- Análise IA -->
-                <div class="mb-3">
-                    <label class="form-label fw-bold text-secondary">Análise da IA</label>
-                    <textarea class="form-control bg-secondary rounded text-light border-0" rows="10" v-model="$store.state.item.ai_analysys" style="height: auto;" readonly></textarea>
-                </div>
+                <event-detailed-component></event-detailed-component>
             </template>
         </modal-component>
     </div>

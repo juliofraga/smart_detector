@@ -24,4 +24,5 @@ Route::middleware('auth')->group(function() {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/usuarios', 'UserController@show')->middleware('admin')->name('users');
     Route::get('/minha-conta', 'UserController@showMyAccount')->name('my-account');
+    Route::get('/evento/{id}', 'EventController@show');
 });

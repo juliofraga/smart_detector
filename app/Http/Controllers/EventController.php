@@ -44,4 +44,15 @@ class EventController extends Controller
             return parent::responseGeneric('Sem novos registros');
         }
     }
+
+    public function show(int $id)
+    {
+        return view('/event');
+    }
+
+    public function get(int $id)
+    {
+        $event = $this->model->find($id);
+        return parent::response($event);
+    }
 }

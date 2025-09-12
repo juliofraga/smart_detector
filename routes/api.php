@@ -29,6 +29,7 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
         Route::get('/', 'EventController@index');
         Route::post('/', 'EventController@store');
         Route::get('/new/{id}', 'EventController@getNewEvents')->middleware('throttle:new-events');
+        Route::get('/{id}', 'EventController@get');
     });
     Route::post('logout', 'AuthController@logout');
     Route::get('me', 'AuthController@me');
