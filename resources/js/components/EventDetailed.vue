@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div v-if="loaded === false">
+        <div v-if="loaded === false && event_id">
             <spinner-component></spinner-component>
         </div>
         <div v-else>
