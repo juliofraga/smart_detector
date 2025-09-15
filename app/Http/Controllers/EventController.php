@@ -50,9 +50,19 @@ class EventController extends Controller
         return view('/event');
     }
 
+    public function display()
+    {
+        return view('/events');
+    }
+
     public function get(int $id)
     {
         $event = $this->model->find($id);
         return parent::response($event);
+    }
+
+    public function getAll(Request $request)
+    {
+        return $this->index($request);
     }
 }
