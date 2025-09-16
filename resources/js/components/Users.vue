@@ -44,7 +44,7 @@
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-4"  v-if="users.data.length > 0">
             <div class="col col-10">
                 <paginate-component>
                     <li v-for="l, key in users.links" :key="key" class="page-item" @click="paginate(l)">

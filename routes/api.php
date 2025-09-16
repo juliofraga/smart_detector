@@ -38,6 +38,12 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
         Route::get('/{id}', 'EventController@get');
         Route::get('/get/all', 'EventController@getAll');
     });
+    Route::prefix('classification')->middleware('admin')->group(function () {
+        Route::post('/', 'ClassificationController@store');
+        Route::get('/', 'ClassificationController@index');
+        Route::patch('/{id}', 'ClassificationController@update');
+        Route::delete('/{id}', 'ClassificationController@destroy');
+    });
     Route::post('logout', 'AuthController@logout');
     Route::get('me', 'AuthController@me');
 });

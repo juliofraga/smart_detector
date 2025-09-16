@@ -34,15 +34,7 @@
                                     {{ value | formatDateTimeStamp }}
                                 </span>
 
-                                <span v-if="title[keyValue].type == 'text-badge-classification' && value == 'Baixa' && title[keyValue].hidden == 'false'" class="badge badge-success w-100">
-                                    {{ value }}
-                                </span>
-
-                                <span v-if="title[keyValue].type == 'text-badge-classification' && value == 'Média' && title[keyValue].hidden == 'false'" class="badge badge-warning w-100">
-                                    {{ value }}
-                                </span>
-
-                                <span v-if="title[keyValue].type == 'text-badge-classification' && value == 'Alta' && title[keyValue].hidden == 'false'" class="badge badge-danger w-100">
+                                <span v-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false'" :class="`badge badge-${value} w-100`">
                                     {{ value }}
                                 </span>
 

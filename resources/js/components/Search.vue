@@ -80,12 +80,16 @@
                 }
                 if (this.classSearch === 'user') {
                     EventBus.$emit("loadUserList");
+                } else if (this.classSearch === 'classification') {
+                    EventBus.$emit("loadClassificationList");
                 }
             },
             clear() {
                 EventBus.$emit("setUrlFilter", '');
                 if (this.classSearch === 'user') {
                     EventBus.$emit("loadUserList");
+                } else if (this.classSearch === 'classification') {
+                    EventBus.$emit("loadClassificationList");
                 }
                 this.searchFilter = '';
             },

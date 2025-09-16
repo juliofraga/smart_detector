@@ -23,8 +23,8 @@
                 :title="{
                     id: {title: 'ID', hidden: 'true', type:'text'},
                     description: {title: 'Descrição', hidden: 'false', type:'text'},
-                    visual_style: {title: 'Estilo', hidden: 'false', type:'text'},               
-                    created_at: {title: 'Data de Criação', hidden: 'true', type: 'datetime'},
+                    visual_style: {title: 'Estilo', hidden: 'false', type:'badge'},               
+                    created_at: {title: 'Data de Criação', hidden: 'false', type: 'timestamp'},
                 }" 
                 :data="classifications.data"
                 :status="status"
@@ -39,6 +39,83 @@
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
         </div>
+        <div class="row mt-4" v-if="classifications.data.length > 0">
+            <div class="col col-10">
+                <paginate-component>
+                    <li v-for="l, key in classifications.links" :key="key" class="page-item" @click="paginate(l)">
+                        <div v-if="l.active">
+                            <a class="page-link dark-paginantion-active" v-html="l.label" 
+                            v-if="
+                                key == classifications.current_page || 
+                                key == classifications.current_page - 1 || 
+                                key == classifications.current_page + 1 || 
+                                key == 0 ||
+                                (classifications.current_page == 1 && key == 3) ||
+                                key == classifications.last_page + 1 || 
+                                (classifications.current_page == classifications.last_page && key == classifications.last_page - 2)"
+                        ></a>
+                        </div>
+                        <div v-else>
+                            <a class="page-link dark-pagination" 
+                            v-if="
+                                l.url != null && 
+                                (key == classifications.current_page || 
+                                key == classifications.current_page - 1 || 
+                                key == classifications.current_page + 1 || 
+                                key == 0 ||
+                                (classifications.current_page == 1 && key == 3) ||
+                                key == classifications.last_page + 1 || 
+                                (classifications.current_page == classifications.last_page && key == classifications.last_page - 2))"
+                        >{{ l.label | formatNextPrevButton }}</a>
+                        </div>
+                        
+                    </li>
+                </paginate-component>
+            </div>
+        </div>
+        <!-- Modal para adicionar classificações de risco -->
+        <modal-component id="modalAdicionarClassificacao" title="Adicionar Classificação de Risco">
+            <template v-slot:conteudo>
+                <div class="form-group">
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="description" name="description" placeholder="Descrição*" v-model="description">
+                                <label class="form-label">Descrição*</label>
+                                <div id="invalidFeedbackDescricao" class="invalid-feedback">
+                                    Informe a descrição.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <select class="form-control" id="visualStyle" name="visualStyle" placeholder="Estilo*" v-model="visualStyle" style="background-color: white;">
+                                    <option value="">Selecione...</option>
+                                    <option value="primary" class="bg-primary text-white">Primary</option>
+                                    <option value="secondary" class="bg-secondary text-white">Secondary</option>
+                                    <option value="success" class="bg-success text-white">Success</option>
+                                    <option value="danger" class="bg-danger text-white">Danger</option>
+                                    <option value="warning" class="bg-warning">Warning</option>
+                                    <option value="info" class="bg-info">Info</option>
+                                    <option value="light" class="bg-light">Light</option>
+                                    <option value="dark" class="bg-dark text-white" style="color:">Dark</option>
+                                </select>
+                                <label class="form-label">Estilo*</label>
+                                <div id="invalidFeedbackEstilo" class="invalid-feedback">
+                                    Informe o estilo do alerta
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success text-white" @click="save()">Salvar</button>
+            </template>
+        </modal-component>
     </div>
 </template>
 
@@ -63,8 +140,73 @@
             }
         },
         methods: {
+            save() {
+                if (utils.fieldsValidate(['description', 'visualStyle'], this)) {
+                    let data = {
+                        description: this.description,
+                        visual_style: this.visualStyle,
+                    };
+                    let url = this.urlBase;
+                    axios.post(url, data)
+                        .then(response => {
+                            this.status = 'success';
+                            this.feedbackTitle = "Classificação de risco adicionada com sucesso";
+                            utils.closeModal('modalAdicionarClassificacao');
+                            this.loadClassificationList();
+                            this.cleanAddClassificationFormData();
+                        })
+                        .catch(errors => {
+                            this.status = 'error';
+                            this.feedbackTitle = "Erro ao adicionar classificação de risco";
+                            utils.closeModal('modalAdicionarClassificacao');
+                            this.feedbackMessage = {
+                                mensagem: errors.response.data.message,
+                                data: errors.response.data.errors
+                            };
+                            this.cleanFeedbackMessage();
+                        })
+                        
+                }
+            },
+            loadClassificationList() {
+                let url = this.urlBase + '?' + this.urlPaginate + this.urlFilter;
+                axios.get(url)
+                    .then(response => {
+                        this.classifications = response.data;
+                        this.loaded = true;
+                    })
+                    .catch(errors => {
+                        if (errors.response.status == 500) {
+                            this.feedbackTitle = "Erro no servidor";
+                            this.status = 'error';
+                            this.feedbackMessage = {message: "Desculpe, não conseguimos processar a sua requisição, tente novamente ou entre em contato com a equipe de suporte"}
+                        } else {
+                            this.feedbackTitle = "Houve um erro";
+                            this.status = 'error';
+                            this.feedbackMessage = errors;
+                        }
+                    })
+                this.cleanFeedbackMessage();                    
+            },
+            setUrlFilter(url) {
+                this.urlFilter = url;
+            },
+            cleanFeedbackMessage() {
+                setTimeout(() => {
+                    this.feedbackMessage =  {};
+                    this.feedbackTitle = '';
+                    this.status = '';
+                }, 10000);
+            },
+            cleanAddClassificationFormData() {
+                this.description = '';
+                this.visualStyle = '';
+            },
         },
         mounted() {
+            EventBus.$on("loadClassificationList", this.loadClassificationList)
+            EventBus.$on("setUrlFilter", this.setUrlFilter);
+            this.loadClassificationList();
         }
     }
 </script>

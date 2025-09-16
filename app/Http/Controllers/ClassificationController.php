@@ -14,6 +14,11 @@ class ClassificationController extends BaseController
         parent::__construct($profile);
     }
 
+    public function index(Request $request, array $attributes = null): JsonResponse
+    {
+        return parent::index($request, ['id', 'asc']);
+    }
+
     public function show(int $id = null)
     {
         return view('/classifications');
