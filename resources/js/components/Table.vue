@@ -43,7 +43,7 @@
                                         {{ value }}
                                     </span>
                                 </div>
-                                <div v-elseif="classList == 'event'">
+                                <div v-else if="classList == 'event'">
                                     <span v-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false' && (value.visual_style == 'warning')" :class="`badge badge-${value.visual_style} w-100`">
                                         {{ value.description }}
                                     </span>
