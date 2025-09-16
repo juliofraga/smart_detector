@@ -3,19 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class EventController extends Controller
+class EventController extends AbstractController
 {
-    private $model;
-    private $qtdEvent= 100;
+    private $qtdEvent = 100;
 
     public function __construct(Event $event)
     {
-        $this->model = $event;
+        parent::__construct($event);
     }
 
     public function index(Request $request): JsonResponse
@@ -30,9 +28,7 @@ class EventController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $request->validate(Event::rules(), Event::feedback());
-        $event = $this->model->create($request->all());
-        return parent::response($event);
+        return parent::store($request);
     }
 
     public function getNewEvents(int $id): JsonResponse
@@ -45,7 +41,7 @@ class EventController extends Controller
         }
     }
 
-    public function show(int $id)
+    public function show(int $id = null)
     {
         return view('/event');
     }

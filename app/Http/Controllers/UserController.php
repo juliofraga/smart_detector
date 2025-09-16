@@ -40,7 +40,7 @@ class UserController extends AbstractController
         return parent::paginate($request, null, ['name', 'asc']);
     }
 
-    public function show()
+    public function show(int $id = null)
     {
         return view('/users');
     }

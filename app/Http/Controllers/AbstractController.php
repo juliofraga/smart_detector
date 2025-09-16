@@ -77,8 +77,6 @@ abstract class AbstractController extends Controller
 
     abstract public function index(Request $request): JsonResponse;
 
-    abstract public function show();
+    abstract public function show(int $id = null);
 
-    
-    
 }
