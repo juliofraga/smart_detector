@@ -4,7 +4,7 @@
             :title="{
                 description: {title: 'Descrição', hidden: 'false', type:'text'},
                 ip_address: {title: 'IP Origem', hidden: 'false', type:'text'},
-                type: {title: 'Tipo', hidden: 'false', type:'text'},               
+                type: {title: 'Tipo de Ameaça', hidden: 'false', type:'text'},               
                 classification: {title: 'Classificação', hidden: 'false', type:'badge'},
                 event_date_time: {title: 'Data/Hora', hidden: 'false', type:'timestamp'},
                 id: {hidden: 'true'},

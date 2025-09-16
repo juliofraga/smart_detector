@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-bold text-secondary">Tipo de Ameaça</label>
-                    <input type="text" class="form-control bg-secondary text-light border-0" :value="$store.state.item.type || event.type" readonly>
+                    <input type="text" class="form-control bg-secondary text-light border-0" :value="($store.state.item.type && $store.state.item.type.description) || (event.type && event.type.description)" readonly>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-bold text-secondary">Classificação de Risco</label>

@@ -54,6 +54,7 @@ class EventController extends BaseController
         $data = $this->model
                     ->with('classification')
                     ->with('analysys')
+                    ->with('type')
                     ->whereDate('event_date_time', Carbon::today())
                     ->orderBy('event_date_time', 'desc')
                     ->take($this->qtdEvent)
@@ -66,6 +67,7 @@ class EventController extends BaseController
         $data = $this->model
                     ->with('classification')
                     ->with('analysys')
+                    ->with('type')
                     ->where('id', '>', $id)
                     ->get();
         if ($data) {
@@ -90,6 +92,7 @@ class EventController extends BaseController
         $event = $this->model
                     ->with('classification')
                     ->with('analysys')
+                    ->with('type')
                     ->find($id);
         return parent::response($event);
     }

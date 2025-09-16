@@ -18,11 +18,11 @@
                     <tbody>
                         <tr v-for="(obj, key) in filteredData" :key="key">
                             <td scope="row" v-for="(value, keyValue) in obj" :key="keyValue" v-if="title[keyValue].hidden == 'false'" style="height:80px;">
-                                <span v-if="title[keyValue].type == 'text' && title[keyValue].hidden == 'false' && keyValue != 'profile'" class="text-white">
+                                <span v-if="title[keyValue].type == 'text' && title[keyValue].hidden == 'false' && (keyValue != 'profile' && keyValue != 'type')" class="text-white">
                                     {{ value }}
                                 </span>
 
-                                <span v-if="keyValue == 'profile' && title[keyValue].hidden == 'false'" class="text-white">
+                                <span v-if="(keyValue == 'profile' || (value && keyValue == 'type')) && title[keyValue].hidden == 'false'" class="text-white">
                                     {{ value.description }}
                                 </span>
 
