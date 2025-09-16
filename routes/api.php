@@ -19,11 +19,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->middleware('jwt.auth')->group(function() {
-    Route::prefix('user')->middleware('admin')->group(function () {
+    Route::prefix('user')->group(function () {
         Route::post('/', 'UserController@store');
         Route::get('/', 'UserController@index');
         Route::patch('/{id}', 'UserController@update');
         Route::delete('/{id}', 'UserController@destroy');
+    });
+    Route::prefix('profile')->group(function () {
+        Route::post('/', 'ProfileController@store');
+        Route::get('/', 'ProfileController@getAll');
+        Route::patch('/{id}', 'ProfileController@update');
+        Route::delete('/{id}', 'ProfileController@destroy');
     });
     Route::prefix('event')->group(function () {
         Route::get('/', 'EventController@index');

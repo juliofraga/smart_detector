@@ -12,7 +12,12 @@ import Vuex from 'Vuex';
 Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
-        item: {}
+        item: {
+            profile: {
+                id: null,
+                description: ''
+            }
+        }
     }
 });
 
@@ -43,14 +48,6 @@ Vue.component('search-component', require('./components/Search.vue').default);
 Vue.component('users-component', require('./components/Users.vue').default);
 Vue.component('paginate-component', require('./components/Paginate.vue').default);
 Vue.component('spinner-component', require('./components/Spinner.vue').default);
-
-Vue.filter('formatProfile', function(valor) {
-    let profile = {
-        'admin': 'Administrador',
-        'user': 'Usuário'
-    };
-    return profile[valor];
-});
 
 Vue.filter('formatDateTime', function(valor){
     if (!valor) {

@@ -24,7 +24,7 @@
                     id: {title: 'ID', hidden: 'true', type:'text'},
                     name: {title: 'Nome', hidden: 'false', type:'text'},
                     email: {title: 'E-mail', hidden: 'false', type:'text'},               
-                    profile: {title: 'Perfil', hidden: 'false', type:'text'},
+                    profile: {title: 'Perfil', hidden: 'false', type: 'profile'},
                     last_access: {title: 'Último Acesso', hidden: 'false', type:'datetime'},
                     editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalAtualizarUsuario', buttonType: 'edit'},
                     updated_at: {title: 'Última Atualização', hidden: 'true', type: 'datetime'},
@@ -109,8 +109,9 @@
                             <div class="form-floating">
                                 <select class="form-control" id="profile" name="profile" placeholder="Perfil*" v-model="profile" style="background-color: white;">
                                     <option value="">Selecione...</option>
-                                    <option value="admin">Administrador</option>
-                                    <option value="user">Usuário</option>
+                                    <option v-for="profile in profiles" :key="profile.id" :value="profile.id">
+                                        {{ profile.description }}
+                                    </option>
                                 </select>
                                 <label class="form-label">Perfil*</label>
                                 <div id="invalidFeedbackProfile" class="invalid-feedback">
@@ -174,9 +175,10 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <select class="form-control" id="profileUpdate" name="profileUpdate" placeholder="Perfil*" style="background-color: white;" v-model="$store.state.item.profile">
-                                    <option value="admin">Administrador</option>
-                                    <option value="user">Usuário</option>
+                                <select class="form-control" id="profileUpdate" name="profileUpdate" placeholder="Perfil*" style="background-color: white;" v-model="$store.state.item.profile.id">
+                                    <option v-for="profile in profiles" :key="profile.id" :value="profile.id">
+                                        {{ profile.description }}
+                                    </option>
                                 </select>
                                 <label class="form-label">Perfil*</label>
                             </div>
@@ -252,6 +254,7 @@
             return {
                 users: {data: {}},
                 urlBase: utils.API_URL + '/api/v1/user',
+                urlBaseProfile: utils.API_URL + '/api/v1/profile',
                 urlPaginate: '',
                 urlFilter: '',
                 status: '',
@@ -265,7 +268,8 @@
                 repeatPasswordUpdate: '',
                 profile: '',
                 profileUpdate: '',
-                loaded: false
+                loaded: false,
+                profiles: {data: {}}
             }
         },
         methods: {
@@ -401,6 +405,19 @@
                     })
                 this.cleanFeedbackMessage();                    
             },
+            loadProfiles() {
+                let url = this.urlBaseProfile;
+                axios.get(url)
+                    .then(response => {
+                        this.profiles = response.data;
+                    })
+                    .catch(errors => {
+                        this.feedbackTitle = "Erro ao carregar perfils";
+                        this.status = 'error';
+                        this.feedbackMessage = errors;
+                        this.cleanFeedbackMessage(); 
+                    })
+            },
             paginate(l) {
                 if (l.url){
                     this.urlPaginate = l.url.split('?')[1];
@@ -415,6 +432,7 @@
             EventBus.$on("loadUserList", this.loadUserList)
             EventBus.$on("setUrlFilter", this.setUrlFilter);
             this.loadUserList();
+            this.loadProfiles();
         }
     }
 </script>

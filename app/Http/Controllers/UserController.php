@@ -37,7 +37,20 @@ class UserController extends AbstractController
 
     public function index(Request $request): JsonResponse
     {
-        return parent::paginate($request, null, ['name', 'asc']);
+        return $this->paginate($request, null, ['name', 'asc']);
+    }
+
+    public function paginate(Request $request, int $qtd = null, array $order): JsonResponse
+    {
+        $by = $order[0];
+        $direction = $order[1];
+        $qtd = $qtd ?? 20;
+        $data = [];
+        if($request->has('filter')) {
+            $this->filter($request->filter);
+        }
+        $data = $this->model->with('profile')->orderby($by, $direction)->paginate($qtd);
+        return parent::responseGeneric($data);
     }
 
     public function show(int $id = null)

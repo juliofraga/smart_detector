@@ -23,7 +23,7 @@
                                 </span>
 
                                 <span v-if="keyValue == 'profile' && title[keyValue].hidden == 'false'" class="text-white">
-                                    {{ value | formatProfile }}
+                                    {{ value.description }}
                                 </span>
 
                                 <span v-if="title[keyValue].type == 'datetime' && title[keyValue].hidden == 'false'" class="text-white">
