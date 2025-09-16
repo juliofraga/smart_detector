@@ -56,7 +56,7 @@
                                         Home
                                     </a>
                                 </li>
-                                @if (auth()->user()->profile === 'admin')
+                                @if (auth()->user()->profile->description === 'Administrador')
                                     <li class="nav-item">
                                         <a class="nav-link {{ returnActive('Usuários', Route::currentRouteName()) }}" href="{{ route('users') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">

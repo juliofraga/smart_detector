@@ -17,7 +17,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->profile === 'admin') {
+        if (Auth::check() && Auth::user()->profile->description === 'Administrador') {
             return $next($request);
         }
         return abort(403, 'Acesso negado');
