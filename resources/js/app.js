@@ -34,6 +34,7 @@ const store = new Vuex.Store({
 
 Vue.component('account-component', require('./components/Account.vue').default);
 Vue.component('alert-component', require('./components/Alert.vue').default);
+Vue.component('classification-component', require('./components/Classification.vue').default);
 Vue.component('event-summary-component', require('./components/EventSummary.vue').default);
 Vue.component('event-table-component', require('./components/EventTable.vue').default);
 Vue.component('event-modal-component', require('./components/EventModal.vue').default);

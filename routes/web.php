@@ -26,4 +26,5 @@ Route::middleware('auth')->group(function() {
     Route::get('/minha-conta', 'UserController@showMyAccount')->name('my-account');
     Route::get('/evento/{id}', 'EventController@show');
     Route::get('/eventos', 'EventController@display')->name('events');
+    Route::get('/classificacoes-de-risco', 'ClassificationController@show')->middleware('admin')->name('classifications');
 });
