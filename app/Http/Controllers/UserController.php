@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\AbstractController;
+use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
-class UserController extends AbstractController
+class UserController extends BaseController
 {
 
     public function __construct(User $user)

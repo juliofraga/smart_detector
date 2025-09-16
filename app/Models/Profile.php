@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Profile extends AbstractModel
+class Profile extends BaseModel
 {
     use HasFactory;
 

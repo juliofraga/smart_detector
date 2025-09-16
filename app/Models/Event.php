@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Event extends AbstractModel
+class Event extends BaseModel
 {
     use HasFactory;
 

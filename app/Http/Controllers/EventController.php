@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class EventController extends AbstractController
+class EventController extends BaseController
 {
     private $qtdEvent = 100;
 
@@ -16,7 +16,7 @@ class EventController extends AbstractController
         parent::__construct($event);
     }
 
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, array $attributes = null): JsonResponse
     {
         $data = $this->model
                     ->whereDate('event_date_time', Carbon::today())
@@ -57,7 +57,7 @@ class EventController extends AbstractController
         return parent::response($event);
     }
 
-    public function getAll(Request $request)
+    public function getAll(Request $request, array $attributes = null): JsonResponse
     {
         return $this->index($request);
     }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
-abstract class AbstractController extends Controller
+Class BaseController extends Controller
 {
     
     protected $model;
@@ -89,7 +89,5 @@ abstract class AbstractController extends Controller
         }
         return parent::responseGeneric($data);
     }
-
-    abstract public function show(int $id = null);
 
 }
