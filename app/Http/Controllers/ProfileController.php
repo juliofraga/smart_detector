@@ -29,18 +29,13 @@ class ProfileController extends AbstractController
         return parent::destroy($id);
     }
 
-    public function index(Request $request): JsonResponse
+    public function getAll(Request $request, array $attributes = null): JsonResponse
     {
-        return parent::paginate($request, null, ['name', 'asc']);
+        return parent::getAll($request, ['id', 'description']);
     }
 
     public function show(int $id = null)
     {
-        return view('/profiles');
-    }
-
-    public function getAll(Request $request)
-    {
-        return $this->model->select('id', 'description')->get();
+        return null;
     }
 }

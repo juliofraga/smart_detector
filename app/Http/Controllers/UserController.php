@@ -35,9 +35,9 @@ class UserController extends AbstractController
         return parent::destroy($id);
     }
 
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, array $attributes = null): JsonResponse
     {
-        return $this->paginate($request, null, ['name', 'asc']);
+        return parent::index($request, ['name', 'asc']);
     }
 
     public function paginate(Request $request, int $qtd = null, array $order): JsonResponse

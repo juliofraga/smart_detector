@@ -16,6 +16,11 @@ abstract class AbstractController extends Controller
         $this->model = $model;
     }
     
+    public function index(Request $request, array $attributes = null): JsonResponse
+    {
+        return $this->paginate($request, null, $attributes);
+    }
+
     public function store(Request $request): JsonResponse
     {
         $request->validate($this->model->rules(), $this->model->feedback());
@@ -75,7 +80,15 @@ abstract class AbstractController extends Controller
         });
     }
 
-    abstract public function index(Request $request): JsonResponse;
+    public function getAll(Request $request, array $attributes = null): JsonResponse
+    {
+        if ($attributes) {
+            $data = $this->model->select($attributes)->get();
+        } else {
+            $data = $this->model->get();
+        }
+        return parent::responseGeneric($data);
+    }
 
     abstract public function show(int $id = null);
 
