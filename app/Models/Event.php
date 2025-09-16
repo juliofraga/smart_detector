@@ -16,7 +16,7 @@ class Event extends BaseModel
         'ip_address',
         'type',
         'classifications_id',
-        'ai_analysys',
+        'analysys_id',
         'geographical_origin',
         'request',
         'event_date_time'
@@ -32,7 +32,7 @@ class Event extends BaseModel
             'description' => 'required',
             'type' => 'required',
             'classifications_id' => 'required',
-            'ai_analysys' => 'required',
+            'analysys_id' => 'required',
             'event_date_time' => 'required'
         ];
     }
@@ -47,5 +47,10 @@ class Event extends BaseModel
     public function classification()
     {
         return $this->belongsTo(Classification::class, 'classifications_id');
+    }
+
+    public function analysys()
+    {
+        return $this->belongsTo(Analysys::class, 'analysys_id');
     }
 }

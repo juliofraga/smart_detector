@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Analysys;
 use App\Models\Event;
 use App\Models\Classification;
 use Illuminate\Http\JsonResponse;
@@ -28,6 +29,12 @@ class EventController extends BaseController
             } else {
                 return parent::responseGeneric('Classificação informada não foi encontrada no sistema, tente novamente.', 401, 'error');
             }
+        }
+        if ($request->analysys) {
+            $analysys_id = Analysys::create(['description' => $request->analysys])->id;
+            $request->merge([
+                'analysys_id' => $analysys_id,
+            ]);
         }
         return parent::store($request);
     }
