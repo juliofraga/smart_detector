@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class LoginError extends Model
+class LoginError extends AbstractModel
 {
     use HasFactory;
 
@@ -21,6 +20,16 @@ class LoginError extends Model
         'blocked' => 'boolean',
         'blocked_at' => 'datetime',
     ];
+
+    public function rules(): array 
+    {
+        return [];
+    }
+
+    public function feedback(): array 
+    {
+        return [];
+    }
 
     public function user(): BelongsTo
     {
