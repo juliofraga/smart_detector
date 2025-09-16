@@ -87,7 +87,7 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="{{ route('classifications') }}">Classificações de Risco</a></li>
-                                            <li><a class="dropdown-item" href="#">Tipos de Ameaças</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('types') }}">Tipos de Ameaças</a></li>
                                         </ul>
                                     </li>
                                 @endif
@@ -140,7 +140,8 @@ function returnActive($menu, $currentPage)
         (in_array($currentPage, ['users']) && $menu == 'Usuários') ||
         (in_array($currentPage, ['my-account']) && $menu == 'Minha Conta') ||
         (in_array($currentPage, ['events']) && $menu == 'Eventos') ||
-        (in_array($currentPage, ['classifications']) && $menu == 'Cadastros')
+        (in_array($currentPage, ['classifications']) && $menu == 'Cadastros') ||
+        (in_array($currentPage, ['types']) && $menu == 'Cadastros')
         ) {
         return 'active';
     }

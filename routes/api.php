@@ -44,6 +44,12 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
         Route::patch('/{id}', 'ClassificationController@update');
         Route::delete('/{id}', 'ClassificationController@destroy');
     });
+    Route::prefix('type')->middleware('admin')->group(function () {
+        Route::post('/', 'TypeController@store');
+        Route::get('/', 'TypeController@index');
+        Route::patch('/{id}', 'TypeController@update');
+        Route::delete('/{id}', 'TypeController@destroy');
+    });
     Route::post('logout', 'AuthController@logout');
     Route::get('me', 'AuthController@me');
 });

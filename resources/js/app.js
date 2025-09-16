@@ -49,6 +49,7 @@ Vue.component('search-component', require('./components/Search.vue').default);
 Vue.component('users-component', require('./components/Users.vue').default);
 Vue.component('paginate-component', require('./components/Paginate.vue').default);
 Vue.component('spinner-component', require('./components/Spinner.vue').default);
+Vue.component('type-component', require('./components/Type.vue').default);
 
 Vue.filter('formatDateTime', function(valor){
     if (!valor) {

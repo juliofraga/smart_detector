@@ -82,6 +82,8 @@
                     EventBus.$emit("loadUserList");
                 } else if (this.classSearch === 'classification') {
                     EventBus.$emit("loadClassificationList");
+                } else if (this.classSearch === 'type') {
+                    EventBus.$emit("loadTipoAmeacaList");
                 }
             },
             clear() {
@@ -90,6 +92,8 @@
                     EventBus.$emit("loadUserList");
                 } else if (this.classSearch === 'classification') {
                     EventBus.$emit("loadClassificationList");
+                } else if (this.classSearch === 'type') {
+                    EventBus.$emit("loadTipoAmeacaList");
                 }
                 this.searchFilter = '';
             },
