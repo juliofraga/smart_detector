@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Analysys;
 use App\Models\Event;
+use App\Models\Type;
 use App\Models\Classification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -34,6 +35,15 @@ class EventController extends BaseController
             $analysys_id = Analysys::create(['description' => $request->analysys])->id;
             $request->merge([
                 'analysys_id' => $analysys_id,
+            ]);
+        }
+        if ($request->type) {
+            $type_id = Type::where('description', $request->type)->value('id');
+            if (!$type_id) {
+                $type_id = Type::create(['description' => $request->type])->id;
+            }
+            $request->merge([
+                'types_id' => $type_id,
             ]);
         }
         return parent::store($request);

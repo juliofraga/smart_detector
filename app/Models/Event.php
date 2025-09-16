@@ -14,7 +14,7 @@ class Event extends BaseModel
     protected $fillable = [
         'description',
         'ip_address',
-        'type',
+        'types_id',
         'classifications_id',
         'analysys_id',
         'geographical_origin',
@@ -30,7 +30,7 @@ class Event extends BaseModel
     {
         return [
             'description' => 'required',
-            'type' => 'required',
+            'types_id' => 'required',
             'classifications_id' => 'required',
             'analysys_id' => 'required',
             'event_date_time' => 'required'
@@ -52,5 +52,10 @@ class Event extends BaseModel
     public function analysys()
     {
         return $this->belongsTo(Analysys::class, 'analysys_id');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class, 'types_id');
     }
 }
