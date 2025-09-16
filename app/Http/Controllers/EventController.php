@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Classification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -14,6 +15,21 @@ class EventController extends BaseController
     public function __construct(Event $event)
     {
         parent::__construct($event);
+    }
+
+    public function store(Request $request): JsonResponse
+    {
+        if ($request->classification) {
+            $classification_id = Classification::where('description', $request->classification)->value('id');
+            if ($classification_id) {
+                $request->merge([
+                    'classifications_id' => $classification_id,
+                ]);
+            } else {
+                return parent::responseGeneric('Classificação informada não foi encontrada no sistema, tente novamente.', 401, 'error');
+            }
+        }
+        return parent::store($request);
     }
 
     public function index(Request $request, array $attributes = null): JsonResponse

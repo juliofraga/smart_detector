@@ -15,7 +15,7 @@ class Event extends BaseModel
         'description',
         'ip_address',
         'type',
-        'threat_classification',
+        'classifications_id',
         'ai_analysys',
         'geographical_origin',
         'request',
@@ -31,7 +31,7 @@ class Event extends BaseModel
         return [
             'description' => 'required',
             'type' => 'required',
-            'threat_classification' => 'required',
+            'classifications_id' => 'required',
             'ai_analysys' => 'required',
             'event_date_time' => 'required'
         ];
