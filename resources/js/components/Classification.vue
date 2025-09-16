@@ -171,6 +171,20 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button> 
             </template>
         </modal-component>
+        <!-- Modal para confirmar remoção de classificação de risco -->
+        <modal-component id="modalConfirmarDeletar" options="modal-dialog-centered modal-sm" title="Você tem certeza?">
+            <template v-slot:conteudo>
+                <div class="row">
+                    <div class="col col-6">
+                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal" @click="showModal('modalAtualizarClassificacao')">Não</button>
+                    </div>
+                    <div class="col col-6">
+                        <button type="button" class="btn btn-danger text-white w-100" @click="deleteClassification()">Sim</button>
+                    </div>
+                </div>
+            </template>
+            <template v-slot:rodape></template>
+        </modal-component>
     </div>
 </template>
 
@@ -258,6 +272,25 @@
                         })
                 }
             },
+            deleteClassification() {
+                let url = this.urlBase + '/' + this.$store.state.item.id;
+                axios.delete(url)
+                    .then(response => {
+                        this.status = 'success';
+                        this.feedbackTitle = "Classificação de risco deletada com sucesso";
+                        utils.closeModal('modalConfirmarDeletar');
+                        this.loadClassificationList();
+                    })
+                    .catch(errors => {
+                        this.status = 'error';
+                        this.feedbackTitle = "Erro ao deletar classificação de risco";
+                        utils.closeModal('modalConfirmarDeletar');
+                        this.feedbackMessage = {
+                            message: errors.response.data.message,
+                            data: errors.response.data.errors
+                        };
+                    })
+            },
             loadClassificationList() {
                 let url = this.urlBase + '?' + this.urlPaginate + this.urlFilter;
                 axios.get(url)
@@ -291,6 +324,9 @@
             cleanAddClassificationFormData() {
                 this.description = '';
                 this.visualStyle = '';
+            },
+            showModal(modal) {
+                utils.showModal(modal);
             },
         },
         mounted() {
