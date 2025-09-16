@@ -45,7 +45,7 @@ class EventController extends BaseController
 
     public function getNewEvents(int $id): JsonResponse
     {
-        $data = $this->model->where('id', '>', $id)->get();
+        $data = $this->model->with('classification')->where('id', '>', $id)->get();
         if ($data) {
             return parent::responseGeneric($data);
         } else {
