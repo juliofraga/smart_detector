@@ -99,6 +99,24 @@ class EventController extends BaseController
 
     public function getAll(Request $request, array $attributes = null): JsonResponse
     {
-        return $this->index($request);
+        return parent::index($request, ['event_date_time', 'desc']);
+    }
+
+    public function paginate(Request $request, int $qtd = null, array $order): JsonResponse
+    {
+        $by = $order[0];
+        $direction = $order[1];
+        $qtd = $qtd ?? 20;
+        $data = [];
+        if($request->has('filter')) {
+            $this->filter($request->filter);
+        }
+        $data = $this->model
+                    ->with('classification')
+                    ->with('analysys')
+                    ->with('type')
+                    ->orderby($by, $direction)
+                    ->paginate($qtd);
+        return parent::responseGeneric($data);
     }
 }
