@@ -19,6 +19,7 @@ class EventController extends BaseController
     public function index(Request $request, array $attributes = null): JsonResponse
     {
         $data = $this->model
+                    ->with('classification')
                     ->whereDate('event_date_time', Carbon::today())
                     ->orderBy('event_date_time', 'desc')
                     ->take($this->qtdEvent)

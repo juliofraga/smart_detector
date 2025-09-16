@@ -5,7 +5,7 @@
                 description: {title: 'Descrição', hidden: 'false', type:'text'},
                 ip_address: {title: 'IP Origem', hidden: 'false', type:'text'},
                 type: {title: 'Tipo', hidden: 'false', type:'text'},               
-                threat_classification: {title: 'Classificação', hidden: 'false', type:'text-badge-classification'},
+                classification: {title: 'Classificação', hidden: 'false', type:'badge'},
                 event_date_time: {title: 'Data/Hora', hidden: 'false', type:'timestamp'},
                 id: {hidden: 'true'},
                 ai_analysys: {hidden: 'true'},
@@ -15,6 +15,7 @@
             }" 
             :data="data"
             :sectionTitle="title"
+            classList="event"
         ></table-component>
     </div>
 </template>

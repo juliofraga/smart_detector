@@ -32,6 +32,7 @@
                 :feedbackMessage="feedbackMessage"
                 :feedbackTitle="feedbackTitle"
                 sectionTitle="Classificações de Risco Cadastradas"
+                classList="classification"
             ></table-component>
         </div>
         <div v-else-if="loaded === true">

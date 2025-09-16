@@ -34,13 +34,24 @@
                                     {{ value | formatDateTimeStamp }}
                                 </span>
 
-                                <span v-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false' && (value == 'warning')" :class="`badge badge-${value} w-100`">
-                                    {{ value }}
-                                </span>
+                                <div v-if="classList == 'classification'">
+                                    <span v-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false' && (value == 'warning')" :class="`badge badge-${value} w-100`">
+                                        {{ value }}
+                                    </span>
 
-                                <span v-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false' && (value != 'warning')" :class="`badge bg-${value} w-100`">
-                                    {{ value }}
-                                </span>
+                                    <span v-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false' && (value != 'warning')" :class="`badge bg-${value} w-100`">
+                                        {{ value }}
+                                    </span>
+                                </div>
+                                <div v-elseif="classList == 'event'">
+                                    <span v-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false' && (value == 'warning')" :class="`badge badge-${value.visual_style} w-100`">
+                                        {{ value.description }}
+                                    </span>
+
+                                    <span v-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false' && (value != 'warning')" :class="`badge bg-${value.visual_style} w-100`">
+                                        {{ value.description }}
+                                    </span>
+                                </div>
 
                                 <button 
                                     v-if="title[keyValue].type == 'buttonModal' && title[keyValue].hidden == 'false'" 

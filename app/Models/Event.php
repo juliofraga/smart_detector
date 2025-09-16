@@ -43,4 +43,9 @@ class Event extends BaseModel
             'required' => 'O campo :attribute é obrigatório'
         ];
     }
+
+    public function classification()
+    {
+        return $this->belongsTo(Classification::class, 'classifications_id');
+    }
 }
