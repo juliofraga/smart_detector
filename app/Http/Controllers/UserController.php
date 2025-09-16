@@ -15,16 +15,6 @@ class UserController extends BaseController
         parent::__construct($user);
     }
 
-    public function store(Request $request): JsonResponse
-    {
-        if ($request->password) {
-            $request->merge([
-                'password' => bcrypt($request->password)
-            ]);
-        }
-        return parent::store($request);
-    }
-
     public function index(Request $request, array $attributes = null): JsonResponse
     {
         return parent::index($request, ['name', 'asc']);

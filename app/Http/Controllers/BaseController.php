@@ -24,6 +24,11 @@ Class BaseController extends Controller
     public function store(Request $request): JsonResponse
     {
         $request->validate($this->model->rules(), $this->model->feedback());
+        if ($request->password) {
+            $request->merge([
+                'password' => bcrypt($request->password)
+            ]);
+        }
         $data = $this->model->create($request->all());
         return parent::response($data);
     }
