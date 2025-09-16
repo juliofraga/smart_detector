@@ -8,7 +8,7 @@
                 classification: {title: 'Classificação', hidden: 'false', type:'badge'},
                 event_date_time: {title: 'Data/Hora', hidden: 'false', type:'timestamp'},
                 id: {hidden: 'true'},
-                ai_analysys: {hidden: 'true'},
+                analysys: {hidden: 'true'},
                 geographical_origin: {hidden: 'true'},
                 request: {hidden: 'true'},
                 detalhes: {title: 'Detalhes', hidden: 'false', type: 'buttonModal', modalId: '#modalEventDetail', buttonType: 'view'}

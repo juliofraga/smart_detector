@@ -7,6 +7,7 @@
             <div class="mb-3">
                 <alert-component type="danger" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'error'"></alert-component>
             </div>
+            {{ $store.state.item.classification }}
             <!-- Descrição -->
             <div class="mb-3">
                 <label class="form-label fw-bold text-secondary">Descrição</label>
@@ -22,10 +23,12 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-bold text-secondary">Classificação de Risco</label>
-                    <input type="text" class="form-control bg-success text-light border-0" :value="$store.state.item.threat_classification || event.threat_classification" readonly v-if="$store.state.item.threat_classification == 'Baixa' || event.threat_classification == 'Baixa'">
-                    <input type="text" class="form-control bg-danger text-light border-0" :value="$store.state.item.threat_classification || event.threat_classification" readonly v-else-if="$store.state.item.threat_classification == 'Alta' || event.threat_classification == 'Alta'">
-                    <input type="text" class="form-control bg-warning border-0" :value="$store.state.item.threat_classification || event.threat_classification" readonly v-else-if="$store.state.item.threat_classification == 'Média' || event.threat_classification == 'Média'">
-                    <input type="text" class="form-control bg-secondary text-light border-0" v-model="$store.state.item.threat_classification" readonly v-else>
+                    <input type="text" :class="`form-control bg-${event.classification.visual_style} text-light border-0`" :value="$store.state.item.classification || event.classification.description" readonly v-if="event.classification && event.classification.visual_style != 'warning'">
+                    <input type="text" :class="`form-control bg-${$store.state.item.classification.visual_style} text-light border-0`" :value="$store.state.item.classification.description || event.classification.description" readonly v-if="$store.state.item.classification  && $store.state.item.classification.visual_style != 'warning'">
+                    <div v-if="($store.state.item.classification && $store.state.item.classification.visual_style == 'warning') || (event.classification && event.classification.visual_style == 'warning')">
+                        <input type="text" class="form-control bg-warning border-0" :value="$store.state.item.classification || event.classification.description" readonly v-if="event.classification">
+                        <input type="text" class="form-control bg-warning border-0`" :value="$store.state.item.classification.description || event.classification.description" readonly v-if="$store.state.item.classification">
+                    </div>
                 </div>
             </div>
             <!-- IP e Origem -->
@@ -53,7 +56,7 @@
             <!-- Análise IA -->
             <div class="mb-3">
                 <label class="form-label fw-bold text-secondary">Análise da IA</label>
-                <textarea class="form-control bg-secondary rounded text-light border-0" rows="10" :value="$store.state.item.ai_analysys || event.ai_analysys" style="height: auto;" readonly></textarea>
+                <textarea class="form-control bg-secondary rounded text-light border-0" rows="10" :value="($store.state.item.analysys && $store.state.item.analysys.description) || (event.analysys && event.analysys.description) || ''" style="height: auto;" readonly></textarea>
             </div>
         </div>
     </div>

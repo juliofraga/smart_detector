@@ -43,6 +43,7 @@ class EventController extends BaseController
     {
         $data = $this->model
                     ->with('classification')
+                    ->with('analysys')
                     ->whereDate('event_date_time', Carbon::today())
                     ->orderBy('event_date_time', 'desc')
                     ->take($this->qtdEvent)
@@ -52,7 +53,11 @@ class EventController extends BaseController
 
     public function getNewEvents(int $id): JsonResponse
     {
-        $data = $this->model->with('classification')->where('id', '>', $id)->get();
+        $data = $this->model
+                    ->with('classification')
+                    ->with('analysys')
+                    ->where('id', '>', $id)
+                    ->get();
         if ($data) {
             return parent::responseGeneric($data);
         } else {
@@ -72,7 +77,10 @@ class EventController extends BaseController
 
     public function get(int $id)
     {
-        $event = $this->model->find($id);
+        $event = $this->model
+                    ->with('classification')
+                    ->with('analysys')
+                    ->find($id);
         return parent::response($event);
     }
 
