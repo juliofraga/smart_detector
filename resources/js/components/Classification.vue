@@ -25,6 +25,7 @@
                     description: {title: 'Descrição', hidden: 'false', type:'text'},
                     visual_style: {title: 'Estilo', hidden: 'false', type:'badge'},               
                     created_at: {title: 'Data de Criação', hidden: 'false', type: 'timestamp'},
+                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalAtualizarClassificacao', buttonType: 'edit'},
                 }" 
                 :data="classifications.data"
                 :status="status"
@@ -116,6 +117,60 @@
                 <button type="button" class="btn btn-success text-white" @click="save()">Salvar</button>
             </template>
         </modal-component>
+        <!-- Modal para atualizar classificações de risco -->
+        <modal-component id="modalAtualizarClassificacao" title="Atualizar Classificação de Risco">
+            <template v-slot:conteudo>
+                <div class="form-group">
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="descriptionUpdate" name="descriptionUpdate" placeholder="Descrição*" v-model="$store.state.item.description">
+                                <label class="form-label">Descrição*</label>
+                                <div id="invalidFeedbackDescricaoUpdate" class="invalid-feedback">
+                                    Informe a descrição.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <select class="form-control" id="visualStyleUpdate" name="visualStyleUpdate" placeholder="Estilo*" v-model="$store.state.item.visual_style" style="background-color: white;">
+                                    <option value="">Selecione...</option>
+                                    <option value="primary" class="bg-primary text-white">Primary</option>
+                                    <option value="secondary" class="bg-secondary text-white">Secondary</option>
+                                    <option value="success" class="bg-success text-white">Success</option>
+                                    <option value="danger" class="bg-danger text-white">Danger</option>
+                                    <option value="warning" class="bg-warning">Warning</option>
+                                    <option value="info" class="bg-info">Info</option>
+                                    <option value="light" class="bg-light">Light</option>
+                                    <option value="dark" class="bg-dark text-white" style="color:">Dark</option>
+                                </select>
+                                <label class="form-label">Estilo*</label>
+                                <div id="invalidFeedbackEstiloUpdate" class="invalid-feedback">
+                                    Informe o estilo do alerta
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12">
+                            <label class="form-label text-light"><i>Data de criação: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="form-label text-light"><i>Última atualização: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template v-slot:rodape>
+                <button type="button" class="btn btn-success text-white" @click="update()">Atualizar</button>
+                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalConfirmarDeletar">Deletar</button> 
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button> 
+            </template>
+        </modal-component>
     </div>
 </template>
 
@@ -166,6 +221,41 @@
                             this.cleanFeedbackMessage();
                         })
                         
+                }
+            },
+            update() {
+                if (this.$store.state.item.description == ''){
+                    document.getElementById('descriptionUpdate').classList.add('is-invalid');
+                } else if (this.$store.state.item.visual_style == '') {
+                    document.getElementById('visualStyleUpdate').classList.add('is-invalid');
+                } else {
+                    if (document.getElementById('descriptionUpdate').classList.contains('is-invalid')) {
+                        document.getElementById('descriptionUpdate').classList.remove('is-invalid');
+                    }
+                    if (document.getElementById('visualStyleUpdate').classList.contains('is-invalid')) {
+                        document.getElementById('visualStyleUpdate').classList.remove('is-invalid');
+                    }
+                    let data = {
+                        description: this.$store.state.item.description,
+                        visual_style: this.$store.state.item.visual_style
+                    };
+                    let url = this.urlBase + '/' + this.$store.state.item.id;
+                    axios.patch(url, data)
+                        .then(response => {
+                            this.status = 'success';
+                            this.feedbackTitle = "Classificação de risco atualizada com sucesso";
+                            utils.closeModal('modalAtualizarClassificacao');
+                            this.loadClassificationList();
+                        })
+                        .catch(errors => {
+                            this.status = 'error';
+                            this.feedbackTitle = "Erro ao atualizar classificação de risco";
+                            utils.closeModal('modalAtualizarClassificacao');
+                            this.feedbackMessage = {
+                                message: errors.response.data.message,
+                                data: errors.response.data.errors
+                            };
+                        })
                 }
             },
             loadClassificationList() {
