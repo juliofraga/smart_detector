@@ -90,4 +90,9 @@ Class BaseController extends Controller
         return parent::responseGeneric($data);
     }
 
+    public function show(int $id = null)
+    {
+        return null;
+    }
+
 }
