@@ -14,21 +14,6 @@ class ProfileController extends BaseController
         parent::__construct($profile);
     }
 
-    public function store(Request $request): JsonResponse
-    {
-        return parent::store($request);
-    }
-
-    public function update(Request $request, int $id): JsonResponse
-    {
-        return parent::update($request, $id);
-    }
-
-    public function destroy(int $id): JsonResponse
-    {
-        return parent::destroy($id);
-    }
-
     public function getAll(Request $request, array $attributes = null): JsonResponse
     {
         return parent::getAll($request, ['id', 'description']);

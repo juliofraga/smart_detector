@@ -25,16 +25,6 @@ class UserController extends BaseController
         return parent::store($request);
     }
 
-    public function update(Request $request, int $id): JsonResponse
-    {
-        return parent::update($request, $id);
-    }
-
-    public function destroy(int $id): JsonResponse
-    {
-        return parent::destroy($id);
-    }
-
     public function index(Request $request, array $attributes = null): JsonResponse
     {
         return parent::index($request, ['name', 'asc']);

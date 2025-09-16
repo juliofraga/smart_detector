@@ -26,11 +26,6 @@ class EventController extends BaseController
         return parent::responseGeneric($data);
     }
 
-    public function store(Request $request): JsonResponse
-    {
-        return parent::store($request);
-    }
-
     public function getNewEvents(int $id): JsonResponse
     {
         $data = $this->model->where('id', '>', $id)->get();
