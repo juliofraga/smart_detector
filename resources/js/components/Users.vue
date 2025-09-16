@@ -284,7 +284,7 @@
                         let data = {
                             name: this.name,
                             email: this.email,
-                            profile: this.profile,
+                            profiles_id: this.profile,
                             password: this.password
                         };
                         let url = this.urlBase;
@@ -327,7 +327,7 @@
                     let data = {
                         name: this.$store.state.item.name,
                         email: this.$store.state.item.email,
-                        profile: this.$store.state.item.profile,
+                        profiles_id: this.$store.state.item.profile.id,
                         password: this.passwordUpdate
                     };
                     let url = this.urlBase + '/' + this.$store.state.item.id;

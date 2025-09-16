@@ -16,7 +16,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'profile'
+        'profiles_id'
     ];
 
     protected $hidden = [
@@ -30,6 +30,7 @@ class User extends Authenticatable implements JWTSubject
             'name' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required',
+            'profiles_id' => 'required'
         ];
     }
 
