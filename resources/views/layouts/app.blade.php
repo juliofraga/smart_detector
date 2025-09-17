@@ -11,6 +11,7 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -121,13 +122,9 @@
                     @yield('content')
                 </div>
             </div>
-            <div class="text-secondary px-4 py-5 text-center background-color-smart-detector rodape">
-                <div class="py-5">
-                    <div class="col-lg-6 mx-auto mt-2">
-                        <p class="fs-5 mb-4">2025 - 2025</p>
-                    </div>
-                </div>
-            </div>
+            <footer>
+                <p>&copy; 2025 SmartDetector. Todos os direitos reservados.</p>
+            </footer>
         </div>
     </body>
 </html>

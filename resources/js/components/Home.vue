@@ -2,7 +2,7 @@
     <div class="container">
         <div class="container-fluid p-4">
             <div class="mb-4">
-                <h2 class="fw-bold">Painel de Monitoramento <span class="highlight">Smart Detector</span></h2>
+                <h2 class="fw-bold">Painel de Monitoramento <span class="highlight">SmartDetector</span></h2>
                 <p class="text-secondary">Visualize eventos em tempo real.</p>
             </div>
             <div v-if="Object.keys(events.data).length > 0">
