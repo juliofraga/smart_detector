@@ -80,22 +80,7 @@
             getEvent() {
                 if (this.event_id) {
                     let url = this.urlBase + '/' + this.event_id;
-                    axios.get(url)
-                        .then(response => {
-                            this.event = response.data;
-                            this.loaded = true;
-                        })
-                        .catch(errors => {
-                            if (errors.response.status == 500) {
-                                this.feedbackTitle = "Erro no servidor";
-                                this.status = 'error';
-                                this.feedbackMessage = {message: "Desculpe, não conseguimos processar a sua requisição, tente novamente ou entre em contato com a equipe de suporte"}
-                            } else {
-                                this.feedbackTitle = "Houve um erro";
-                                this.status = 'error';
-                                this.feedbackMessage = errors;
-                            }
-                    })
+                    utils.axiosGet(url, this, 'event');
                 }
             }
         },
