@@ -5,7 +5,7 @@
             :buttons=" {
                 add: {
                     show: true,
-                    modalId: '#modalAdicionarTipo'
+                    modalId: '#modalAdd'
                 },
                 search: {
                     show: true,
@@ -24,7 +24,7 @@
                     id: {title: 'ID', hidden: 'true', type:'text'},
                     description: {title: 'Descrição', hidden: 'false', type:'text'},           
                     created_at: {title: 'Data de Criação', hidden: 'false', type: 'timestamp'},
-                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalAtualizarTipo', buttonType: 'edit'},
+                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
                 }" 
                 :data="types.data"
                 :status="status"
@@ -75,7 +75,7 @@
             </div>
         </div>
         <!-- Modal para adicionar tipo de ameaça -->
-        <modal-component id="modalAdicionarTipo" title="Adicionar Tipo de Ameaça">
+        <modal-component id="modalAdd" title="Adicionar Tipo de Ameaça">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
@@ -97,7 +97,7 @@
             </template>
         </modal-component>
         <!-- Modal para atualizar tipo de ameaça -->
-        <modal-component id="modalAtualizarTipo" title="Atualizar Tipo de Ameaça">
+        <modal-component id="modalUpdate" title="Atualizar Tipo de Ameaça">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
@@ -125,16 +125,16 @@
             </template>
             <template v-slot:rodape>
                 <button type="button" class="btn btn-success text-white" @click="update()">Atualizar</button>
-                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalConfirmarDeletar">Deletar</button> 
+                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalConfirmDelete">Deletar</button> 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button> 
             </template>
         </modal-component>
         <!-- Modal para confirmar remoção de tipo de ameaça -->
-        <modal-component id="modalConfirmarDeletar" options="modal-dialog-centered modal-sm" title="Você tem certeza?">
+        <modal-component id="modalConfirmDelete" options="modal-dialog-centered modal-sm" title="Você tem certeza?">
             <template v-slot:conteudo>
                 <div class="row">
                     <div class="col col-6">
-                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal" @click="showModal('modalAtualizarTipo')">Não</button>
+                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal" @click="showModal('modalUpdate')">Não</button>
                     </div>
                     <div class="col col-6">
                         <button type="button" class="btn btn-danger text-white w-100" @click="deleteTipoAmeaca()">Sim</button>
@@ -171,25 +171,7 @@
                         description: this.description,
                     };
                     let url = this.urlBase;
-                    axios.post(url, data)
-                        .then(response => {
-                            this.status = 'success';
-                            this.feedbackTitle = "Tipo de ameaça adicionada com sucesso";
-                            utils.closeModal('modalAdicionarTipo');
-                            this.loadTipoAmeacaList();
-                            this.cleanAddTipoFormData();
-                        })
-                        .catch(errors => {
-                            this.status = 'error';
-                            this.feedbackTitle = "Erro ao adicionar tipo de ameaça";
-                            utils.closeModal('modalAdicionarTipo');
-                            this.feedbackMessage = {
-                                mensagem: errors.response.data.message,
-                                data: errors.response.data.errors
-                            };
-                            this.cleanFeedbackMessage();
-                        })
-                        
+                    utils.axiosPost(url, data, this);                        
                 }
             },
             update() {
@@ -203,44 +185,14 @@
                         description: this.$store.state.item.description
                     };
                     let url = this.urlBase + '/' + this.$store.state.item.id;
-                    axios.patch(url, data)
-                        .then(response => {
-                            this.status = 'success';
-                            this.feedbackTitle = "Tipo de ameaça atualizada com sucesso";
-                            utils.closeModal('modalAtualizarTipo');
-                            this.loadTipoAmeacaList();
-                        })
-                        .catch(errors => {
-                            this.status = 'error';
-                            this.feedbackTitle = "Erro ao atualizar tipo de ameaça";
-                            utils.closeModal('modalAtualizarTipo');
-                            this.feedbackMessage = {
-                                message: errors.response.data.message,
-                                data: errors.response.data.errors
-                            };
-                        })
+                    utils.axiosPatch(url, data, this);
                 }
             },
             deleteTipoAmeaca() {
                 let url = this.urlBase + '/' + this.$store.state.item.id;
-                axios.delete(url)
-                    .then(response => {
-                        this.status = 'success';
-                        this.feedbackTitle = "Tipo de ameaça deletada com sucesso";
-                        utils.closeModal('modalConfirmarDeletar');
-                        this.loadTipoAmeacaList();
-                    })
-                    .catch(errors => {
-                        this.status = 'error';
-                        this.feedbackTitle = "Erro ao deletar tipo de ameaça";
-                        utils.closeModal('modalConfirmarDeletar');
-                        this.feedbackMessage = {
-                            message: errors.response.data.message,
-                            data: errors.response.data.errors
-                        };
-                    })
+                utils.axiosDelete(url, this);
             },
-            loadTipoAmeacaList() {
+            loadList() {
                 let url = this.urlBase + '?' + this.urlPaginate + this.urlFilter;
                 axios.get(url)
                     .then(response => {
@@ -270,7 +222,7 @@
                     this.status = '';
                 }, 10000);
             },
-            cleanAddTipoFormData() {
+            cleanAddFormData() {
                 this.description = '';
             },
             showModal(modal) {
@@ -278,9 +230,9 @@
             },
         },
         mounted() {
-            EventBus.$on("loadTipoAmeacaList", this.loadTipoAmeacaList)
+            EventBus.$on("loadList", this.loadList)
             EventBus.$on("setUrlFilter", this.setUrlFilter);
-            this.loadTipoAmeacaList();
+            this.loadList();
         }
     }
 </script>
