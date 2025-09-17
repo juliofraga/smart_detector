@@ -44,6 +44,7 @@ Vue.component('login-component', require('./components/Login.vue').default);
 Vue.component('home-component', require('./components/Home.vue').default);
 Vue.component('table-component', require('./components/Table.vue').default);
 Vue.component('modal-component', require('./components/Modal.vue').default);
+Vue.component('modal-delete-component', require('./components/ModalDelete.vue').default);
 Vue.component('no-itens-component', require('./components/NoItens.vue').default);
 Vue.component('search-component', require('./components/Search.vue').default);
 Vue.component('users-component', require('./components/Users.vue').default);

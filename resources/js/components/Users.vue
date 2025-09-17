@@ -197,19 +197,7 @@
             </template>
         </modal-component>
         <!-- Modal para confirmar remoção de usuário -->
-        <modal-component id="modalConfirmDelete" options="modal-dialog-centered modal-sm" title="Você tem certeza?">
-            <template v-slot:conteudo>
-                <div class="row">
-                    <div class="col col-6">
-                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal" @click="showModal('modalUpdate')">Não</button>
-                    </div>
-                    <div class="col col-6">
-                        <button type="button" class="btn btn-danger text-white w-100" @click="deleteUser()">Sim</button>
-                    </div>
-                </div>
-            </template>
-            <template v-slot:rodape></template>
-        </modal-component>
+        <modal-delete-component></modal-delete-component>
     </div>
 </template>
 
@@ -279,7 +267,7 @@
                     utils.axiosPatch(url, data, this);
                 }
             },
-            deleteUser() {
+            deleteRecord() {
                 let url = this.urlBase + '/' + this.$store.state.item.id;
                 utils.axiosDelete(url, this);
             },
@@ -312,6 +300,7 @@
             EventBus.$on("loadList", this.loadList)
             EventBus.$on("setUrlFilter", this.setUrlFilter);
             EventBus.$on("paginate", this.paginate);
+            EventBus.$on("deleteRecord", this.deleteRecord);
             this.loadList();
             this.loadProfiles();
         }
