@@ -7,7 +7,7 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Smart Detector') }}</title>
+        <title>{{ config('app.name', 'SmartDetector') }}</title>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
@@ -40,9 +40,6 @@
             @auth
                 <nav class="navbar navbar-expand-md navbar-dark fixed-top background-color-smart-detector">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="#">
-                            <!--<img src="/storage/logo_site.JPG" width="120px">-->
-                        </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
