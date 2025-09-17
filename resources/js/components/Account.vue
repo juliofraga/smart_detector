@@ -113,33 +113,12 @@
                             name: this.name,
                             password: this.password
                         };
-                        let url = this.urlBase + '/update/' + this.id;
-                        axios.patch(url, data)
-                            .then(response => {
-                                this.status = 'success';
-                                this.feedbackTitle = "Usuário atualizado com sucesso";
-                                this.password = '';
-                                this.repeatPassword = '';
-                            })
-                            .catch(errors => {
-                                this.status = 'error';
-                                this.feedbackTitle = "Erro ao atualizar usuário";
-                                this.feedbackMessage = {
-                                    message: errors.response.data.message,
-                                    data: errors.response.data.errors
-                                };
-                            })
-                        this.cleanFeedbackMessage(); 
+                        let url = this.urlBase + '/' + this.id;
+                        utils.axiosPatch(url, data, this);
+                        utils.cleanFeedbackMessage(this); 
                     }
                 }
-            },
-            cleanFeedbackMessage() {
-                setTimeout(() => {
-                    this.feedbackMessage =  {};
-                    this.feedbackTitle = '';
-                    this.status = '';
-                }, 10000);
-            },
+            }
         }
     }
 </script>
