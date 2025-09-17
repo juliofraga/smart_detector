@@ -86,5 +86,23 @@ export function axiosDelete(url, obj) {
                 data: errors.response.data.errors
             };
         })
+}
 
+export function axiosGet(url, obj, attr) {
+    axios.get(url)
+        .then(response => {
+            obj[attr] = response.data;
+            obj.loaded = true;
+        })
+        .catch(errors => {
+            if (errors.response.status == 500) {
+                obj.feedbackTitle = "Erro no servidor";
+                obj.status = 'error';
+                obj.feedbackMessage = {message: "Desculpe, não conseguimos processar a sua requisição, tente novamente ou entre em contato com a equipe de suporte"}
+            } else {
+                obj.feedbackTitle = "Houve um erro";
+                obj.status = 'error';
+                obj.feedbackMessage = errors;
+            }
+        })
 }

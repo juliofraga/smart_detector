@@ -83,16 +83,7 @@
         methods: {
             loadList() {
                 let url = this.urlBase + '/get/all/?' + this.urlPaginate + this.urlFilter;
-                axios.get(url)
-                    .then(response => {
-                        this.events = response.data;
-                        this.loaded = true;
-                    })
-                    .catch(errors => {
-                        this.feedbackTitle = "Houve um erro";
-                        this.status = 'error';
-                        this.feedbackMessage = errors;
-                    })
+                utils.axiosGet(url, this, 'events');
             },
             setUrlFilter(url) {
                 this.urlFilter = url;

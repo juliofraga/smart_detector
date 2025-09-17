@@ -339,22 +339,7 @@
             },
             loadList() {
                 let url = this.urlBase + '?' + this.urlPaginate + this.urlFilter;
-                axios.get(url)
-                    .then(response => {
-                        this.users = response.data;
-                        this.loaded = true;
-                    })
-                    .catch(errors => {
-                        if (errors.response.status == 500) {
-                            this.feedbackTitle = "Erro no servidor";
-                            this.status = 'error';
-                            this.feedbackMessage = {message: "Desculpe, não conseguimos processar a sua requisição, tente novamente ou entre em contato com a equipe de suporte"}
-                        } else {
-                            this.feedbackTitle = "Houve um erro";
-                            this.status = 'error';
-                            this.feedbackMessage = errors;
-                        }
-                    })
+                utils.axiosGet(url, this, 'users');
                 this.cleanFeedbackMessage();                    
             },
             loadProfiles() {
