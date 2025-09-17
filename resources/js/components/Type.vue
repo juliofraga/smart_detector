@@ -42,36 +42,7 @@
         </div>
         <div class="row mt-4" v-if="types.data.length > 0">
             <div class="col col-10">
-                <paginate-component>
-                    <li v-for="l, key in types.links" :key="key" class="page-item" @click="paginate(l)">
-                        <div v-if="l.active">
-                            <a class="page-link dark-paginantion-active" v-html="l.label" 
-                            v-if="
-                                key == types.current_page || 
-                                key == types.current_page - 1 || 
-                                key == types.current_page + 1 || 
-                                key == 0 ||
-                                (types.current_page == 1 && key == 3) ||
-                                key == types.last_page + 1 || 
-                                (types.current_page == types.last_page && key == types.last_page - 2)"
-                        ></a>
-                        </div>
-                        <div v-else>
-                            <a class="page-link dark-pagination" 
-                            v-if="
-                                l.url != null && 
-                                (key == types.current_page || 
-                                key == types.current_page - 1 || 
-                                key == types.current_page + 1 || 
-                                key == 0 ||
-                                (types.current_page == 1 && key == 3) ||
-                                key == types.last_page + 1 || 
-                                (types.current_page == types.last_page && key == types.last_page - 2))"
-                        >{{ l.label | formatNextPrevButton }}</a>
-                        </div>
-                        
-                    </li>
-                </paginate-component>
+                <paginate-component :data = "types"></paginate-component>
             </div>
         </div>
         <!-- Modal para adicionar tipo de ameaça -->
@@ -210,6 +181,7 @@
         mounted() {
             EventBus.$on("loadList", this.loadList)
             EventBus.$on("setUrlFilter", this.setUrlFilter);
+            EventBus.$on("paginate", this.paginate);
             this.loadList();
         }
     }

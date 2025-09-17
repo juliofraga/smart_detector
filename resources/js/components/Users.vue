@@ -46,36 +46,7 @@
         </div>
         <div class="row mt-4"  v-if="users.data.length > 0">
             <div class="col col-10">
-                <paginate-component>
-                    <li v-for="l, key in users.links" :key="key" class="page-item" @click="paginate(l)">
-                        <div v-if="l.active">
-                            <a class="page-link dark-paginantion-active" v-html="l.label" 
-                            v-if="
-                                key == users.current_page || 
-                                key == users.current_page - 1 || 
-                                key == users.current_page + 1 || 
-                                key == 0 ||
-                                (users.current_page == 1 && key == 3) ||
-                                key == users.last_page + 1 || 
-                                (users.current_page == users.last_page && key == users.last_page - 2)"
-                        ></a>
-                        </div>
-                        <div v-else>
-                            <a class="page-link dark-pagination" 
-                            v-if="
-                                l.url != null && 
-                                (key == users.current_page || 
-                                key == users.current_page - 1 || 
-                                key == users.current_page + 1 || 
-                                key == 0 ||
-                                (users.current_page == 1 && key == 3) ||
-                                key == users.last_page + 1 || 
-                                (users.current_page == users.last_page && key == users.last_page - 2))"
-                        >{{ l.label | formatNextPrevButton }}</a>
-                        </div>
-                        
-                    </li>
-                </paginate-component>
+                <paginate-component :data = "users"></paginate-component>
             </div>
         </div>
         <!-- Modal para adicionar usuários -->
@@ -352,6 +323,7 @@
         mounted() {
             EventBus.$on("loadList", this.loadList)
             EventBus.$on("setUrlFilter", this.setUrlFilter);
+            EventBus.$on("paginate", this.paginate);
             this.loadList();
             this.loadProfiles();
         }

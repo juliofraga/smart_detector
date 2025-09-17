@@ -28,36 +28,7 @@
         </div>
         <div class="row mt-4"  v-if="events.data.length > 0">
             <div class="col col-10">
-                <paginate-component>
-                    <li v-for="l, key in events.links" :key="key" class="page-item" @click="paginate(l)">
-                        <div v-if="l.active">
-                            <a class="page-link dark-paginantion-active" v-html="l.label" 
-                            v-if="
-                                key == events.current_page || 
-                                key == events.current_page - 1 || 
-                                key == events.current_page + 1 || 
-                                key == 0 ||
-                                (events.current_page == 1 && key == 3) ||
-                                key == events.last_page + 1 || 
-                                (events.current_page == events.last_page && key == events.last_page - 2)"
-                        ></a>
-                        </div>
-                        <div v-else>
-                            <a class="page-link dark-pagination" 
-                            v-if="
-                                l.url != null && 
-                                (key == events.current_page || 
-                                key == events.current_page - 1 || 
-                                key == events.current_page + 1 || 
-                                key == 0 ||
-                                (events.current_page == 1 && key == 3) ||
-                                key == events.last_page + 1 || 
-                                (events.current_page == events.last_page && key == events.last_page - 2))"
-                        >{{ l.label | formatNextPrevButton }}</a>
-                        </div>
-                        
-                    </li>
-                </paginate-component>
+                <paginate-component :data = "events"></paginate-component>
             </div>
         </div>
         <event-modal-component></event-modal-component>
@@ -98,6 +69,7 @@
         mounted() {
             EventBus.$on("loadList", this.loadList)
             EventBus.$on("setUrlFilter", this.setUrlFilter);
+            EventBus.$on("paginate", this.paginate);
             this.loadList();
         }
     }

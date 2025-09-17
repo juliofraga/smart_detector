@@ -57,9 +57,6 @@
             }
         },
         methods: {
-            add() {
-                
-            },
             search() {
                 let filter = '';
                 let fields = this.buttons.search.fields;
