@@ -91,9 +91,7 @@
                 </div>
             </template>
             <template v-slot:rodape>
-                <button type="button" class="btn btn-success text-white" @click="update()">Atualizar</button>
-                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalConfirmDelete">Deletar</button> 
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button> 
+                <updates-button-component></updates-button-component> 
             </template>
         </modal-component>
         <!-- Modal para confirmar remoção de tipo de ameaça -->
@@ -166,6 +164,7 @@
             EventBus.$on("setUrlFilter", this.setUrlFilter);
             EventBus.$on("paginate", this.paginate);
             EventBus.$on("deleteRecord", this.deleteRecord);
+            EventBus.$on("update", this.update);
             this.loadList();
         }
     }
