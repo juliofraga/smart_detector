@@ -195,17 +195,10 @@
             loadList() {
                 let url = this.urlBase + '?' + this.urlPaginate + this.urlFilter;
                 utils.axiosGet(url, this, 'types');
-                this.cleanFeedbackMessage();                    
+                utils.cleanFeedbackMessage(this);                    
             },
             setUrlFilter(url) {
                 this.urlFilter = url;
-            },
-            cleanFeedbackMessage() {
-                setTimeout(() => {
-                    this.feedbackMessage =  {};
-                    this.feedbackTitle = '';
-                    this.status = '';
-                }, 10000);
             },
             cleanAddFormData() {
                 this.description = '';

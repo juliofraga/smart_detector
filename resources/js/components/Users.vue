@@ -327,20 +327,13 @@
                 this.profile= '';
                 this.repeatPassword = '';
             },
-            cleanFeedbackMessage() {
-                setTimeout(() => {
-                    this.feedbackMessage =  {};
-                    this.feedbackTitle = '';
-                    this.status = '';
-                }, 10000);
-            },
             setUrlFilter(url) {
                 this.urlFilter = url;
             },
             loadList() {
                 let url = this.urlBase + '?' + this.urlPaginate + this.urlFilter;
                 utils.axiosGet(url, this, 'users');
-                this.cleanFeedbackMessage();                    
+                utils.cleanFeedbackMessage(this);                    
             },
             loadProfiles() {
                 let url = this.urlBaseProfile;
@@ -352,7 +345,7 @@
                         this.feedbackTitle = "Erro ao carregar perfils";
                         this.status = 'error';
                         this.feedbackMessage = errors;
-                        this.cleanFeedbackMessage(); 
+                        utils.cleanFeedbackMessage(this); 
                     })
             },
             paginate(l) {

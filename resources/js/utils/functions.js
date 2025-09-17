@@ -46,7 +46,7 @@ export function axiosPost(url, data, obj) {
                 mensagem: errors.response.data.message,
                 data: errors.response.data.errors
             };
-            obj.cleanFeedbackMessage();
+            cleanFeedbackMessage(obj);
         })
 }
 
@@ -106,3 +106,11 @@ export function axiosGet(url, obj, attr) {
             }
         })
 }
+
+export function cleanFeedbackMessage(obj) {
+    setTimeout(() => {
+        obj.feedbackMessage =  {};
+        obj.feedbackTitle = '';
+        obj.status = '';
+    }, 10000);
+};
