@@ -260,19 +260,15 @@
                 }
             },
             update() {
+                utils.removeRequiredFieldMessage(['nameUpdate', 'repeatPasswordUpdate']);
                 if (this.$store.state.item.name == ''){
-                    document.getElementById('nameUpdate').classList.add('is-invalid');
+                    utils.showRequiredFieldMessage('nameUpdate');
                 } else if (this.passwordUpdate != this.repeatPasswordUpdate) {
-                    document.getElementById('repeatPasswordUpdate').classList.add('is-invalid');
+                    utils.showRequiredFieldMessage('repeatPasswordUpdate');
                 } else if (this.$store.state.item.profile == '') {
-                    document.getElementById('profileUpdate').classList.add('is-invalid');
+                    utils.showRequiredFieldMessage('profileUpdate');
                 } else {
-                    if (document.getElementById('nameUpdate').classList.contains('is-invalid')) {
-                        document.getElementById('nameUpdate').classList.remove('is-invalid');
-                    }
-                    if (document.getElementById('repeatPasswordUpdate').classList.contains('is-invalid')) {
-                        document.getElementById('repeatPasswordUpdate').classList.remove('is-invalid');
-                    }
+                    utils.removeRequiredFieldMessage(['nameUpdate', 'repeatPasswordUpdate']);
                     let data = {
                         name: this.$store.state.item.name,
                         email: this.$store.state.item.email,

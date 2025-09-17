@@ -122,3 +122,15 @@ export function cleanAddFormData(obj, attribute) {
         }
     });
 }
+
+export function showRequiredFieldMessage(el) {
+    document.getElementById(el).classList.add('is-invalid');
+}
+
+export function removeRequiredFieldMessage(elements) {
+    elements.forEach(el => {
+        if (document.getElementById(el).classList.contains('is-invalid')) {
+            document.getElementById(el).classList.remove('is-invalid');
+        }
+    });   
+}

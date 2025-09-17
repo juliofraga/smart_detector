@@ -188,17 +188,13 @@
                 }
             },
             update() {
+                utils.removeRequiredFieldMessage(['descriptionUpdate', 'visualStyleUpdate']);
                 if (this.$store.state.item.description == ''){
-                    document.getElementById('descriptionUpdate').classList.add('is-invalid');
+                    utils.showRequiredFieldMessage('descriptionUpdate');
                 } else if (this.$store.state.item.visual_style == '') {
-                    document.getElementById('visualStyleUpdate').classList.add('is-invalid');
+                    utils.showRequiredFieldMessage('visualStyleUpdate');
                 } else {
-                    if (document.getElementById('descriptionUpdate').classList.contains('is-invalid')) {
-                        document.getElementById('descriptionUpdate').classList.remove('is-invalid');
-                    }
-                    if (document.getElementById('visualStyleUpdate').classList.contains('is-invalid')) {
-                        document.getElementById('visualStyleUpdate').classList.remove('is-invalid');
-                    }
+                    utils.removeRequiredFieldMessage(['descriptionUpdate', 'visualStyleUpdate']);
                     let data = {
                         description: this.$store.state.item.description,
                         visual_style: this.$store.state.item.visual_style

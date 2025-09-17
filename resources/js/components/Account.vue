@@ -97,18 +97,14 @@
         },
         methods: {
             update() {
+                utils.removeRequiredFieldMessage(['name', 'repeatPassword']);
                 if (this.name == ''){
-                    document.getElementById('name').classList.add('is-invalid');
+                    utils.showRequiredFieldMessage('name');
                 } else {
-                    if (document.getElementById('name').classList.contains('is-invalid')) {
-                        document.getElementById('name').classList.remove('is-invalid');
-                    }
                     if (this.password != this.repeatPassword) {
-                        document.getElementById('repeatPassword').classList.add('is-invalid');
+                        utils.showRequiredFieldMessage('repeatPassword');
                     } else {
-                        if (document.getElementById('repeatPassword').classList.contains('is-invalid')) {
-                            document.getElementById('repeatPassword').classList.remove('is-invalid');
-                        }
+                        utils.removeRequiredFieldMessage(['name', 'repeatPassword']);
                         let data = {
                             name: this.name,
                             password: this.password

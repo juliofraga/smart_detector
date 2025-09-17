@@ -142,12 +142,11 @@
                 }
             },
             update() {
+                utils.removeRequiredFieldMessage(['descriptionUpdate']);
                 if (this.$store.state.item.description == ''){
-                    document.getElementById('descriptionUpdate').classList.add('is-invalid');
+                    utils.showRequiredFieldMessage('descriptionUpdate');
                 } else {
-                    if (document.getElementById('descriptionUpdate').classList.contains('is-invalid')) {
-                        document.getElementById('descriptionUpdate').classList.remove('is-invalid');
-                    }
+                    utils.removeRequiredFieldMessage(['descriptionUpdate']);
                     let data = {
                         description: this.$store.state.item.description
                     };
