@@ -59,8 +59,7 @@
                 </div>
             </template>
             <template v-slot:rodape>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success text-white" @click="save()">Salvar</button>
+                <add-cancel-buttons-component></add-cancel-buttons-component>
             </template>
         </modal-component>
         <!-- Modal para atualizar tipo de ameaça -->
@@ -165,6 +164,7 @@
             EventBus.$on("paginate", this.paginate);
             EventBus.$on("deleteRecord", this.deleteRecord);
             EventBus.$on("update", this.update);
+            EventBus.$on("save", this.save);
             this.loadList();
         }
     }

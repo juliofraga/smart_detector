@@ -33,6 +33,7 @@ const store = new Vuex.Store({
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('account-component', require('./components/Account.vue').default);
+Vue.component('add-cancel-buttons-component', require('./components/AddCancelButtons.vue').default);
 Vue.component('alert-component', require('./components/Alert.vue').default);
 Vue.component('classification-component', require('./components/Classification.vue').default);
 Vue.component('event-summary-component', require('./components/EventSummary.vue').default);
