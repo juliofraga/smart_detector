@@ -337,16 +337,7 @@
             },
             loadProfiles() {
                 let url = this.urlBaseProfile;
-                axios.get(url)
-                    .then(response => {
-                        this.profiles = response.data;
-                    })
-                    .catch(errors => {
-                        this.feedbackTitle = "Erro ao carregar perfils";
-                        this.status = 'error';
-                        this.feedbackMessage = errors;
-                        utils.cleanFeedbackMessage(this); 
-                    })
+                utils.axiosGet(url, this, 'profiles');
             },
             paginate(l) {
                 if (l.url){
