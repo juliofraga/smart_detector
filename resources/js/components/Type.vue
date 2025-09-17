@@ -168,7 +168,7 @@
                 this.urlFilter = url;
             },
             cleanAddFormData() {
-                this.description = '';
+                utils.cleanAddFormData(this, ['description']);
             },
             showModal(modal) {
                 utils.showModal(modal);

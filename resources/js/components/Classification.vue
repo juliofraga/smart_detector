@@ -220,8 +220,7 @@
                 this.urlFilter = url;
             },
             cleanAddFormData() {
-                this.description = '';
-                this.visualStyle = '';
+                utils.cleanAddFormData(this, ['description', 'visualStyle']);
             },
             showModal(modal) {
                 utils.showModal(modal);

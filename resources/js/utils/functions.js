@@ -114,3 +114,11 @@ export function cleanFeedbackMessage(obj) {
         obj.status = '';
     }, 10000);
 };
+
+export function cleanAddFormData(obj, attribute) {
+    attribute.forEach(attr => {
+        if (obj.hasOwnProperty(attr)) {
+            obj[attr] = '';
+        }
+    });
+}

@@ -288,11 +288,7 @@
                 utils.axiosDelete(url, this);
             },
             cleanAddFormData() {
-                this.name = '';
-                this.email = '';
-                this.password = '';
-                this.profile= '';
-                this.repeatPassword = '';
+                utils.cleanAddFormData(this, ['name', 'email', 'password', 'profile', 'repeatPassword']);
             },
             setUrlFilter(url) {
                 this.urlFilter = url;
