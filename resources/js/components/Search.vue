@@ -79,9 +79,9 @@
                     urlFilter = '';
                 }
                 if (this.classSearch === 'user') {
-                    EventBus.$emit("loadUserList");
+                    EventBus.$emit("loadList");
                 } else if (this.classSearch === 'classification') {
-                    EventBus.$emit("loadClassificationList");
+                    EventBus.$emit("loadList");
                 } else if (this.classSearch === 'type') {
                     EventBus.$emit("loadTipoAmeacaList");
                 } else if (this.classSearch === 'event') {
@@ -93,7 +93,7 @@
                 if (this.classSearch === 'user') {
                     EventBus.$emit("loadList");
                 } else if (this.classSearch === 'classification') {
-                    EventBus.$emit("loadClassificationList");
+                    EventBus.$emit("loadList");
                 } else if (this.classSearch === 'type') {
                     EventBus.$emit("loadTipoAmeacaList");
                 } else if (this.classSearch === 'event') {

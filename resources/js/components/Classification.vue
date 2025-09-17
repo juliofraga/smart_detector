@@ -5,7 +5,7 @@
             :buttons=" {
                 add: {
                     show: true,
-                    modalId: '#modalAdicionarClassificacao'
+                    modalId: '#modalAdd'
                 },
                 search: {
                     show: true,
@@ -25,7 +25,7 @@
                     description: {title: 'Descrição', hidden: 'false', type:'text'},
                     visual_style: {title: 'Estilo', hidden: 'false', type:'badge'},               
                     created_at: {title: 'Data de Criação', hidden: 'false', type: 'timestamp'},
-                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalAtualizarClassificacao', buttonType: 'edit'},
+                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
                 }" 
                 :data="classifications.data"
                 :status="status"
@@ -76,7 +76,7 @@
             </div>
         </div>
         <!-- Modal para adicionar classificações de risco -->
-        <modal-component id="modalAdicionarClassificacao" title="Adicionar Classificação de Risco">
+        <modal-component id="modalAdd" title="Adicionar Classificação de Risco">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
@@ -119,7 +119,7 @@
             </template>
         </modal-component>
         <!-- Modal para atualizar classificações de risco -->
-        <modal-component id="modalAtualizarClassificacao" title="Atualizar Classificação de Risco">
+        <modal-component id="modalUpdate" title="Atualizar Classificação de Risco">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
@@ -168,16 +168,16 @@
             </template>
             <template v-slot:rodape>
                 <button type="button" class="btn btn-success text-white" @click="update()">Atualizar</button>
-                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalConfirmarDeletar">Deletar</button> 
+                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalConfirmDelete">Deletar</button> 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button> 
             </template>
         </modal-component>
         <!-- Modal para confirmar remoção de classificação de risco -->
-        <modal-component id="modalConfirmarDeletar" options="modal-dialog-centered modal-sm" title="Você tem certeza?">
+        <modal-component id="modalConfirmDelete" options="modal-dialog-centered modal-sm" title="Você tem certeza?">
             <template v-slot:conteudo>
                 <div class="row">
                     <div class="col col-6">
-                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal" @click="showModal('modalAtualizarClassificacao')">Não</button>
+                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal" @click="showModal('modalUpdate')">Não</button>
                     </div>
                     <div class="col col-6">
                         <button type="button" class="btn btn-danger text-white w-100" @click="deleteClassification()">Sim</button>
@@ -217,25 +217,7 @@
                         visual_style: this.visualStyle,
                     };
                     let url = this.urlBase;
-                    axios.post(url, data)
-                        .then(response => {
-                            this.status = 'success';
-                            this.feedbackTitle = "Classificação de risco adicionada com sucesso";
-                            utils.closeModal('modalAdicionarClassificacao');
-                            this.loadClassificationList();
-                            this.cleanAddClassificationFormData();
-                        })
-                        .catch(errors => {
-                            this.status = 'error';
-                            this.feedbackTitle = "Erro ao adicionar classificação de risco";
-                            utils.closeModal('modalAdicionarClassificacao');
-                            this.feedbackMessage = {
-                                mensagem: errors.response.data.message,
-                                data: errors.response.data.errors
-                            };
-                            this.cleanFeedbackMessage();
-                        })
-                        
+                    utils.axiosPost(url, data, this);                        
                 }
             },
             update() {
@@ -255,44 +237,14 @@
                         visual_style: this.$store.state.item.visual_style
                     };
                     let url = this.urlBase + '/' + this.$store.state.item.id;
-                    axios.patch(url, data)
-                        .then(response => {
-                            this.status = 'success';
-                            this.feedbackTitle = "Classificação de risco atualizada com sucesso";
-                            utils.closeModal('modalAtualizarClassificacao');
-                            this.loadClassificationList();
-                        })
-                        .catch(errors => {
-                            this.status = 'error';
-                            this.feedbackTitle = "Erro ao atualizar classificação de risco";
-                            utils.closeModal('modalAtualizarClassificacao');
-                            this.feedbackMessage = {
-                                message: errors.response.data.message,
-                                data: errors.response.data.errors
-                            };
-                        })
+                    utils.axiosPatch(url, data, this);
                 }
             },
             deleteClassification() {
                 let url = this.urlBase + '/' + this.$store.state.item.id;
-                axios.delete(url)
-                    .then(response => {
-                        this.status = 'success';
-                        this.feedbackTitle = "Classificação de risco deletada com sucesso";
-                        utils.closeModal('modalConfirmarDeletar');
-                        this.loadClassificationList();
-                    })
-                    .catch(errors => {
-                        this.status = 'error';
-                        this.feedbackTitle = "Erro ao deletar classificação de risco";
-                        utils.closeModal('modalConfirmarDeletar');
-                        this.feedbackMessage = {
-                            message: errors.response.data.message,
-                            data: errors.response.data.errors
-                        };
-                    })
+                utils.axiosDelete(url, this);
             },
-            loadClassificationList() {
+            loadList() {
                 let url = this.urlBase + '?' + this.urlPaginate + this.urlFilter;
                 axios.get(url)
                     .then(response => {
@@ -322,7 +274,7 @@
                     this.status = '';
                 }, 10000);
             },
-            cleanAddClassificationFormData() {
+            cleanAddFormData() {
                 this.description = '';
                 this.visualStyle = '';
             },
@@ -331,9 +283,9 @@
             },
         },
         mounted() {
-            EventBus.$on("loadClassificationList", this.loadClassificationList)
+            EventBus.$on("loadList", this.loadList)
             EventBus.$on("setUrlFilter", this.setUrlFilter);
-            this.loadClassificationList();
+            this.loadList();
         }
     }
 </script>
