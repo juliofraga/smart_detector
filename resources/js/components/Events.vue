@@ -81,7 +81,7 @@
             }
         },
         methods: {
-            loadEventList() {
+            loadList() {
                 let url = this.urlBase + '/get/all/?' + this.urlPaginate + this.urlFilter;
                 axios.get(url)
                     .then(response => {
@@ -100,14 +100,14 @@
             paginate(l) {
                 if (l.url){
                     this.urlPaginate = l.url.split('?')[1];
-                    this.loadEventList();
+                    this.loadList();
                 }
             },
         },
         mounted() {
-            EventBus.$on("loadEventList", this.loadEventList)
+            EventBus.$on("loadList", this.loadList)
             EventBus.$on("setUrlFilter", this.setUrlFilter);
-            this.loadEventList();
+            this.loadList();
         }
     }
 </script>

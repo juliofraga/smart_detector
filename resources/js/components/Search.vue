@@ -78,27 +78,11 @@
                 } else {
                     urlFilter = '';
                 }
-                if (this.classSearch === 'user') {
-                    EventBus.$emit("loadList");
-                } else if (this.classSearch === 'classification') {
-                    EventBus.$emit("loadList");
-                } else if (this.classSearch === 'type') {
-                    EventBus.$emit("loadList");
-                } else if (this.classSearch === 'event') {
-                    EventBus.$emit("loadEventList");
-                }
+                EventBus.$emit("loadList");
             },
             clear() {
                 EventBus.$emit("setUrlFilter", '');
-                if (this.classSearch === 'user') {
-                    EventBus.$emit("loadList");
-                } else if (this.classSearch === 'classification') {
-                    EventBus.$emit("loadList");
-                } else if (this.classSearch === 'type') {
-                    EventBus.$emit("loadList");
-                } else if (this.classSearch === 'event') {
-                    EventBus.$emit("loadEventList");
-                }
+                EventBus.$emit("loadList");
                 this.searchFilter = '';
             },
         },

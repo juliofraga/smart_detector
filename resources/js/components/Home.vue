@@ -35,7 +35,7 @@
             }
         },
         methods: {
-            loadEventList() {
+            loadList() {
                 let url = this.urlBase;
                 axios.get(url)
                     .then(response => {
@@ -78,7 +78,7 @@
             }
         },
         mounted() {
-            this.loadEventList();
+            this.loadList();
             setInterval(() => {
                 this.getNewEvents();
             }, 10000);
