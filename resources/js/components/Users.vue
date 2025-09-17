@@ -5,7 +5,7 @@
             :buttons=" {
                 add: {
                     show: true,
-                    modalId: '#modalAdicionarUsuario'
+                    modalId: '#modalAdd'
                 },
                 search: {
                     show: true,
@@ -26,7 +26,7 @@
                     email: {title: 'E-mail', hidden: 'false', type:'text'},               
                     profile: {title: 'Perfil', hidden: 'false', type: 'profile'},
                     last_access: {title: 'Último Acesso', hidden: 'false', type:'datetime'},
-                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalAtualizarUsuario', buttonType: 'edit'},
+                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
                     updated_at: {title: 'Última Atualização', hidden: 'true', type: 'datetime'},
                     created_at: {title: 'Data de Criação', hidden: 'true', type: 'datetime'},
                     
@@ -79,7 +79,7 @@
             </div>
         </div>
         <!-- Modal para adicionar usuários -->
-        <modal-component id="modalAdicionarUsuario" title="Adicionar Usuário">
+        <modal-component id="modalAdd" title="Adicionar Usuário">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
@@ -150,7 +150,7 @@
             </template>
         </modal-component>
         <!-- Modal para atualizar usuários -->
-        <modal-component id="modalAtualizarUsuario" title="Atualizar Usuário">
+        <modal-component id="modalUpdate" title="Atualizar Usuário">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
@@ -225,16 +225,16 @@
             </template>
             <template v-slot:rodape>
                 <button type="button" class="btn btn-success text-white" @click="update()">Atualizar</button>
-                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalConfirmarDeletar">Deletar</button> 
+                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalConfirmDelete">Deletar</button> 
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>                            
             </template>
         </modal-component>
         <!-- Modal para confirmar remoção de usuário -->
-        <modal-component id="modalConfirmarDeletar" options="modal-dialog-centered modal-sm" title="Você tem certeza?">
+        <modal-component id="modalConfirmDelete" options="modal-dialog-centered modal-sm" title="Você tem certeza?">
             <template v-slot:conteudo>
                 <div class="row">
                     <div class="col col-6">
-                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal" @click="showModal('modalAtualizarUsuario')">Não</button>
+                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal" @click="showModal('modalUpdate')">Não</button>
                     </div>
                     <div class="col col-6">
                         <button type="button" class="btn btn-danger text-white w-100" @click="deleteUser()">Sim</button>
@@ -288,25 +288,7 @@
                             password: this.password
                         };
                         let url = this.urlBase;
-                        axios.post(url, data)
-                            .then(response => {
-                                this.status = 'success';
-                                this.feedbackTitle = "Usuário adicionado com sucesso";
-                                utils.closeModal('modalAdicionarUsuario');
-                                this.loadUserList();
-                                this.cleanAddUserFormData();
-                            })
-                            .catch(errors => {
-                                this.status = 'error';
-                                this.feedbackTitle = "Erro ao adicionar usuário";
-                                utils.closeModal('modalAdicionarUsuario');
-                                this.feedbackMessage = {
-                                    mensagem: errors.response.data.message,
-                                    data: errors.response.data.errors
-                                };
-                                this.cleanFeedbackMessage();
-                            })
-                        
+                        utils.axiosPost(url, data, this);                        
                     }
                 }
             },
@@ -331,44 +313,14 @@
                         password: this.passwordUpdate
                     };
                     let url = this.urlBase + '/' + this.$store.state.item.id;
-                    axios.patch(url, data)
-                        .then(response => {
-                            this.status = 'success';
-                            this.feedbackTitle = "Usuário atualizado com sucesso";
-                            utils.closeModal('modalAtualizarUsuario');
-                            this.loadUserList();
-                        })
-                        .catch(errors => {
-                            this.status = 'error';
-                            this.feedbackTitle = "Erro ao atualizar usuário";
-                            utils.closeModal('modalAtualizarUsuario');
-                            this.feedbackMessage = {
-                                message: errors.response.data.message,
-                                data: errors.response.data.errors
-                            };
-                        })
+                    utils.axiosPatch(url, data, this);
                 }
             },
             deleteUser() {
                 let url = this.urlBase + '/' + this.$store.state.item.id;
-                axios.delete(url)
-                    .then(response => {
-                        this.status = 'success';
-                        this.feedbackTitle = "Usuário deletado com sucesso";
-                        utils.closeModal('modalConfirmarDeletar');
-                        this.loadUserList();
-                    })
-                    .catch(errors => {
-                        this.status = 'error';
-                        this.feedbackTitle = "Erro ao deletar usuário";
-                        utils.closeModal('modalConfirmarDeletar');
-                        this.feedbackMessage = {
-                            message: errors.response.data.message,
-                            data: errors.response.data.errors
-                        };
-                    })
+                utils.axiosDelete(url, this);
             },
-            cleanAddUserFormData() {
+            cleanAddFormData() {
                 this.name = '';
                 this.email = '';
                 this.password = '';
@@ -385,7 +337,7 @@
             setUrlFilter(url) {
                 this.urlFilter = url;
             },
-            loadUserList() {
+            loadList() {
                 let url = this.urlBase + '?' + this.urlPaginate + this.urlFilter;
                 axios.get(url)
                     .then(response => {
@@ -421,7 +373,7 @@
             paginate(l) {
                 if (l.url){
                     this.urlPaginate = l.url.split('?')[1];
-                    this.loadUserList();
+                    this.loadList();
                 }
             },
             showModal(modal) {
@@ -429,9 +381,9 @@
             },
         },
         mounted() {
-            EventBus.$on("loadUserList", this.loadUserList)
+            EventBus.$on("loadList", this.loadList)
             EventBus.$on("setUrlFilter", this.setUrlFilter);
-            this.loadUserList();
+            this.loadList();
             this.loadProfiles();
         }
     }

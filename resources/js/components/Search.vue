@@ -91,7 +91,7 @@
             clear() {
                 EventBus.$emit("setUrlFilter", '');
                 if (this.classSearch === 'user') {
-                    EventBus.$emit("loadUserList");
+                    EventBus.$emit("loadList");
                 } else if (this.classSearch === 'classification') {
                     EventBus.$emit("loadClassificationList");
                 } else if (this.classSearch === 'type') {
