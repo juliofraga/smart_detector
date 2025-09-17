@@ -44,11 +44,7 @@
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
         </div>
-        <div class="row mt-4"  v-if="users.data.length > 0">
-            <div class="col col-10">
-                <paginate-component :data = "users"></paginate-component>
-            </div>
-        </div>
+        <paginate-component :data = "users"></paginate-component>
         <!-- Modal para adicionar usuários -->
         <modal-component id="modalAdd" title="Adicionar Usuário">
             <template v-slot:conteudo>

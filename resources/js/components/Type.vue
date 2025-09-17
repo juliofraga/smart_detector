@@ -40,11 +40,7 @@
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
         </div>
-        <div class="row mt-4" v-if="types.data.length > 0">
-            <div class="col col-10">
-                <paginate-component :data = "types"></paginate-component>
-            </div>
-        </div>
+        <paginate-component :data = "types"></paginate-component>
         <!-- Modal para adicionar tipo de ameaça -->
         <modal-component id="modalAdd" title="Adicionar Tipo de Ameaça">
             <template v-slot:conteudo>

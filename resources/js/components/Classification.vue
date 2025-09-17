@@ -41,11 +41,7 @@
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
         </div>
-        <div class="row mt-4" v-if="classifications.data.length > 0">
-            <div class="col col-10">
-                <paginate-component :data = "classifications"></paginate-component>
-            </div>
-        </div>
+        <paginate-component :data = "classifications"></paginate-component>
         <!-- Modal para adicionar classificações de risco -->
         <modal-component id="modalAdd" title="Adicionar Classificação de Risco">
             <template v-slot:conteudo>

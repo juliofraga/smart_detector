@@ -26,11 +26,7 @@
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
         </div>
-        <div class="row mt-4"  v-if="events.data.length > 0">
-            <div class="col col-10">
-                <paginate-component :data = "events"></paginate-component>
-            </div>
-        </div>
+        <paginate-component :data = "events"></paginate-component>
         <event-modal-component></event-modal-component>
     </div>
 </template>
