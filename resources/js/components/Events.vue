@@ -14,7 +14,8 @@
                     show: true,
                 },
                 searchDate: {
-                    show: true
+                    show: true,
+                    field: 'event_date_time'
                 }
             }" 
             placeholder="Buscar Evento"

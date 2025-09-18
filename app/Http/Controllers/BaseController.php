@@ -76,7 +76,19 @@ Class BaseController extends Controller
 
     public function filter(string $filters): void
     {
+        $f = explode('&filterDate=', $filters);
+        $filters = $f[0];
+        if (count($f) > 1) {
+            $filtersDate = $f[1];
+        }
         $filters = explode(';', $filters);
+        if (end($filters) === "" || end($filters) === null) {
+            array_pop($filters);
+        }
+        if (isset($filtersDate)) {
+            $this->resolveFilterDate($filtersDate);
+        }
+
         $this->model = $this->model->where(function ($query) use ($filters) {
             foreach ($filters as $key => $condition) {
                 $c = explode(':', $condition);
@@ -98,6 +110,38 @@ Class BaseController extends Controller
     public function show(int $id = null)
     {
         return null;
+    }
+
+    private function resolveFilterDate(string $filtersDate): void
+    {
+        $from = '';
+        $to = '';
+        $fd = explode(';', $filtersDate);
+        $field = explode('field:', $fd[0]);
+        $field = $field[1];
+        if (strpos($fd[1], 'from:') !== false) {
+            $from = explode('from:', $fd[1]);
+            $from = $from[1];
+            $from = str_replace('T', ' ', $from) . ':00';
+        } else if (strpos($fd[1], 'to:') !== false) {
+            $to = explode('to:', $fd[1]);
+            $to = $to[1];
+            $to = str_replace('T', ' ', $to) . ':00';
+        }
+        if (count($fd) > 2) {
+            if (strpos($fd[2], 'to:') !== false) {
+                $to = explode('to:', $fd[2]);
+                $to = $to[1];
+                $to = str_replace('T', ' ', $to) . ':00';
+            }
+        }
+        if ($from && $to) {
+            $this->model = $this->model->whereBetween($field, [$from, $to]);
+        } elseif ($from) {
+            $this->model = $this->model->where($field, '>=', $from);
+        } elseif ($to) {
+            $this->model= $this->model->where($field, '<=', $to);
+        }
     }
 
 }

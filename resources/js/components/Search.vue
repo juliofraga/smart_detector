@@ -1,9 +1,9 @@
 <template>
     <div>
         <h3 class="text-white">{{ title }}</h3>
-        <div class="row mt-4">
+        <div class="row mt-3">
             <!-- TEXT SEARCH FIELD -->
-            <div class="col-sm-3" v-if="buttons.search.show">
+            <div class="col-sm-3 mt-1" v-if="buttons.search.show">
                 <div class="form-floating">
                     <input type="text" class="form-control" id="buscar" name="buscar" :placeholder="placeholder" v-model="searchFilter">
                     <label class="form-label">{{ placeholder }}</label>
@@ -11,21 +11,21 @@
             </div>
 
             <!-- DATE SEARCH FIELDS -->
-            <div class="col-sm-2" v-if="buttons.searchDate.show">
+            <div class="col-sm-2 mt-1" v-if="buttons.searchDate.show">
                 <div class="form-floating">
-                    <input type="datetime-local" class="form-control" id="fromDateTime" name="fromDateTime" placeholder="Dê:" v-model="searchFilter">
+                    <input type="datetime-local" class="form-control" id="fromDateTime" name="fromDateTime" placeholder="Dê:" v-model="searchFromDateFilter">
                     <label class="form-label">Dê:</label>
                 </div>
             </div>
-            <div class="col-sm-2" v-if="buttons.searchDate.show">
+            <div class="col-sm-2 mt-1" v-if="buttons.searchDate.show">
                 <div class="form-floating">
-                    <input type="datetime-local" class="form-control" id="toDateTime" name="toDateTime" placeholder="Até:" v-model="searchFilter">
+                    <input type="datetime-local" class="form-control" id="toDateTime" name="toDateTime" placeholder="Até:" v-model="searchToDateFilter">
                     <label class="form-label">Até:</label>
                 </div>
             </div>
 
             <!-- BOTÃO BUSCAR  -->
-            <div v-if="buttons.search.show"  class="col-sm-2 mt-1">
+            <div v-if="buttons.search.show"  class="col-sm-2 mt-2">
                 <button class="w-100 btn btn-info btn-lg" @click="search()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -35,7 +35,7 @@
             </div>
 
             <!-- BOTÃO LIMPAR  -->
-            <div v-if="buttons.clear.show" class="col-sm-2 mt-1">
+            <div v-if="buttons.clear.show" class="col-sm-2 mt-2">
                 <button class="w-100 btn btn-warning btn-lg" @click="clear()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
@@ -46,7 +46,7 @@
             </div>
 
             <!-- BOTÃO ADICIONAR  -->
-            <div v-if="buttons.add.show" class="col-sm-2 mt-1">
+            <div v-if="buttons.add.show" class="col-sm-2 mt-2">
                 <button class="w-100 btn btn-secondary btn-lg" data-bs-toggle="modal" :data-bs-target="buttons.add.modalId">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16" v-if="classSearch == 'user'">
                         <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
@@ -71,24 +71,42 @@
     export default {
         data() {
             return {
-                searchFilter: ''
+                searchFilter: '',
+                searchFromDateFilter: '',
+                searchToDateFilter: ''
             }
         },
         methods: {
             search() {
                 let filter = '';
+                let filterDate = '';
                 let fields = this.buttons.search.fields;
                 let paginate = '';
                 let urlFilter = '';
+                let from = this.searchFromDateFilter;
+                let to = this.searchToDateFilter;
                 fields.forEach((field, key) => {
                     if (filter != ''){
                         filter += ';';
                     }
                     filter += field + ':like:%' + this.searchFilter+ '%'
                 });
-                if (filter) {
+                if (from || to) {
+                    filterDate = '&filterDate=field:' + this.buttons.searchDate.field + ';';
+                    if (from) {
+                        filterDate += 'from:' + from + ';';
+                    }
+                    if (to) {
+                        filterDate += 'to:' + to;
+                    }
+                }
+                if (filter || filterDate) {
                     paginate = 'page=1';
+                    if (filterDate) {
+                        filter += ';' + filterDate;
+                    }
                     urlFilter = `&filter=${encodeURIComponent(filter)}`;
+                    console.log('urlFilter', urlFilter);
                     EventBus.$emit("setUrlFilter", urlFilter);
                 } else {
                     urlFilter = '';
@@ -99,6 +117,8 @@
                 EventBus.$emit("setUrlFilter", '');
                 EventBus.$emit("loadList");
                 this.searchFilter = '';
+                this.searchFromDateFilter = '';
+                this.searchToDateFilter = '';
             },
         },
         props: ['title', 'buttons', 'placeholder', 'classSearch'],
