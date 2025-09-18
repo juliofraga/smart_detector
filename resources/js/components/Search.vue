@@ -2,10 +2,25 @@
     <div>
         <h3 class="text-white">{{ title }}</h3>
         <div class="row mt-4">
+            <!-- TEXT SEARCH FIELD -->
             <div class="col-sm-3" v-if="buttons.search.show">
                 <div class="form-floating">
                     <input type="text" class="form-control" id="buscar" name="buscar" :placeholder="placeholder" v-model="searchFilter">
                     <label class="form-label">{{ placeholder }}</label>
+                </div>
+            </div>
+
+            <!-- DATE SEARCH FIELDS -->
+            <div class="col-sm-2" v-if="buttons.searchDate.show">
+                <div class="form-floating">
+                    <input type="datetime-local" class="form-control" id="fromDateTime" name="fromDateTime" placeholder="Dê:" v-model="searchFilter">
+                    <label class="form-label">Dê:</label>
+                </div>
+            </div>
+            <div class="col-sm-2" v-if="buttons.searchDate.show">
+                <div class="form-floating">
+                    <input type="datetime-local" class="form-control" id="toDateTime" name="toDateTime" placeholder="Até:" v-model="searchFilter">
+                    <label class="form-label">Até:</label>
                 </div>
             </div>
 

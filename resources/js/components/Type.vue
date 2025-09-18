@@ -13,6 +13,9 @@
                 },
                 clear: {
                     show: true,
+                },
+                searchDate: {
+                    show: false
                 }
             }" 
             placeholder="Buscar por descrição"

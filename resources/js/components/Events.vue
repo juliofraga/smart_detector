@@ -12,6 +12,9 @@
                 },
                 clear: {
                     show: true,
+                },
+                searchDate: {
+                    show: true
                 }
             }" 
             placeholder="Buscar Evento"
