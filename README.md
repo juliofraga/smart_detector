@@ -21,9 +21,9 @@ O **Smart Detector** é um sistema desenvolvido para exibir em tempo real evento
 - **Outros**: Postman, MySQL Workbench, Astah UML, VS Code, XAMPP  
 
 ## 📂 Estrutura de Diretórios
-/frontend -> Código Vue.js
-/backend -> Código Laravel (API, autenticação, serviços)
-/database -> Scripts e modelos do banco de dados
+- frontend -> Código Vue.js
+- backend -> Código Laravel (API, autenticação, serviços)
+- database -> Scripts e modelos do banco de dados
 
 ## 🛡️ Funcionalidades Principais
 - Cadastro, edição e exclusão de usuários  
