@@ -51,37 +51,24 @@
                         this.feedbackMessage = errors;
                     })                  
             },
-            getNewEvents() {
-                let url = this.urlBase + '/new/' + this.lastId;
-                if (this.lastId == 0) {
-                    url = this.urlBase;
-                }
-                axios.get(url)
-                    .then(response => {
-                        if (response.data.length > 0) {
-                            const merged = [...this.events.data, ...response.data].reduce((acc, current) => {
-                                if (!acc.some(item => item.id === current.id)) {
-                                    acc.push(current);
-                                }
-                                return acc;
-                            }, [])
-                            .sort((a, b) => new Date(b.event_date_time) - new Date(a.event_date_time));
-                            this.events = {data: merged};
-                            this.lastId = Math.max(...this.events.data.map(e => e.id));
+            showNewEvent(eventData) {
+                const merged = [...this.events.data, eventData]
+                    .reduce((acc, current) => {
+                        if (!acc.some(item => item.id === current.id)) {
+                            acc.push(current);
                         }
-                    })
-                    .catch(errors => {
-                        this.feedbackTitle = "Houve um erro";
-                        this.status = 'error';
-                        this.feedbackMessage = errors;
-                    }) 
+                            return acc;
+                        }, [])
+                    .sort((a, b) => new Date(b.event_date_time) - new Date(a.event_date_time));
+                this.events = { data: merged };
             }
         },
         mounted() {
             this.loadList();
-            setInterval(() => {
-                this.getNewEvents();
-            }, 10000);
+            window.Echo.private('events')
+                .listen('.EventCreated', (e) => {
+                    this.showNewEvent(e.eventData);
+                });
         }
     }
 </script>

@@ -9,6 +9,7 @@ use App\Models\Classification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Events\EventCreated;
 
 class EventController extends BaseController
 {
@@ -46,7 +47,10 @@ class EventController extends BaseController
                 'types_id' => $type_id,
             ]);
         }
-        return parent::store($request);
+        $event = $this->model->create($request->all());
+        $event->load(['classification', 'analysys', 'type']);
+        event(new EventCreated($event));
+        return parent::response($event);
     }
 
     public function index(Request $request, array $attributes = null): JsonResponse

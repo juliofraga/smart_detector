@@ -29,26 +29,34 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo';
+import Echo from 'laravel-echo';
 
-// window.Pusher = require('pusher-js');
+window.Pusher = require('pusher-js');
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     forceTLS: true
-// });
+const currentToken = getAuthToken();
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    wsHost: window.location.hostname,
+    wsPort: process.env.MIX_PUSHER_PORT || 6001,
+    wssPort: process.env.MIX_PUSHER_PORT || 6001,
+    forceTLS: false,
+    disableStats: true,
+    enabledTransports: ['ws', 'wss'],
+    authEndpoint: '/api/broadcasting/auth',
+    auth: {
+      headers: {
+        Authorization: currentToken,
+        Accept: 'application/json',
+      },
+    },
+});
 
 axios.interceptors.request.use(
     config => {
         config.headers.Accept = 'application/json';
-        let token = document.cookie.split(';').find(indice => {
-            return indice.includes('token=');
-        });
-        token = token.split('=')[1];
-        token = 'Bearer ' + token;
-        token = token.split(':SameSite')[0];
+        const token = getAuthToken();
         config.headers.Authorization = token
         return config;
     },
@@ -77,3 +85,15 @@ axios.interceptors.response.use(
         return Promise.reject(error);
     }
 )
+
+function getAuthToken() {
+    let tokenCookie = document.cookie.split(';').find(indice => {
+        return indice.trim().startsWith('token=');
+    });
+    if (!tokenCookie) {
+        return null;
+    }
+    let token = tokenCookie.split('=')[1];
+    token = token.split(':SameSite')[0];
+    return 'Bearer ' + token.trim();
+};

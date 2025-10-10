@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Broadcast;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Broadcast::routes(['middleware' => ['jwt.auth']]);
 
 Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::prefix('user')->middleware('admin')->group(function () {
