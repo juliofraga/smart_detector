@@ -26,7 +26,8 @@
                 :title="{
                     id: {title: 'ID', hidden: 'true', type:'text'},
                     display_value: {title: 'Valor de Exibição', hidden: 'false', type: 'text'},
-                    field_name: {title: 'Nome do Campo', hidden: 'false', type:'text'},           
+                    field_name: {title: 'Nome do Campo', hidden: 'false', type: 'text'},
+                    type_field:{title: 'Tipo', hidden: 'false', type: 'text'},
                     editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
                     updated_at: {title: 'Última Atualização', hidden: 'true', type: 'datetime'},
                     created_at: {title: 'Data de Criação', hidden: 'true', type: 'datetime'},
@@ -72,6 +73,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <select class="form-control" id="type_field" name="type_field" placeholder="Tipo de Campo*" v-model="type_field" style="background-color: white;">
+                                    <option value="">Selecione...</option>
+                                    <option value="text">Texto Geral</option>
+                                    <option value="textarea">Textarea</option>
+                                </select>
+                                <label class="form-label">Tipo de Campo*</label>
+                                <div id="invalidFeedbackTypeField" class="invalid-feedback">
+                                    Informe o estilo do campo
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </template>
             <template v-slot:rodape>
@@ -79,13 +95,13 @@
             </template>
         </modal-component>
         <!-- Modal para atualizar atributo de evento -->
-        <modal-component id="modalUpdate" title="Atualizar Tipo de Ameaça">
+        <modal-component id="modalUpdate" title="Atualizar Atributo de Evento">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="display_valueUpdate" name="display_valueUpdate" placeholder="Texto de Exibição*" v-model="$store.state.item.display_value" @blur="createFieldName($event.target.value)">
+                                <input type="text" class="form-control" id="display_valueUpdate" name="display_valueUpdate" placeholder="Texto de Exibição*" v-model="$store.state.item.display_value">
                                 <label class="form-label">Texto de Exibição*</label>
                                 <div id="invalidFeedbackDisplayValueUpdate" class="invalid-feedback">
                                     Informe o Texto de Exibição
@@ -100,6 +116,20 @@
                                 <label class="form-label text-light">Nome do Campo*</label>
                                 <div id="invalidFeedbackFieldNameUpdate" class="invalid-feedback">
                                     Informe o Nome do campo
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <select class="form-control" id="type_fieldUpdate" name="type_fieldUpdate" placeholder="Tipo de Campo*" v-model="$store.state.item.type_field" style="background-color: white;">
+                                    <option value="text">Texto Geral</option>
+                                    <option value="textarea">Textarea</option>
+                                </select>
+                                <label class="form-label">Tipo de Campo*</label>
+                                <div id="invalidFeedbackTypeFieldUpdate" class="invalid-feedback">
+                                    Informe o estilo do campo
                                 </div>
                             </div>
                         </div>
@@ -140,30 +170,37 @@
                 feedbackTitle: '',
                 display_value: '',
                 field_name: '',
+                type_field: '',
                 display_valueUpdate: '',
                 field_nameUpdate: '',
+                type_fieldUpdate: '',
                 loaded: false,
             }
         },
         methods: {
             save() {
-                if (utils.fieldsValidate(['display_value', 'field_name'], this)) {
+                if (utils.fieldsValidate(['display_value', 'field_name', 'type_field'], this)) {
                     let data = {
                         display_value: this.display_value,
-                        field_name: this.field_name
+                        field_name: this.field_name,
+                        type_field: this.type_field
                     };
                     let url = this.urlBase;
                     utils.axiosPost(url, data, this);                        
                 }
             },
             update() {
-                utils.removeRequiredFieldMessage(['display_valueUpdate']);
+                utils.removeRequiredFieldMessage(['display_valueUpdate', 'field_nameUpdate', 'type_fieldUpdate']);
                 if (this.$store.state.item.display_value == ''){
                     utils.showRequiredFieldMessage('display_valueUpdate');
+                } else if (this.$store.state.item.type_field == '') {
+                    utils.showRequiredFieldMessage('type_fieldUpdate');
                 } else {
-                    utils.removeRequiredFieldMessage(['display_valueUpdate']);
+                    utils.removeRequiredFieldMessage(['display_valueUpdate', 'type_fieldUpdate']);
                     let data = {
-                        display_value: this.$store.state.item.display_value
+                        display_value: this.$store.state.item.display_value,
+                        field_name: this.$store.state.item.field_name,
+                        type_field: this.$store.state.item.type_field
                     };
                     let url = this.urlBase + '/' + this.$store.state.item.id;
                     utils.axiosPatch(url, data, this);
@@ -182,7 +219,7 @@
                 this.urlFilter = url;
             },
             cleanAddFormData() {
-                utils.cleanAddFormData(this, ['display_value', 'field_name']);
+                utils.cleanAddFormData(this, ['display_value', 'field_name', 'type_field']);
             },
             showModal(modal) {
                 utils.showModal(modal);

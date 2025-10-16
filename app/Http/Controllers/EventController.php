@@ -10,10 +10,15 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Events\EventCreated;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Schema\Blueprint;
+use App\Traits\FieldNameValidator;
 
 class EventController extends BaseController
 {
     private $qtdEvent = 100;
+    use FieldNameValidator;
 
     public function __construct(Event $event)
     {
@@ -122,5 +127,67 @@ class EventController extends BaseController
                     ->orderby($by, $direction)
                     ->paginate($qtd);
         return parent::responseGeneric($data);
+    }
+
+    public static function addTableColumn(string $field, string $type_field = 'text'): bool
+    {
+        try {
+            self::validateFieldName($field);
+            if (!Schema::hasColumn('events', $field)) {
+                Schema::table('events', function (Blueprint $table) use ($field, $type_field) {
+                    if ($type_field === 'textarea') {
+                        $table->text($field)->nullable();
+                    } else {
+                        $table->string($field, 255)->nullable();
+                    }
+                });
+                return true;
+            } else {
+                Log::info("The column '{$field}' has already exists in the table 'events'.");
+                return false;
+            }
+        } catch (\Throwable $e) {
+            Log::error("Error to add column '{$field}': " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public static function removeColumn(string $field): void
+    {
+        try {
+            self::validateFieldName($field);
+            if (Schema::hasColumn('events', $field)) {
+                Schema::table('events', function (Blueprint $table) use ($field) {
+                    $table->dropColumn($field);
+                });
+            } else {
+                Log::info("The column '{$field}' doesn't exist in the table 'events'.");
+            }
+        } catch (\Throwable $e) {
+            Log::error("Error to remove column '{$field}': " . $e->getMessage());
+        }
+    }
+
+    public static function updateColumn(string $type_field, string $field_name): void
+    {
+        try {
+            if (Schema::hasColumn('events', $field_name)) {
+                Schema::table('events', function (Blueprint $table) use ($field_name, $type_field) {
+                    if ($type_field === 'textarea') {
+                        Schema::table('events', function (Blueprint $table) use ($field_name) {
+                            $table->text($field_name)->change();
+                        });
+                    } elseif ($type_field === 'text') {
+                        Schema::table('events', function (Blueprint $table) use ($field_name) {
+                            $table->string($field_name, 255)->change();
+                        });
+                    }
+                });
+            } else {
+                Log::info("The column '{$field_name}' doesn't exist in the table 'events'.");
+            }
+        } catch (\Throwable $e) {
+            Log::error("Error to update column '{$field_name}': " . $e->getMessage());
+        }
     }
 }

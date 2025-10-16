@@ -13,6 +13,7 @@ class event_attribute extends Model
         'position',
         'field_name',
         'display_value',
+        'type_field',
         'show',
         'enabled'
     ];
@@ -20,7 +21,7 @@ class event_attribute extends Model
     public function rules(): array 
     {
         return [
-            'field_name' => 'required',
+            'field_name' => 'required|unique:event_attributes,field_name',
             'display_value' => 'required'
         ];
     }
@@ -28,7 +29,8 @@ class event_attribute extends Model
     public function feedback(): array 
     {
         return [
-            'required' => 'O campo :attribute é obrigatório'
+            'required' => 'O campo :attribute é obrigatório',
+            'field_name.unique' => 'Já existe um campo com esse nome. Informe outro nome, por favor.'
         ];
     }
 }
