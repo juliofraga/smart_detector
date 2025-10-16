@@ -28,4 +28,5 @@ Route::middleware('auth')->group(function() {
     Route::get('/eventos', 'EventController@display')->name('events');
     Route::get('/classificacoes-de-risco', 'ClassificationController@show')->middleware('admin')->name('classifications');
     Route::get('/tipos-de-ameaca', 'TypeController@show')->middleware('admin')->name('types');
+    Route::get('/atributos-de-eventos', 'EventAttributeController@show')->middleware('admin')->name('event_attributes');
 });

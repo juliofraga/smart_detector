@@ -53,6 +53,12 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
         Route::patch('/{id}', 'TypeController@update');
         Route::delete('/{id}', 'TypeController@destroy');
     });
+    Route::prefix('event-attribute')->middleware('admin')->group(function () {
+        Route::post('/', 'EventAttributeController@store');
+        Route::get('/', 'EventAttributeController@index');
+        Route::patch('/{id}', 'EventAttributeController@update');
+        Route::delete('/{id}', 'EventAttributeController@destroy');
+    });
     Route::post('logout', 'AuthController@logout');
     Route::get('me', 'AuthController@me');
 });
