@@ -28,6 +28,8 @@
                     display_value: {title: 'Valor de Exibição', hidden: 'false', type: 'text'},
                     field_name: {title: 'Nome do Campo', hidden: 'false', type: 'text'},
                     type_field:{title: 'Tipo', hidden: 'false', type: 'text'},
+                    show:{title: 'Exibir', hidden: 'false', type: 'yesno'},
+                    enabled:{title: 'Habilitado', hidden: 'false', type: 'yesno'},
                     editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
                     updated_at: {title: 'Última Atualização', hidden: 'true', type: 'datetime'},
                     created_at: {title: 'Data de Criação', hidden: 'true', type: 'datetime'},

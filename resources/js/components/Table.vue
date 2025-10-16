@@ -34,6 +34,10 @@
                                     {{ value | formatDateTimeStamp }}
                                 </span>
 
+                                <span v-if="title[keyValue].type == 'yesno' && title[keyValue].hidden == 'false'" class="text-white">
+                                    {{ value | formatYesNo }}
+                                </span>
+
                                 <div v-if="classList == 'classification'">
                                     <span v-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false' && (value == 'warning')" :class="`badge badge-${value} w-100`">
                                         {{ value }}

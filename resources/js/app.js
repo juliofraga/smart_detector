@@ -97,6 +97,15 @@ Vue.filter('formatNextPrevButton', function(valor) {
     return valor;
 });
 
+Vue.filter('formatYesNo', function(valor) {
+    if (valor == 1) {
+        return "Sim";
+    } else if (valor === 0) {
+        return "Não";
+    }
+    return '-';
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
