@@ -48,6 +48,11 @@ class EventAttributeController extends BaseController
     public function update(Request $request, int $id): JsonResponse
     {
         EventController::updateColumn($request->type_field, $request->field_name);
+        if ($request->enabled == 0) {
+            $request->merge([
+                'show' => 0
+            ]);
+        }
         return parent::update($request, $id);
     }
 }

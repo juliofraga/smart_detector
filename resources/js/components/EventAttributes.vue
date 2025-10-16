@@ -137,6 +137,34 @@
                         </div>
                     </div>
                     <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <select class="form-control" id="show" name="show" placeholder="Exibir Campo?*" v-model="$store.state.item.show" style="background-color: white;">
+                                    <option value="0">Não</option>
+                                    <option value="1">Sim</option>
+                                </select>
+                                <label class="form-label">Exibir Campo?*</label>
+                                <div id="invalidFeedbackShow" class="invalid-feedback">
+                                    Informe se o campo deve ser exibido
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <select class="form-control" id="enabled" name="enabled" placeholder="Habilitar Campo?*" v-model="$store.state.item.enabled" style="background-color: white;">
+                                    <option value="0">Não</option>
+                                    <option value="1">Sim</option>
+                                </select>
+                                <label class="form-label">Habilitar Campo?*</label>
+                                <div id="invalidFeedbackEnabled" class="invalid-feedback">
+                                    Informe se o campo deve ser habilitado
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
                         <div class="col-sm-12">
                             <label class="form-label text-light"><i>Data de criação: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
                         </div>
@@ -202,7 +230,9 @@
                     let data = {
                         display_value: this.$store.state.item.display_value,
                         field_name: this.$store.state.item.field_name,
-                        type_field: this.$store.state.item.type_field
+                        type_field: this.$store.state.item.type_field,
+                        show: this.$store.state.item.show,
+                        enabled: this.$store.state.item.enabled
                     };
                     let url = this.urlBase + '/' + this.$store.state.item.id;
                     utils.axiosPatch(url, data, this);
