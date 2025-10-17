@@ -33,6 +33,7 @@ class EventController extends BaseController
                 $request->merge([
                     'classifications_id' => $classification_id,
                 ]);
+                $request->request->remove('classification');
             } else {
                 return parent::responseGeneric('Classificação informada não foi encontrada no sistema, tente novamente.', 401, 'error');
             }
@@ -42,6 +43,7 @@ class EventController extends BaseController
             $request->merge([
                 'analysys_id' => $analysys_id,
             ]);
+            $request->request->remove('analysys');
         }
         if ($request->type) {
             $type_id = Type::where('description', $request->type)->value('id');
@@ -51,6 +53,7 @@ class EventController extends BaseController
             $request->merge([
                 'types_id' => $type_id,
             ]);
+            $request->request->remove('type');
         }
         $event = $this->model->create($request->all());
         $event->load(['classification', 'analysys', 'type']);

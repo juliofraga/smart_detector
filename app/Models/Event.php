@@ -11,16 +11,7 @@ class Event extends BaseModel
     const CREATED_AT = 'created_at';
     const UPDATED_AT = null;
 
-    protected $fillable = [
-        'description',
-        'ip_address',
-        'types_id',
-        'classifications_id',
-        'analysys_id',
-        'geographical_origin',
-        'request',
-        'event_date_time'
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'event_date_time' => 'datetime',
