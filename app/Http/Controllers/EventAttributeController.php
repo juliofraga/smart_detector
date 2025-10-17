@@ -55,4 +55,15 @@ class EventAttributeController extends BaseController
         }
         return parent::update($request, $id);
     }
+
+    public function getShowEnabled(Request $request): JsonResponse
+    {
+        $data = $this->model
+                    ->where('show', 1)
+                    ->where('enabled', 1)
+                    ->orderBy('type_field', 'asc')
+                    ->orderBy('display_value', 'asc')
+                    ->get();
+        return parent::responseGeneric($data);
+    }
 }

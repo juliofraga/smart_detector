@@ -69,7 +69,9 @@
         data() {
             return {
                 urlBase: utils.API_URL + '/api/v1/event',
+                urlBaseEventMetadata: utils.API_URL + '/api/v1/event-attribute',
                 event: '',
+                eventMetadata: '',
                 status: '',
                 feedbackMessage: {},
                 feedbackTitle: '',
@@ -82,10 +84,15 @@
                     let url = this.urlBase + '/' + this.event_id;
                     utils.axiosGet(url, this, 'event');
                 }
+            },
+            getEventMetadata() {
+                let url = this.urlBaseEventMetadata + '/show-enabled';
+                utils.axiosGet(url, this, 'eventMetadata');
             }
         },
         mounted() {
             this.getEvent();
+            this.getEventMetadata();
         }
     }
 </script>
