@@ -53,6 +53,20 @@
                     <input type="text" class="form-control bg-secondary text-light border-0" :value="$store.state.item.event_date_time || event.event_date_time | formatDateTimeStamp" readonly>
                 </div>
             </div>
+            <div class="row">
+                <div v-for="(meta, index) in eventMetadata" :key="index">
+                    <div class="col-md-6 mb-3" v-if="meta.type_field == 'text'">
+                        <label class="form-label fw-bold text-secondary">{{ meta.display_value }}</label>
+                        <input type="text" class="form-control bg-secondary text-light border-0" :value="$store.state.item[meta.field_name] || event[meta.field_name]" readonly>
+                    </div>
+                </div>
+            </div>
+            <div v-for="(meta, index) in eventMetadata" :key="index">
+                <div class="mb-3" v-if="meta.type_field == 'textarea'">
+                    <label class="form-label fw-bold text-secondary">{{ meta.display_value }}</label>
+                    <textarea class="form-control bg-secondary rounded text-light border-0" rows="10" :value="$store.state.item[meta.field_name] || event[meta.field_name] || ''" style="height: auto;" readonly></textarea>
+                </div>
+            </div>
             <!-- Análise IA -->
             <div class="mb-3">
                 <label class="form-label fw-bold text-secondary">Análise da IA</label>
