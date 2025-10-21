@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Schema\Blueprint;
 use App\Traits\FieldNameValidator;
+use App\Http\Controllers\EventAttributeController;
 
 class EventController extends BaseController
 {
@@ -54,6 +55,10 @@ class EventController extends BaseController
                 'types_id' => $type_id,
             ]);
             $request->request->remove('type');
+        }
+        $disabledFields = EventAttributeController::getDisabledFields();
+        foreach ($disabledFields as $df) {
+            $request->request->remove($df);
         }
         $event = $this->model->create($request->all());
         $event->load(['classification', 'analysys', 'type']);

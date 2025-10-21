@@ -66,4 +66,10 @@ class EventAttributeController extends BaseController
                     ->get();
         return parent::responseGeneric($data);
     }
+
+    public static function getDisabledFields(): array
+    {
+        $data = event_attribute::where('enabled', 0)->pluck('field_name')->toArray();
+        return $data ?? [];   
+    }
 }
