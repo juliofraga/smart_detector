@@ -25,8 +25,6 @@
                     event_date_time: { title: 'Data/Hora', hidden: 'false', type: 'timestamp' },
                     id: { hidden: 'true' },
                     analysys: { hidden: 'true' },
-                    geographical_origin: { hidden: 'true' },
-                    request: { hidden: 'true' },
                     detalhes: {
                         title: 'Detalhes',
                         hidden: 'false',

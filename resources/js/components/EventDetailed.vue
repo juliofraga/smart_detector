@@ -31,22 +31,11 @@
                     </div>
                 </div>
             </div>
-            <!-- IP e Origem -->
+            <!-- IP de Origem e Data -->
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-bold text-secondary">IP de Origem</label>
                     <input type="text" class="form-control bg-secondary text-light border-0" :value="$store.state.item.ip_address || event.ip_address" readonly>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label fw-bold text-secondary">Origem Geográfica</label>
-                    <input type="text" class="form-control bg-secondary text-light border-0" :value="$store.state.item.geographical_origin || event.geographical_origin" readonly>
-                </div>
-            </div>
-            <!-- Data e Request -->
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label fw-bold text-secondary">Request</label>
-                    <input type="text" class="form-control bg-secondary text-light border-0" :value="$store.state.item.request || event.request" readonly>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-bold text-secondary">Data e Hora</label>

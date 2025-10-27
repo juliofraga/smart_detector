@@ -8,7 +8,7 @@
                 },
                 search: {
                     show: true,
-                    fields: ['description', 'geographical_origin', 'request']
+                    fields: ['description']
                 },
                 clear: {
                     show: true,
