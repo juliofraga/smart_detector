@@ -67,8 +67,8 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control bg-secondary text-light" id="field_name" name="field_name" placeholder="Nome do Campo*" v-model="field_name" readonly>
-                                <label class="form-label text-light">Nome do Campo*</label>
+                                <input type="text" class="form-control" id="field_name" name="field_name" placeholder="Nome do Campo*" v-model="field_name" @blur="createFieldName($event.target.value)">
+                                <label class="form-label">Nome do Campo*</label>
                                 <div id="invalidFeedbackFieldName" class="invalid-feedback">
                                     Informe o Nome do campo
                                 </div>
