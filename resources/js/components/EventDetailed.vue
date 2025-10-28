@@ -43,11 +43,9 @@
                 </div>
             </div>
             <div class="row">
-                <div v-for="(meta, index) in eventMetadata" :key="index">
-                    <div class="col-md-6 mb-3" v-if="meta.type_field == 'text'">
-                        <label class="form-label fw-bold text-secondary">{{ meta.display_value }}</label>
-                        <input type="text" class="form-control bg-secondary text-light border-0" :value="$store.state.item[meta.field_name] || event[meta.field_name]" readonly>
-                    </div>
+                <div class="col-md-6 mb-3" v-for="(meta, index) in eventMetadata" :key="index" v-if="meta.type_field == 'text'">
+                    <label class="form-label fw-bold text-secondary">{{ meta.display_value }}</label>
+                    <input type="text" class="form-control bg-secondary text-light border-0" :value="$store.state.item[meta.field_name] || event[meta.field_name]" readonly>
                 </div>
             </div>
             <div v-for="(meta, index) in eventMetadata" :key="index">
