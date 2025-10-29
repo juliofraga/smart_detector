@@ -33,13 +33,13 @@ Class BaseController extends Controller
         return parent::response($data);
     }
 
-    public function update(Request $request, int $id, array $except = []): JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
         $data = $this->model->find($id);
         if (!$data) {
             return parent::responseDataNotFound();
         }
-        $update = empty($except) ? $data->update($request->all()) : $data->update($request->except($except));
+        $update = $data->update($request->all());
         return parent::responseOther($update, 'update');
     }
 

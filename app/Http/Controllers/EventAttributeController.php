@@ -45,7 +45,7 @@ class EventAttributeController extends BaseController
         return parent::destroy($id);
     }
 
-    public function update(Request $request, int $id, array $except = []): JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
         EventController::updateColumn($request->type_field, $request->field_name);
         if ($request->enabled == 0) {
@@ -53,7 +53,7 @@ class EventAttributeController extends BaseController
                 'show' => 0
             ]);
         }
-        return parent::update($request, $id, $except);
+        return parent::update($request, $id);
     }
 
     public function getShowEnabled(Request $request): JsonResponse
