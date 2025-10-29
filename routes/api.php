@@ -25,9 +25,9 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::prefix('user')->middleware('admin')->group(function () {
         Route::post('/', 'UserController@store');
         Route::get('/', 'UserController@index');
-        Route::patch('/{id}', 'UserController@update');
         Route::delete('/{id}', 'UserController@destroy');
     });
+    Route::patch('user/{id}', 'UserController@update');
     Route::prefix('profile')->group(function () {
         Route::post('/', 'ProfileController@store');
         Route::get('/', 'ProfileController@getAll');
