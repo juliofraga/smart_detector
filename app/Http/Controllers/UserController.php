@@ -20,6 +20,20 @@ class UserController extends BaseController
         return parent::index($request, ['name', 'asc']);
     }
 
+    public function update(Request $request, int $id, array $except = []): JsonResponse
+    {
+        $user_id = $request->user()->id;
+        if ($request->password) {
+            $request->merge([
+                'password' => bcrypt($request->password),
+                'updated_pass' => $user_id != $id ? 0 : 1
+            ]);
+        } else {
+            $except[] = 'password';
+        }
+        return parent::update($request, $id, $except);
+    }
+
     public function paginate(Request $request, int $qtd = null, array $order): JsonResponse
     {
         $by = $order[0];

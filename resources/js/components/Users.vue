@@ -272,7 +272,7 @@
                 utils.axiosDelete(url, this);
             },
             cleanAddFormData() {
-                utils.cleanAddFormData(this, ['name', 'email', 'password', 'profile', 'repeatPassword']);
+                utils.cleanAddFormData(this, ['name', 'email', 'password', 'profile', 'repeatPassword', 'passwordUpdate', 'repeatPasswordUpdate']);
             },
             setUrlFilter(url) {
                 this.urlFilter = url;

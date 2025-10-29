@@ -33,16 +33,8 @@ Class BaseController extends Controller
         return parent::response($data);
     }
 
-    public function update(Request $request, int $id): JsonResponse
+    public function update(Request $request, int $id, array $except = []): JsonResponse
     {
-        $except = [];
-        if ($request->password) {
-            $request->merge([
-                'password' => bcrypt($request->password)
-            ]);
-        } else {
-            $except[] = 'password';
-        }
         $data = $this->model->find($id);
         if (!$data) {
             return parent::responseDataNotFound();
