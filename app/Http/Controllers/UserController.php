@@ -62,4 +62,27 @@ class UserController extends BaseController
         $now = date('Y-m-d H:i:s');
         User::where('email', $email)->update(['last_access' => $now]);
     }
+
+    public function updatePassword(Request $request): JsonResponse
+    {
+        $data = $request->all(['email', 'password', 'passwordNew']);
+        $token = auth('api')->attempt(['email' => $data['email'], 'password' => $data['password']]);
+        if (!$token) {
+            return parent::responseGeneric('Senha temporária inválida, tente novamente!', 403, 'error');
+        } else {
+            User::where('email', $data['email'])->update([
+                'password' => bcrypt($data['passwordNew'])
+            ]);
+            $data['password'] = $data['passwordNew'];
+            $token = auth('api')->attempt($data);
+            if ($token) {
+                User::where('email', $data['email'])->update([
+                    'updated_pass' => 1
+                ]);
+                return parent::responseSuccessUpdate();
+            } else {
+                return parent::responseError();
+            }
+        }
+    }
 }

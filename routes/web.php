@@ -30,3 +30,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/tipos-de-ameaca', 'TypeController@show')->middleware('admin')->name('types');
     Route::get('/atributos-de-eventos', 'EventAttributeController@show')->middleware('admin')->name('event_attributes');
 });
+
+Route::get('/login/update-password', function () {
+    return view('/auth/update');
+});

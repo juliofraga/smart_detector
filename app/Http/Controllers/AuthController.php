@@ -31,6 +31,9 @@ class AuthController extends Controller
             if ($loginError) {
                 $loginError->resetErrors();
             }
+            if ($user->updated_pass == 0) {
+                return response()->json(['error' => 'Usuário deve atualizar a senha via login web.', 'status' => 428], 428);
+            }
             UserController::registerUserLogin($email);
             return parent::responseGeneric($token, 201, 'token');
         } else {

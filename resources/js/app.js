@@ -54,6 +54,7 @@ Vue.component('paginate-component', require('./components/Paginate.vue').default
 Vue.component('spinner-component', require('./components/Spinner.vue').default);
 Vue.component('type-component', require('./components/Type.vue').default);
 Vue.component('updates-button-component', require('./components/UpdatesButton.vue').default);
+Vue.component('update-password-component', require('./components/UpdatePassword.vue').default);
 Vue.component('welcome-component', require('./components/Welcome.vue').default);
 
 Vue.filter('formatDateTime', function(valor){

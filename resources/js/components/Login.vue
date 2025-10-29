@@ -67,8 +67,12 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.error) {
-                            this.statusLogin = 'error';
-                            this.details.message = data.error;
+                            if (data.status == 428) {
+                                window.location.href = `/login/update-password?email=${encodeURIComponent(this.email)}`;
+                            } else {
+                                this.statusLogin = 'error';
+                                this.details.message = data.error;
+                            }
                         } else {
                             if (data.token) {
                                 document.cookie = 'token=' + data.token + ':SameSite=Lax';
