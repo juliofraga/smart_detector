@@ -52,6 +52,7 @@ Vue.component('search-component', require('./components/Search.vue').default);
 Vue.component('users-component', require('./components/Users.vue').default);
 Vue.component('paginate-component', require('./components/Paginate.vue').default);
 Vue.component('spinner-component', require('./components/Spinner.vue').default);
+Vue.component('system-settings-component', require('./components/SystemSettings.vue').default);
 Vue.component('type-component', require('./components/Type.vue').default);
 Vue.component('updates-button-component', require('./components/UpdatesButton.vue').default);
 Vue.component('update-password-component', require('./components/UpdatePassword.vue').default);

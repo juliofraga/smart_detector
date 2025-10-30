@@ -83,9 +83,10 @@
                                             Cadastros Gerais
                                         </a>
                                         <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('event_attributes') }}">Atributos de Eventos</a></li>
                                             <li><a class="dropdown-item" href="{{ route('classifications') }}">Classificações de Risco</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('system_settings') }}">Configurações do Sistema</a></li>
                                             <li><a class="dropdown-item" href="{{ route('types') }}">Tipos de Ameaças</a></li>
-                                            <li><a class="dropdown-item" href="{{ route('event_attributes') }}">Atributos de Eventos</a></li>
                                         </ul>
                                     </li>
                                 @endif
@@ -136,7 +137,8 @@ function returnActive($menu, $currentPage)
         (in_array($currentPage, ['events']) && $menu == 'Eventos') ||
         (in_array($currentPage, ['classifications']) && $menu == 'Cadastros') ||
         (in_array($currentPage, ['types']) && $menu == 'Cadastros') ||
-        (in_array($currentPage, ['event_attributes']) && $menu == 'Cadastros')
+        (in_array($currentPage, ['event_attributes']) && $menu == 'Cadastros') ||
+        (in_array($currentPage, ['system_settings']) && $menu == 'Cadastros')
         ) {
         return 'active';
     }
