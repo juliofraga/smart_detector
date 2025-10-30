@@ -64,7 +64,7 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     });
     Route::prefix('system-settings')->middleware('admin')->group(function () {
         Route::get('/', 'SystemSettingController@index');
-        Route::patch('/{id}', 'SystemSettingController@update');
+        Route::patch('/', 'SystemSettingController@update');
     });
     Route::post('logout', 'AuthController@logout');
     Route::get('me', 'AuthController@me');
