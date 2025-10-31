@@ -18,6 +18,8 @@
                 </div>
             </div>
         </div>
+        <alert-component type="danger" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'error'"></alert-component>
+        <alert-component type="success" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'success'"></alert-component>
     </div>
 </template>
 

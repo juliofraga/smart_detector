@@ -24,4 +24,20 @@ class SystemSettingController extends BaseController
     {
         return view('/system-settings');
     }
+
+    public function update(Request $request, int $id = 0): JsonResponse
+    {
+        $attribute = array_key_first($request->all());
+        $value = $request->input($attribute);
+
+        $data = $this->model->where('attribute', $attribute)->first();
+        if (!$data) {
+            return parent::responseDataNotFound();
+        }
+
+        $data->value = $value;
+        $update = $data->save();
+
+        return parent::responseOther($update, 'update');
+    }
 }
