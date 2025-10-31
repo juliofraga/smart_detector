@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 
 class system_setting extends BaseModel
 {
@@ -24,5 +25,16 @@ class system_setting extends BaseModel
         return [
             'required' => 'O campo :attribute é obrigatório'
         ];
+    }
+
+    protected static function booted()
+    {
+        static::saved(function () {
+            Cache::forget('system_settings');
+        });
+
+        static::deleted(function () {
+            Cache::forget('system_settings');
+        });
     }
 }
