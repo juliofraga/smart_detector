@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\LoginError;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\UserController;
+use App\Models\system_setting;
 
 class AuthController extends Controller
 {
@@ -16,13 +17,16 @@ class AuthController extends Controller
         $email = $request->email;
         $password = $request->password;
         $user = User::where('email', $email)->first();
+        $blockUserSetting = system_setting::where('attribute', 'block_user')->first()->value === "Sim" ? true : false;
         if (!$user) {
             return parent::responseGeneric('Usuário não cadastrado no sistema', 401, 'error');
         }
         $loginError = LoginError::where('user_id', $user->id)->first();
-        if ($loginError && $loginError->isBlocked()) {
-            if ($this->BlockedByTime($loginError->blocked_at)) {
-                return parent::responseGeneric('Conta temporariamente bloqueada, tente novamente mais tarde', 403, 'error');
+        if ($blockUserSetting) {
+            if ($loginError && $loginError->isBlocked()) {
+                if ($this->BlockedByTime($loginError->blocked_at)) {
+                    return parent::responseGeneric('Conta temporariamente bloqueada, tente novamente mais tarde', 403, 'error');
+                }
             }
         }
 
@@ -37,12 +41,14 @@ class AuthController extends Controller
             UserController::registerUserLogin($email);
             return parent::responseGeneric($token, 201, 'token');
         } else {
-            $loginError = LoginError::firstOrCreate(['user_id' => $user->id]);
-            if ($loginError->error_count >= 5) {
-                $loginError->block();
-                return parent::responseGeneric('Sua conta foi temporariamente bloqueada, tente novamente mais tarde', 403, 'error');
+            if ($blockUserSetting) {
+                $loginError = LoginError::firstOrCreate(['user_id' => $user->id]);
+                if ($loginError->error_count >= 5) {
+                    $loginError->block();
+                    return parent::responseGeneric('Sua conta foi temporariamente bloqueada, tente novamente mais tarde', 403, 'error');
+                }
+                $loginError->incrementErrorCount();
             }
-            $loginError->incrementErrorCount();
             return parent::responseGeneric('Credenciais Inválidas', 401, 'error');
         }
     }
