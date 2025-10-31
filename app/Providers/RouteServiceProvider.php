@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use App\Models\system_setting;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -62,7 +63,9 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('store-events', function ($request) {
-            return Limit::perMinute(1000)->by(optional($request->user())->id ?: $request->ip());
+            $setting = system_setting::where('attribute', 'request_per_minute')->first();
+            $limit = $setting ? (int)$setting->value : 1000;
+            return Limit::perMinute($limit)->by(optional($request->user())->id ?: $request->ip());
         });
 
         RateLimiter::for('api', function (Request $request) {
