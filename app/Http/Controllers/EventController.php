@@ -79,21 +79,6 @@ class EventController extends BaseController
         return parent::responseGeneric($data);
     }
 
-    public function getNewEvents(int $id): JsonResponse
-    {
-        $data = $this->model
-                    ->with('classification')
-                    ->with('analysys')
-                    ->with('type')
-                    ->where('id', '>', $id)
-                    ->get();
-        if ($data) {
-            return parent::responseGeneric($data);
-        } else {
-            return parent::responseGeneric('Sem novos registros');
-        }
-    }
-
     public function show(int $id = null)
     {
         return view('/event');

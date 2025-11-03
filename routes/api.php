@@ -39,7 +39,6 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
         Route::post('/', 'EventController@store')
             ->withoutMiddleware('throttle:api')
             ->middleware('throttle:store-events');
-        Route::get('/new/{id}', 'EventController@getNewEvents')->middleware('throttle:new-events');
         Route::get('/{id}', 'EventController@get');
         Route::get('/get/all', 'EventController@getAll');
     });

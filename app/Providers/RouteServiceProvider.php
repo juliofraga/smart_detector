@@ -62,7 +62,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('store-events', function ($request) {
-            $limit = (int) config('system_settings.request_per_minute', 1000);
+            $limit = min((int) config('system_settings.request_per_minute', 1000), 5000);
             return Limit::perMinute($limit)->by(optional($request->user())->id ?: $request->ip());
         });
 
