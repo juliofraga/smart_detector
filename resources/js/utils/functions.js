@@ -43,7 +43,7 @@ export function axiosPost(url, data, obj) {
             obj.feedbackTitle = "Erro ao registrar dados";
             closeModal('modalAdd');
             obj.feedbackMessage = {
-                mensagem: errors.response.data.message,
+                message: errors.response.data.message,
                 data: errors.response.data.errors
             };
             cleanFeedbackMessage(obj);
