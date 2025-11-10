@@ -56,11 +56,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function configureRateLimiting()
     {
-        RateLimiter::for('new-events', function ($request) {
-            $id = $request->route('id');
-            return Limit::perMinute(10)->by($request->user() ? $request->user()->id : $request->ip());
-        });
-
         RateLimiter::for('store-events', function ($request) {
             $limit = min((int) config('system_settings.request_per_minute', 1000), 5000);
             return Limit::perMinute($limit)->by(optional($request->user())->id ?: $request->ip());
