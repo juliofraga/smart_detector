@@ -64,9 +64,17 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::prefix('system-settings')->middleware('admin')->group(function () {
         Route::get('/', 'SystemSettingController@index');
         Route::patch('/', 'SystemSettingController@update');
+        Route::get('/timezones', function () {
+            $timezones = collect(DateTimeZone::listIdentifiers())
+                ->groupBy(function ($tz) {
+                    return explode('/', $tz)[0];
+                });
+            return response()->json($timezones);
+        });
     });
     Route::post('logout', 'AuthController@logout');
     Route::get('me', 'AuthController@me');
+    
 });
 
 Route::post('login', 'AuthController@login');

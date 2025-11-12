@@ -9,13 +9,21 @@
                 <!-- Field text -->
                 <input v-if="setting.type === 'text'" type="text" class="form-control" :id="setting.attribute" :name="setting.attribute" v-model="setting.value" @blur="update(setting.attribute, setting.value)">
 
-                <!-- Fiels YesNo -->
+                <!-- Field YesNo -->
                 <div v-else-if="setting.type === 'YesNo'" class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" :id="setting.attribute" :name="setting.attribute" :checked="setting.value === 'Sim'" @change="toggleYesNo(setting)" />
                     <label class="form-check-label text-white" :for="setting.attribute">
                         {{ setting.value === 'Sim' ? 'Ativado' : 'Desativado' }}
                     </label>
                 </div>
+
+                <!-- Field select -->
+                <select v-else-if="setting.type === 'select'" class="form-control" v-model="setting.value" @change="update(setting.attribute, setting.value)">
+                    <optgroup v-for="(zones, region) in timezones" :key="region" :label="region">
+                        <option v-for="tz in zones" :key="tz" :value="tz">{{ tz }}</option>
+                    </optgroup>
+                </select>
+
             </div>
         </div>
         <alert-component type="danger" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'error'"></alert-component>
@@ -34,6 +42,7 @@
                 feedbackMessage: {},
                 feedbackTitle: '',
                 loaded: false,
+                timezones: [],
             }
         },
         methods: {
@@ -53,9 +62,14 @@
                 let url = this.urlBase;
                 utils.axiosPatch(url, data, this);
             },
+            loadTimezones() {
+                let url = this.urlBase + '/timezones';
+                utils.axiosGet(url, this, 'timezones');
+            }
         },
         mounted() {
             this.loadList();
+            this.loadTimezones();
         }
     }
 </script>
