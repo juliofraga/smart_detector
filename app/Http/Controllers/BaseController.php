@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Traits\PasswordValidationTrait;
 
 Class BaseController extends Controller
 {
@@ -25,6 +26,9 @@ Class BaseController extends Controller
     {
         $request->validate($this->model->rules(), $this->model->feedback());
         if ($request->password) {
+            if (config('system_settings.pass_complexity') === 'Yes' && !PasswordValidationTrait::passwordValidate($request->password)) {
+                return parent::responseGeneric('A senha não atendeu os requisitos mínimos de segurança, tente novamente!', 400, 'message');
+            }
             $request->merge([
                 'password' => bcrypt($request->password)
             ]);

@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use App\Traits\PasswordValidationTrait;
 
 class UserController extends BaseController
 {
@@ -24,7 +25,7 @@ class UserController extends BaseController
     {
         $user_id = $request->user()->id;
         if ($request->password) {
-            if (config('system_settings.pass_complexity') === 'Yes' && !$this->passwordValidate($request->password)) {
+            if (config('system_settings.pass_complexity') === 'Yes' && !PasswordValidationTrait::passwordValidate($request->password)) {
                 return parent::responseGeneric('A senha não atendeu os requisitos mínimos de segurança, tente novamente!', 400, 'message');
             }
             $request->merge([
@@ -90,31 +91,6 @@ class UserController extends BaseController
                 return parent::responseError();
             }
         }
-    }
-
-    private function passwordValidate($pass): bool
-    {
-        if (strlen($pass) < 8) {
-            return false;
-        }
-    
-        if (!preg_match('/[A-Z]/', $pass)) {
-            return false;
-        }
-
-        if (!preg_match('/[a-z]/', $pass)) {
-            return false;
-        }
-    
-        if (!preg_match('/[0-9]/', $pass)) {
-            return false;
-        }
-    
-        if (!preg_match('/[\W_]/', $pass)) {
-            return false;
-        }
-    
-        return true;
     }
     
 }
