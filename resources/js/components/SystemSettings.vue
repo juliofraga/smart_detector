@@ -11,9 +11,9 @@
 
                 <!-- Field YesNo -->
                 <div v-else-if="setting.type === 'YesNo'" class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" :id="setting.attribute" :name="setting.attribute" :checked="setting.value === 'Sim'" @change="toggleYesNo(setting)" />
+                    <input class="form-check-input" type="checkbox" role="switch" :id="setting.attribute" :name="setting.attribute" :checked="setting.value === 'Yes'" @change="toggleYesNo(setting)" />
                     <label class="form-check-label text-white" :for="setting.attribute">
-                        {{ setting.value === 'Sim' ? 'Ativado' : 'Desativado' }}
+                        {{ setting.value === 'Yes' ? 'Ativado' : 'Desativado' }}
                     </label>
                 </div>
 
@@ -52,7 +52,7 @@
                 utils.cleanFeedbackMessage(this);                    
             },
             toggleYesNo(setting) {
-                setting.value = setting.value === "Sim" ? "Não" : "Sim";
+                setting.value = setting.value === "Yes" ? "No" : "Yes";
                 this.update(setting.attribute, setting.value);
             },
             update(attribute, value) {

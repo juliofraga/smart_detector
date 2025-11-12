@@ -17,7 +17,7 @@ class AuthController extends Controller
         $email = $request->email;
         $password = $request->password;
         $user = User::where('email', $email)->first();
-        $blockUserSetting = system_setting::where('attribute', 'block_user')->first()->value === "Sim" ? true : false;
+        $blockUserSetting = system_setting::where('attribute', 'block_user')->first()->value === "Yes" ? true : false;
         if (!$user) {
             return parent::responseGeneric('Usuário não cadastrado no sistema', 401, 'error');
         }
