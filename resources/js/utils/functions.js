@@ -57,13 +57,15 @@ export function axiosPatch(url, data, obj) {
             obj.feedbackTitle = "Dados atualizados com sucesso";
             closeModal('modalUpdate');
             obj.loadList();
-            obj.cleanAddFormData();
+            if (typeof obj.cleanAddFormData === 'function') {
+                obj.cleanAddFormData();
+            }
         })
         .catch(errors => {
-            this.status = 'error';
-            this.feedbackTitle = "Erro ao atualizar dados";
+            obj.status = 'error';
+            obj.feedbackTitle = "Erro ao atualizar dados";
             closeModal('modalUpdate');
-            this.feedbackMessage = {
+            obj.feedbackMessage = {
                 message: errors.response.data.message,
                 data: errors.response.data.errors
             };

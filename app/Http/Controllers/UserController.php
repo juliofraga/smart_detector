@@ -24,6 +24,9 @@ class UserController extends BaseController
     {
         $user_id = $request->user()->id;
         if ($request->password) {
+            if (config('system_settings.pass_complexity') === 'Yes' && !$this->passwordValidate($request->password)) {
+                return parent::responseGeneric('A senha não atendeu os requisitos mínimos de segurança, tente novamente!', 400, 'message');
+            }
             $request->merge([
                 'password' => bcrypt($request->password),
                 'updated_pass' => $user_id != $id ? 0 : 1
@@ -70,6 +73,9 @@ class UserController extends BaseController
         if (!$token) {
             return parent::responseGeneric('Senha temporária inválida, tente novamente!', 403, 'error');
         } else {
+            if (config('system_settings.pass_complexity') === 'Yes' && $this->passwordValidate($request->password)) {
+                return parent::responseGeneric('A senha não atendeu os requisitos mínimos de segurança, tente novamente!', 400, 'error');
+            }
             User::where('email', $data['email'])->update([
                 'password' => bcrypt($data['passwordNew'])
             ]);
@@ -85,4 +91,30 @@ class UserController extends BaseController
             }
         }
     }
+
+    private function passwordValidate($pass): bool
+    {
+        if (strlen($pass) < 8) {
+            return false;
+        }
+    
+        if (!preg_match('/[A-Z]/', $pass)) {
+            return false;
+        }
+
+        if (!preg_match('/[a-z]/', $pass)) {
+            return false;
+        }
+    
+        if (!preg_match('/[0-9]/', $pass)) {
+            return false;
+        }
+    
+        if (!preg_match('/[\W_]/', $pass)) {
+            return false;
+        }
+    
+        return true;
+    }
+    
 }
