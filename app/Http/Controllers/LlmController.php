@@ -14,6 +14,11 @@ class LlmController extends BaseController
         parent::__construct($llm);
     }
 
+    public function index(Request $request, array $attributes = null): JsonResponse
+    {
+        return parent::index($request, ['name', 'asc']);
+    }
+
     public function show(int $id = null)
     {
         return view('/llm');

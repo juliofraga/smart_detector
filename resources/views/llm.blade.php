@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    LLM
+    <llm-component></llm-component>
 @endsection
