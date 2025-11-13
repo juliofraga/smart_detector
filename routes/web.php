@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/tipos-de-ameaca', 'TypeController@show')->middleware('admin')->name('types');
     Route::get('/atributos-de-eventos', 'EventAttributeController@show')->middleware('admin')->name('event_attributes');
     Route::get('/configuracoes-do-sistema', 'SystemSettingController@show')->middleware('admin')->name('system_settings');
+    Route::get('/llm', 'LlmController@show')->middleware('admin')->name('llm');
 });
 
 Route::get('/login/update-password', function () {
