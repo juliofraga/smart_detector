@@ -274,6 +274,8 @@
                 <updates-button-component></updates-button-component> 
             </template>
         </modal-component>
+        <!-- Modal para confirmar remoção de tipo de ameaça -->
+        <modal-delete-component></modal-delete-component>
     </div>
 </template>
 
