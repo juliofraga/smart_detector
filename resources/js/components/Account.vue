@@ -33,6 +33,25 @@
                                     Informe a senha.
                                 </div>
                             </div>
+                            <div v-if="passComplexityActivated && passwordStarted" class="mt-2 text-white small">
+                                <ul class="mb-0">
+                                    <li :class="{'text-success': passwordLengthOk, 'text-danger': !passwordLengthOk}">
+                                        Mínimo de 8 caracteres
+                                    </li>
+                                    <li :class="{'text-success': passwordUpperOk, 'text-danger': !passwordUpperOk}">
+                                        Pelo menos uma letra maiúscula
+                                    </li>
+                                    <li :class="{'text-success': passwordLowerOk, 'text-danger': !passwordLowerOk}">
+                                        Pelo menos uma letra minúscula
+                                    </li>
+                                    <li :class="{'text-success': passwordNumberOk, 'text-danger': !passwordNumberOk}">
+                                        Pelo menos um número
+                                    </li>
+                                    <li :class="{'text-success': passwordSpecialOk, 'text-danger': !passwordSpecialOk}">
+                                        Pelo menos um caractere especial
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -48,7 +67,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-success text-white w-100" @click="update()">
+                            <button type="button" class="btn btn-success text-white w-100" @click="update()" :disabled="isButtonDisabled">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy" viewBox="0 0 16 16">
                                     <path d="M11 2H9v3h2z"/>
                                     <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
@@ -96,9 +115,44 @@
                 password: '',
                 repeatPassword: '',
                 urlBase: utils.API_URL + '/api/v1/user',
+                urlBaseSettings: utils.API_URL + '/api/v1/system-settings',
                 feedbackMessage: {},
                 feedbackTitle: '',
-                status: ''
+                status: '',
+                passComplexityActivated: true,
+                passwordStarted: false,
+                passwordLengthOk: false,
+                passwordUpperOk: false,
+                passwordLowerOk: false,
+                passwordNumberOk: false,
+                passwordSpecialOk: false,
+                settings: {data: {}},
+            }
+        },
+        watch: {
+            password(newVal) {
+                if (this.passComplexityActivated) {
+                    this.passwordStarted = newVal.length > 0;
+                    this.passwordLengthOk = newVal.length >= 8;
+                    this.passwordUpperOk = /[A-Z]/.test(newVal);
+                    this.passwordLowerOk = /[a-z]/.test(newVal);
+                    this.passwordNumberOk = /\d/.test(newVal);
+                    this.passwordSpecialOk = /[^A-Za-z0-9]/.test(newVal);
+                }
+            },
+            settings(newVal) {
+                if (Array.isArray(newVal) && newVal.length > 0) {
+                const passComplexity = newVal.find(item => item.attribute === 'pass_complexity');
+                    if (passComplexity) {
+                        if (passComplexity.value == 'Yes') {
+                            this.passComplexityActivated = true;
+                        } else {
+                            this.passComplexityActivated = false;
+                        }
+                    } else {
+                        this.passComplexityActivated = true;
+                    }
+                }
             }
         },
         methods: {
@@ -120,6 +174,35 @@
                         utils.cleanFeedbackMessage(this); 
                     }
                 }
+            },
+            loadSettings() {
+                let url = this.urlBaseSettings;
+                utils.axiosGet(url, this, 'settings');
+            }
+        },
+        mounted() {
+            this.loadSettings();
+        },
+        computed: {
+            isButtonDisabled() {
+                if (!this.passComplexityActivated) {
+                    return false
+                }
+
+                if (this.passComplexityActivated && !this.passwordStarted) {
+                    return false
+                }
+
+                if (this.passComplexityActivated && this.passwordStarted) {
+                    const allOk = this.passwordLengthOk &&
+                                this.passwordUpperOk &&
+                                this.passwordLowerOk &&
+                                this.passwordNumberOk &&
+                                this.passwordSpecialOk
+                    return !allOk
+                }
+
+                return true
             }
         }
     }

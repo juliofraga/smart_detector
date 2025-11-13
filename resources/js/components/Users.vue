@@ -376,7 +376,6 @@
             settings(newVal) {
                 if (Array.isArray(newVal) && newVal.length > 0) {
                 const passComplexity = newVal.find(item => item.attribute === 'pass_complexity');
-                console.log(passComplexity);
                     if (passComplexity) {
                         if (passComplexity.value == 'Yes') {
                             this.passComplexityActivated = true;
