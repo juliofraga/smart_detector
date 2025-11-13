@@ -56,7 +56,7 @@
             <spinner-component></spinner-component>
         </div>
         <paginate-component :data = "llms"></paginate-component>
-                <!-- Modal para adicionar LLM's -->
+        <!-- Modal para adicionar LLM's -->
         <modal-component id="modalAdd" options="modal-dialog-centered modal-xl" title="Adicionar LLM">
             <template v-slot:conteudo>
                 <div class="form-group">
@@ -160,6 +160,120 @@
                 <add-cancel-buttons-component></add-cancel-buttons-component>
             </template>
         </modal-component>
+        <!-- Modal para atualizar LLM's -->
+        <modal-component id="modalUpdate" options="modal-dialog-centered modal-xl" title="Atualizar LLM">
+            <template v-slot:conteudo>
+                <div class="form-group">
+                    <div class="row mt-2">
+                        <div class="col-sm-4 mt-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="nameUpdate" name="nameUpdate" placeholder="Nome (ex: 'GPT-5', 'Claude 3.5', 'Gemini 1.5')*" v-model="$store.state.item.name">
+                                <label class="form-label">Nome (ex: 'GPT-5', 'Claude 3.5', 'Gemini 1.5')*</label>
+                                <div id="invalidFeedbackName" class="invalid-feedback">
+                                    Informe o nome.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mt-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="providerUpdate" name="providerUpdate" placeholder="Provider (ex: 'OpenAI', 'Google')*" v-model="$store.state.item.provider">
+                                <label class="form-label">Provider (ex: 'OpenAI', 'Google')*</label>
+                                <div id="invalidFeedbackProvider" class="invalid-feedback">
+                                    Informe a provider.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mt-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="model_idUpdate" name="model_idUpdate" placeholder="Model ID (ex: gpt-5, gemini-1.5-pro)*" v-model="$store.state.item.model_id">
+                                <label class="form-label">Model ID (ex: gpt-5, gemini-1.5-pro)*</label>
+                                <div id="invalidFeedbackModelId" class="invalid-feedback">
+                                    Informe o Model ID.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-6 mt-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="api_base_urlUpdate" name="api_base_urlUpdate" placeholder="API URL (ex: https://api.openai.com/v1)*" v-model="$store.state.item.api_base_url">
+                                <label class="form-label">API URL (ex: https://api.openai.com/v1)*</label>
+                                <div id="invalidFeedbackApiBaseUrl" class="invalid-feedback">
+                                    Informe a URL da API.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mt-3">
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="api_keyUpdate" name="api_keyUpdate" placeholder="API Key*" v-model="$store.state.item.api_key">
+                                <label class="form-label">API Key*</label>
+                                <div id="invalidFeedbackApiKey" class="invalid-feedback">
+                                    Informe a API Key.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-6 mt-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="pricing_prompt_tokenUpdate" name="pricing_prompt_tokenUpdate" placeholder="Custo por 1k tokens de prompt" v-model="$store.state.item.pricing_prompt_token">
+                                <label class="form-label">Custo por 1k tokens de prompt</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mt-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="pricing_completion_tokenUpdate" name="pricing_completion_tokenUpdate" placeholder="Custo por 1k tokens de resposta" v-model="$store.state.item.pricing_completion_token">
+                                <label class="form-label">Custo por 1k tokens de resposta</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-4 mt-3">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="max_tokensUpdate" name="max_tokensUpdate" placeholder="Limite de tokens permitido por requisição" v-model="$store.state.item.max_tokens">
+                                <label class="form-label">Limite de tokens permitido por requisição</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mt-3">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="default_temperatureUpdate" name="default_temperatureUpdate" placeholder="Temperatura Padrão*" v-model="$store.state.item.default_temperature">
+                                <label class="form-label">Temperatura Padrão*</label>
+                                <div id="invalidFeedbackDefaultTemperature" class="invalid-feedback">
+                                    Informe a temperatura padrão.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mt-3">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="context_lengthUpdate" name="context_lengthUpdate" placeholder="Quantos tokens o modelo aceita no contexto?" v-model="$store.state.item.context_length">
+                                <label class="form-label">Quantos tokens o modelo aceita no contexto?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
+                            <div class="form-floating">
+                                <textarea class="form-control rounded border-0" rows="10" id="notesUpdate" name="notesUpdate" style="height: auto;" v-model="$store.state.item.notes"></textarea>
+                                <label class="form-label">Notas*</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12">
+                            <label class="form-label text-light"><i>Data de criação: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="form-label text-light"><i>Última atualização: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template v-slot:rodape>
+                <updates-button-component></updates-button-component> 
+            </template>
+        </modal-component>
     </div>
 </template>
 
@@ -187,6 +301,17 @@
                 pricing_prompt_token: '',
                 pricing_completion_token: '',
                 notes: '',
+                nameUpdate: '',
+                providerUpdate: '',
+                model_idUpdate: '',
+                api_base_urlUpdate: '',
+                api_keyUpdate: '',
+                max_tokensUpdate: '',
+                default_temperatureUpdate: '',
+                context_lengthUpdate: '',
+                pricing_prompt_tokenUpdate: '',
+                pricing_completion_tokenUpdate: '',
+                notesUpdate: '',
                 loaded: false,
             }
         },
@@ -211,13 +336,33 @@
                 }
             },
             update() {
-                utils.removeRequiredFieldMessage(['descriptionUpdate']);
-                if (this.$store.state.item.description == ''){
-                    utils.showRequiredFieldMessage('descriptionUpdate');
+                utils.removeRequiredFieldMessage(['nameUpdate', 'providerUpdate', 'model_idUpdate', 'api_base_urlUpdate', 'api_keyUpdate', 'default_temperatureUpdate']);
+                if (this.$store.state.item.name == ''){
+                    utils.showRequiredFieldMessage('nameUpdate');
+                } else if(this.$store.state.item.provider == '') {
+                    utils.showRequiredFieldMessage('providerUpdate');
+                } else if(this.$store.state.item.model_id == '') {
+                    utils.showRequiredFieldMessage('model_idUpdate');
+                } else if(this.$store.state.item.api_base_url == '') {
+                    utils.showRequiredFieldMessage('api_base_urlUpdate');
+                } else if(this.$store.state.item.api_key == '') {
+                    utils.showRequiredFieldMessage('api_keyUpdate');
+                } else if(this.$store.state.item.default_temperature == '') {
+                    utils.showRequiredFieldMessage('default_temperatureUpdate');
                 } else {
-                    utils.removeRequiredFieldMessage(['descriptionUpdate']);
+                    utils.removeRequiredFieldMessage(['nameUpdate', 'providerUpdate', 'model_idUpdate', 'api_base_urlUpdate', 'api_keyUpdate', 'default_temperatureUpdate']);
                     let data = {
-                        description: this.$store.state.item.description
+                        name: this.$store.state.item.name,
+                        provider: this.$store.state.item.provider,
+                        model_id: this.$store.state.item.model_id,
+                        api_base_url: this.$store.state.item.api_base_url,
+                        api_key: this.$store.state.item.api_key,
+                        max_tokens: this.$store.state.item.max_tokens,
+                        default_temperature: this.$store.state.item.default_temperature,
+                        context_length: this.$store.state.item.context_length,
+                        pricing_prompt_token: this.$store.state.item.pricing_prompt_token,
+                        pricing_completion_token: this.$store.state.item.pricing_completion_token,
+                        notes: this.$store.state.item.notes
                     };
                     let url = this.urlBase + '/' + this.$store.state.item.id;
                     utils.axiosPatch(url, data, this);
