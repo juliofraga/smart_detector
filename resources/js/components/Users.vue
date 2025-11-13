@@ -93,12 +93,20 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Senha*" v-model="password">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Senha*" v-model="password" @input="(checkPasswordStrength('add'))">
                                 <label class="form-label">Senha*</label>
                                 <div id="invalidFeedbackPassword" class="invalid-feedback">
                                     Informe a senha.
                                 </div>
                             </div>
+                            <!-- Indicador de requisitos da senha -->
+                            <ul v-if="passComplexityActivated && passwordStarted" class="mt-2 ps-3" style="font-size: 0.9rem; list-style: none;">
+                                <li :style="{ color: passwordChecks.length ? 'green' : 'red' }">• Mínimo de 8 caracteres</li>
+                                <li :style="{ color: passwordChecks.uppercase ? 'green' : 'red' }">• Pelo menos uma letra maiúscula</li>
+                                <li :style="{ color: passwordChecks.lowercase ? 'green' : 'red' }">• Pelo menos uma letra minúscula</li>
+                                <li :style="{ color: passwordChecks.number ? 'green' : 'red' }">• Pelo menos um número</li>
+                                <li :style="{ color: passwordChecks.special ? 'green' : 'red' }">• Pelo menos um caractere especial</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -115,7 +123,7 @@
                 </div>
             </template>
             <template v-slot:rodape>
-                <add-cancel-buttons-component></add-cancel-buttons-component>
+                <add-cancel-buttons-component :disabled="!isPasswordValid"></add-cancel-buttons-component>
             </template>
         </modal-component>
         <!-- Modal para atualizar usuários -->
@@ -156,12 +164,20 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="passwordUpdate" name="passwordUpdate" placeholder="Senha*" v-model="passwordUpdate">
+                                <input type="password" class="form-control" id="passwordUpdate" name="passwordUpdate" placeholder="Senha*" v-model="passwordUpdate" @input="checkPasswordStrength('update')">
                                 <label class="form-label">Senha*</label>
                                 <div id="invalidFeedbackPasswordUpdate" class="invalid-feedback">
                                     Informe a senha.
                                 </div>
                             </div>
+                            <!-- Indicador de requisitos da senha -->
+                            <ul v-if="passComplexityActivated && passwordUpdateStarted" class="mt-2 ps-3" style="font-size: 0.9rem; list-style: none;">
+                                <li :style="{ color: passwordChecks.length ? 'green' : 'red' }">• Mínimo de 8 caracteres</li>
+                                <li :style="{ color: passwordChecks.uppercase ? 'green' : 'red' }">• Pelo menos uma letra maiúscula</li>
+                                <li :style="{ color: passwordChecks.lowercase ? 'green' : 'red' }">• Pelo menos uma letra minúscula</li>
+                                <li :style="{ color: passwordChecks.number ? 'green' : 'red' }">• Pelo menos um número</li>
+                                <li :style="{ color: passwordChecks.special ? 'green' : 'red' }">• Pelo menos um caractere especial</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -193,7 +209,7 @@
                 </div>
             </template>
             <template v-slot:rodape>
-                <updates-button-component></updates-button-component>                          
+                <updates-button-component :disabled="!(isPasswordValid || !passwordUpdateStarted)"></updates-button-component>                          
             </template>
         </modal-component>
         <!-- Modal para confirmar remoção de usuário -->
@@ -210,6 +226,7 @@
                 users: {data: {}},
                 urlBase: utils.API_URL + '/api/v1/user',
                 urlBaseProfile: utils.API_URL + '/api/v1/profile',
+                urlBaseSettings: utils.API_URL + '/api/v1/system-settings',
                 urlPaginate: '',
                 urlFilter: '',
                 status: '',
@@ -224,7 +241,18 @@
                 profile: '',
                 profileUpdate: '',
                 loaded: false,
-                profiles: {data: {}}
+                profiles: {data: {}},
+                settings: {data: {}},
+                passComplexityActivated: true,
+                passwordStarted: false,
+                passwordUpdateStarted: false,
+                passwordChecks: {
+                    length: false,
+                    uppercase: false,
+                    lowercase: false,
+                    number: false,
+                    special: false,
+                },
             }
         },
         methods: {
@@ -295,6 +323,43 @@
             showModal(modal) {
                 utils.showModal(modal);
             },
+            checkPasswordStrength(action) {
+                if (!this.passComplexityActivated) return;
+                let pass = '';
+                if (action == 'add') {
+                    pass = this.password;
+                    this.passwordStarted = pass.length > 0;
+                } else {
+                    pass = this.passwordUpdate;
+                    this.passwordUpdateStarted = pass.length > 0;
+                }             
+                
+
+                this.passwordChecks.length = pass.length >= 8;
+                this.passwordChecks.uppercase = /[A-Z]/.test(pass);
+                this.passwordChecks.lowercase = /[a-z]/.test(pass);
+                this.passwordChecks.number = /[0-9]/.test(pass);
+                this.passwordChecks.special = /[\W_]/.test(pass);
+            },
+            loadSettings() {
+                let url = this.urlBaseSettings;
+                utils.axiosGet(url, this, 'settings');
+            }
+        },
+        computed: {
+            isPasswordValid() {
+                if (!this.passComplexityActivated) {
+                    return true;
+                }
+                const checks = this.passwordChecks;
+                return (
+                    checks.length &&
+                    checks.uppercase &&
+                    checks.lowercase &&
+                    checks.number &&
+                    checks.special
+                );
+            },
         },
         mounted() {
             EventBus.$on("loadList", this.loadList)
@@ -305,6 +370,37 @@
             EventBus.$on("save", this.save);
             this.loadList();
             this.loadProfiles();
-        }
+            this.loadSettings();
+        },
+        watch: {
+            settings(newVal) {
+                if (Array.isArray(newVal) && newVal.length > 0) {
+                const passComplexity = newVal.find(item => item.attribute === 'pass_complexity');
+                console.log(passComplexity);
+                    if (passComplexity) {
+                        if (passComplexity.value == 'Yes') {
+                            this.passComplexityActivated = true;
+                        } else {
+                            this.passComplexityActivated = false;
+                        }
+                    } else {
+                        this.passComplexityActivated = true;
+                    }
+                }
+            }
+        },
     }
 </script>
+<style scoped>
+    ul li {
+        transition: color 0.2s ease;
+    }
+    ul li::before {
+        content: "✖ ";
+        color: red;
+    }
+    ul li[style*="green"]::before {
+        content: "✔ ";
+        color: green;
+    }
+</style>
