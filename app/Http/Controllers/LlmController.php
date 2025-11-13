@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
-use App\Models\llm;
+use App\Models\Llm;
 use Illuminate\Http\JsonResponse;
 
 class LlmController extends BaseController
 {
-    public function __construct(llm $llm)
+    public function __construct(Llm $llm)
     {
         parent::__construct($llm);
     }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class llm extends Model
+class Llm extends Model
 {
     use HasFactory;
 
@@ -27,7 +27,7 @@ class llm extends Model
     public function rules(): array 
     {
         return [
-            'name' => 'required|unique:llm,name',
+            'name' => 'required|unique:llms,name',
             'provider' => 'required',
             'model_id' => 'required',
             'api_base_url' => 'required',
