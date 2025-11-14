@@ -23,4 +23,14 @@ class LlmController extends BaseController
     {
         return view('/llm');
     }
+
+    public function update(Request $request, int $id): JsonResponse
+    {
+        if ($request->api_key) {
+            $request->merge([
+                'api_key' => bcrypt($request->api_key)
+            ]);
+        }
+        return parent::update($request, $id);
+    }
 }

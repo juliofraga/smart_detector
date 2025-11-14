@@ -57,11 +57,11 @@
         </div>
         <paginate-component :data = "llms"></paginate-component>
         <!-- Modal para adicionar LLM's -->
-        <modal-component id="modalAdd" options="modal-dialog-centered modal-xl" title="Adicionar LLM">
+        <modal-component id="modalAdd" options="modal-dialog-centered modal-md" title="Adicionar LLM">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
-                        <div class="col-sm-4 mt-3">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Nome (ex: 'GPT-5', 'Claude 3.5', 'Gemini 1.5')*" v-model="name">
                                 <label class="form-label">Nome (ex: 'GPT-5', 'Claude 3.5', 'Gemini 1.5')*</label>
@@ -70,7 +70,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 mt-3">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="provider" name="provider" placeholder="Provider (ex: 'OpenAI', 'Google')*" v-model="provider">
                                 <label class="form-label">Provider (ex: 'OpenAI', 'Google')*</label>
@@ -79,7 +81,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 mt-3">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="model_id" name="model_id" placeholder="Model ID (ex: gpt-5, gemini-1.5-pro)*" v-model="model_id">
                                 <label class="form-label">Model ID (ex: gpt-5, gemini-1.5-pro)*</label>
@@ -90,7 +94,7 @@
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-sm-6 mt-3">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="api_base_url" name="api_base_url" placeholder="API URL (ex: https://api.openai.com/v1)*" v-model="api_base_url">
                                 <label class="form-label">API URL (ex: https://api.openai.com/v1)*</label>
@@ -99,7 +103,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 mt-3">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="password" class="form-control" id="api_key" name="api_key" placeholder="API Key*" v-model="api_key">
                                 <label class="form-label">API Key*</label>
@@ -110,13 +116,15 @@
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-sm-6 mt-3">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="pricing_prompt_token" name="pricing_prompt_token" placeholder="Custo por 1k tokens de prompt" v-model="pricing_prompt_token">
                                 <label class="form-label">Custo por 1k tokens de prompt</label>
                             </div>
                         </div>
-                        <div class="col-sm-6 mt-3">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="pricing_completion_token" name="pricing_completion_token" placeholder="Custo por 1k tokens de resposta" v-model="pricing_completion_token">
                                 <label class="form-label">Custo por 1k tokens de resposta</label>
@@ -124,13 +132,15 @@
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-sm-4 mt-3">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="max_tokens" name="max_tokens" placeholder="Limite de tokens permitido por requisição" v-model="max_tokens">
                                 <label class="form-label">Limite de tokens permitido por requisição</label>
                             </div>
                         </div>
-                        <div class="col-sm-4 mt-3">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="default_temperature" name="default_temperature" placeholder="Temperatura Padrão*" v-model="default_temperature">
                                 <label class="form-label">Temperatura Padrão*</label>
@@ -139,7 +149,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 mt-3">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="context_length" name="context_length" placeholder="Quantos tokens o modelo aceita no contexto?" v-model="context_length">
                                 <label class="form-label">Quantos tokens o modelo aceita no contexto?</label>
@@ -161,11 +173,11 @@
             </template>
         </modal-component>
         <!-- Modal para atualizar LLM's -->
-        <modal-component id="modalUpdate" options="modal-dialog-centered modal-xl" title="Atualizar LLM">
+        <modal-component id="modalUpdate" options="modal-dialog-centered modal-md" title="Atualizar LLM">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
-                        <div class="col-sm-4 mt-3">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="nameUpdate" name="nameUpdate" placeholder="Nome (ex: 'GPT-5', 'Claude 3.5', 'Gemini 1.5')*" v-model="$store.state.item.name">
                                 <label class="form-label">Nome (ex: 'GPT-5', 'Claude 3.5', 'Gemini 1.5')*</label>
@@ -174,7 +186,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 mt-3">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="providerUpdate" name="providerUpdate" placeholder="Provider (ex: 'OpenAI', 'Google')*" v-model="$store.state.item.provider">
                                 <label class="form-label">Provider (ex: 'OpenAI', 'Google')*</label>
@@ -183,7 +197,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 mt-3">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="model_idUpdate" name="model_idUpdate" placeholder="Model ID (ex: gpt-5, gemini-1.5-pro)*" v-model="$store.state.item.model_id">
                                 <label class="form-label">Model ID (ex: gpt-5, gemini-1.5-pro)*</label>
@@ -194,7 +210,7 @@
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-sm-6 mt-3">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="api_base_urlUpdate" name="api_base_urlUpdate" placeholder="API URL (ex: https://api.openai.com/v1)*" v-model="$store.state.item.api_base_url">
                                 <label class="form-label">API URL (ex: https://api.openai.com/v1)*</label>
@@ -203,7 +219,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 mt-3">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="password" class="form-control" id="api_keyUpdate" name="api_keyUpdate" placeholder="API Key*" v-model="$store.state.item.api_key">
                                 <label class="form-label">API Key*</label>
@@ -214,13 +232,15 @@
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-sm-6 mt-3">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="pricing_prompt_tokenUpdate" name="pricing_prompt_tokenUpdate" placeholder="Custo por 1k tokens de prompt" v-model="$store.state.item.pricing_prompt_token">
                                 <label class="form-label">Custo por 1k tokens de prompt</label>
                             </div>
                         </div>
-                        <div class="col-sm-6 mt-3">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="pricing_completion_tokenUpdate" name="pricing_completion_tokenUpdate" placeholder="Custo por 1k tokens de resposta" v-model="$store.state.item.pricing_completion_token">
                                 <label class="form-label">Custo por 1k tokens de resposta</label>
@@ -228,13 +248,15 @@
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-sm-4 mt-3">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="max_tokensUpdate" name="max_tokensUpdate" placeholder="Limite de tokens permitido por requisição" v-model="$store.state.item.max_tokens">
                                 <label class="form-label">Limite de tokens permitido por requisição</label>
                             </div>
                         </div>
-                        <div class="col-sm-4 mt-3">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="default_temperatureUpdate" name="default_temperatureUpdate" placeholder="Temperatura Padrão*" v-model="$store.state.item.default_temperature">
                                 <label class="form-label">Temperatura Padrão*</label>
@@ -243,7 +265,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 mt-3">
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="context_lengthUpdate" name="context_lengthUpdate" placeholder="Quantos tokens o modelo aceita no contexto?" v-model="$store.state.item.context_length">
                                 <label class="form-label">Quantos tokens o modelo aceita no contexto?</label>
