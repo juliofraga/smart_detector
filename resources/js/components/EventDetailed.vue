@@ -42,15 +42,16 @@
                     <input type="text" class="form-control bg-secondary text-light border-0" :value="$store.state.item.event_date_time || event.event_date_time | formatDateTimeStamp" readonly>
                 </div>
             </div>
+            <!-- Custom Fields -->
             <div class="row">
                 <div class="col-md-6 mb-3" v-for="(meta, index) in eventMetadata" :key="index" v-if="meta.type_field == 'text'">
-                    <label class="form-label fw-bold text-secondary">{{ meta.display_value }}</label>
+                    <label class="form-label fw-bold text-secondary">{{ meta.display_value }} (Custom)</label>
                     <input type="text" class="form-control bg-secondary text-light border-0" :value="$store.state.item[meta.field_name] || event[meta.field_name]" readonly>
                 </div>
             </div>
             <div v-for="(meta, index) in eventMetadata" :key="index">
                 <div class="mb-3" v-if="meta.type_field == 'textarea'">
-                    <label class="form-label fw-bold text-secondary">{{ meta.display_value }}</label>
+                    <label class="form-label fw-bold text-secondary">{{ meta.display_value }} (Custom)</label>
                     <textarea class="form-control bg-secondary rounded text-light border-0" rows="10" :value="$store.state.item[meta.field_name] || event[meta.field_name] || ''" style="height: auto;" readonly></textarea>
                 </div>
             </div>
