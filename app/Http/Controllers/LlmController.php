@@ -33,4 +33,10 @@ class LlmController extends BaseController
         }
         return parent::update($request, $id);
     }
+
+    public function getIdentifiers(): JsonResponse
+    {
+        $llms = $this->model->select('id', 'name', 'provider', 'model_id')->get();
+        return parent::responseGeneric($llms);
+    }
 }

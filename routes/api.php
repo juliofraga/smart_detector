@@ -75,6 +75,7 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::prefix('llm')->middleware('admin')->group(function () {
         Route::post('/', 'LlmController@store');
         Route::get('/', 'LlmController@index');
+        Route::get('/identifiers', 'LlmController@getIdentifiers');
         Route::patch('/{id}', 'LlmController@update');
         Route::delete('/{id}', 'LlmController@destroy');
     });

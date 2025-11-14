@@ -19,10 +19,14 @@
 
                 <!-- Field select -->
                 <select v-else-if="setting.type === 'select'" class="form-control" v-model="setting.value" @change="update(setting.attribute, setting.value)">
-                    <optgroup v-for="(zones, region) in timezones" :key="region" :label="region">
+                    <optgroup v-if="setting.attribute === 'timezone_selected'" v-for="(zones, region) in timezones" :key="region" :label="region">
                         <option v-for="tz in zones" :key="tz" :value="tz">{{ tz }}</option>
                     </optgroup>
+                    <option v-if="setting.attribute === 'llm_standard'" v-for="llm in llms" :key="llm" :value="llm.id">{{ llm.name }} - {{ llm.provider }} ({{ llm.model_id }})</option>
                 </select>
+
+                <!-- Field textarea -->
+                <textarea v-if="setting.type === 'textarea'" class="form-control" :id="setting.attribute" :name="setting.attribute" v-model="setting.value" @blur="update(setting.attribute, setting.value)" rows="5"></textarea>
 
             </div>
         </div>
@@ -38,11 +42,13 @@
             return {
                 settings: {data: {}},
                 urlBase: utils.API_URL + '/api/v1/system-settings',
+                urlBaseLlms: utils.API_URL + '/api/v1/llm',
                 status: '',
                 feedbackMessage: {},
                 feedbackTitle: '',
                 loaded: false,
                 timezones: [],
+                llms: []
             }
         },
         methods: {
@@ -65,11 +71,16 @@
             loadTimezones() {
                 let url = this.urlBase + '/timezones';
                 utils.axiosGet(url, this, 'timezones');
+            },
+            loadLlms() {
+                let url = this.urlBaseLlms + '/identifiers';
+                utils.axiosGet(url, this, 'llms');
             }
         },
         mounted() {
             this.loadList();
             this.loadTimezones();
+            this.loadLlms();
         }
     }
 </script>

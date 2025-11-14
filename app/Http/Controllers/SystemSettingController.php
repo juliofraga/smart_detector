@@ -16,7 +16,7 @@ class SystemSettingController extends BaseController
 
     public function index(Request $request, array $attributes = null): JsonResponse
     {
-        $data = $this->model->orderby('title', 'asc')->get();
+        $data = $this->model->orderby('orderby', 'asc')->get();
         return parent::responseGeneric($data);
     }
 
