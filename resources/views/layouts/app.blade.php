@@ -53,6 +53,14 @@
                                         Home
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ returnActive('Eventos', Route::currentRouteName()) }}" href="{{ route('events') }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                        </svg>
+                                        Consulta de Eventos
+                                    </a>
+                                </li>
                                 @if (auth()->user()->profile->description === 'Administrador')
                                     <li class="nav-item">
                                         <a class="nav-link {{ returnActive('Usuários', Route::currentRouteName()) }}" href="{{ route('users') }}">
@@ -63,16 +71,6 @@
                                             Usuários
                                         </a>
                                     </li>
-                                @endif
-                                <li class="nav-item">
-                                    <a class="nav-link {{ returnActive('Eventos', Route::currentRouteName()) }}" href="{{ route('events') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                                        </svg>
-                                        Consulta de Eventos
-                                    </a>
-                                </li>
-                                @if (auth()->user()->profile->description === 'Administrador')
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle {{ returnActive('Cadastros', Route::currentRouteName()) }}" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-journal-plus" viewBox="0 0 16 16">
