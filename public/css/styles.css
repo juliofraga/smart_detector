@@ -194,11 +194,13 @@ body {
     color: #1e1e1e;
 }
 
-.dark-paginantion-active {
+.dark-pagination-active {
+    background-color: white;
     color: #1e1e1e;
 }
 
-.dark-paginantion-active:hover {
+.dark-pagination-active:hover {
+    background-color: #aaa;
     color: #1e1e1e;
 }
 
