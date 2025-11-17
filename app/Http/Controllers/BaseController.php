@@ -33,11 +33,6 @@ Class BaseController extends Controller
                 'password' => bcrypt($request->password)
             ]);
         }
-        if ($request->api_key) {
-            $request->merge([
-                'api_key' => bcrypt($request->api_key)
-            ]);
-        }
         $data = $this->model->create($request->all());
         return parent::response($data);
     }
