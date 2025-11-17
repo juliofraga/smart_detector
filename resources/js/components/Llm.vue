@@ -118,7 +118,7 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="pricing_prompt_token" name="pricing_prompt_token" placeholder="Custo por 1k tokens de prompt" v-model="pricing_prompt_token">
+                                <input type="text" class="form-control" id="pricing_prompt_token" name="pricing_prompt_token" placeholder="Custo por 1k tokens de prompt" v-model="pricing_prompt_token" @input="maskMoney('pricing_prompt_token')">
                                 <label class="form-label">Custo por 1k tokens de prompt</label>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="pricing_completion_token" name="pricing_completion_token" placeholder="Custo por 1k tokens de resposta" v-model="pricing_completion_token">
+                                <input type="text" class="form-control" id="pricing_completion_token" name="pricing_completion_token" placeholder="Custo por 1k tokens de resposta" v-model="pricing_completion_token" @input="maskMoney('pricing_completion_token')">
                                 <label class="form-label">Custo por 1k tokens de resposta</label>
                             </div>
                         </div>
@@ -412,6 +412,16 @@
             showModal(modal) {
                 utils.showModal(modal);
             },
+            maskMoney(field) {
+                let value = this[field];
+                value = value.replace(/\D/g, "");
+                value = (Number(value) / 100).toFixed(2);
+                value = value
+                    .toString()
+                    .replace(".", ",")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                this[field] = "R$ " + value;
+            }
         },
         mounted() {
             EventBus.$on("loadList", this.loadList)
