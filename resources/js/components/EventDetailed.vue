@@ -9,7 +9,7 @@
             </div>
             {{ $store.state.item.classification }}
             <!-- Classificação -->
-            <div class="mb-3" v-if="$store.state.item.intrusion_normal || event.intrusion_normal">
+            <div class="mb-3" v-if="$store.state.item.intrusion_normal || (event.intrusion_normal && allEvents == 'Yes')">
                 <label class="form-label fw-bold text-secondary">Classificação</label>
                 <div :class="intrusionClass" style="max-height: 120px; overflow-y: auto;">
                     {{ ($store.state.item.intrusion_normal  || event.intrusion_normal) | formatIntrusionNormalField }}
@@ -75,7 +75,7 @@
 <script>
     import * as utils from '../utils/functions';
     export default {
-        props: ['event_id'],
+        props: ['event_id', 'allEvents'],
         data() {
             return {
                 urlBase: utils.API_URL + '/api/v1/event',

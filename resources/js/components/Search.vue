@@ -106,7 +106,6 @@
                         filter += ';' + filterDate;
                     }
                     urlFilter = `&filter=${encodeURIComponent(filter)}`;
-                    console.log('urlFilter', urlFilter);
                     EventBus.$emit("setUrlFilter", urlFilter);
                 } else {
                     urlFilter = '';
