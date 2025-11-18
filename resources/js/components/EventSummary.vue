@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row g-4 mb-4">
-            <div class="col-md-3">
+            <div class="col-md-12">
                 <div class="card p-3 text-center">
                     <h5>Eventos Hoje</h5>
                     <h2 class="highlight">{{ today }}</h2>
@@ -28,7 +28,7 @@
                 const data = (this.events && this.events.data) ? this.events.data : [];
                 const map = data.reduce((acc, ev) => {
                     const cls = ev.classification || {};
-                    const desc = cls.description || 'Não classificado';
+                    const desc = cls.description != undefined ? 'Risco ' + cls.description : 'Sem Risco Classificado';
                     const visual = (cls.visual_style || 'secondary').toString().replace(/^text-/, '');
                     if (!acc[desc]) {
                         acc[desc] = { description: desc, count: 0, visual_style: visual };

@@ -113,6 +113,16 @@ Vue.filter('formatTypeField', function(valor) {
     return '<' + valor + '>';
 });
 
+Vue.filter('formatIntrusionNormalField', function(value) {
+    if (value.toUpperCase() === "INTRUSION") {
+        return 'Intrusão';
+    } else if (value.toUpperCase === "NORMAL") {
+        return 'Normal';
+    } else {
+        return '';
+    }
+})
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
