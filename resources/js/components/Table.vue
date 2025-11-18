@@ -52,6 +52,13 @@
                                     </span>
                                 </div>
                                 <div v-else if="classList == 'event'">
+                                    <span v-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false' && keyValue == 'intrusion_normal' && value == 'Intrusion'" class="badge badge-danger w-100 mt-4">
+                                        {{ value }}
+                                    </span>
+                                    <span v-else-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false' && keyValue == 'intrusion_normal' && value == 'Normal'" class="badge badge-success w-100 mt-4">
+                                        {{ value }}
+                                    </span>
+
                                     <span v-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false' && (value.visual_style == 'warning')" :class="`badge badge-${value.visual_style} w-100`">
                                         {{ value.description }}
                                     </span>
