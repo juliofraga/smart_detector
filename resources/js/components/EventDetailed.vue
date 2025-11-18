@@ -4,15 +4,22 @@
             <spinner-component></spinner-component>
         </div>
         <div v-else>
-            <div class="mb-3">
-                <alert-component type="danger" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'error'"></alert-component>
+            <div class="mb-3" v-if="status == 'error'">
+                <alert-component type="danger" :details="feedbackMessage" :title="feedbackTitle"></alert-component>
             </div>
             {{ $store.state.item.classification }}
+            <!-- Classificação -->
+            <div class="mb-3" v-if="$store.state.item.intrusion_normal || event.intrusion_normal">
+                <label class="form-label fw-bold text-secondary">Classificação</label>
+                <div :class="intrusionClass" style="max-height: 120px; overflow-y: auto;">
+                    {{ ($store.state.item.intrusion_normal  || event.intrusion_normal) | formatIntrusionNormalField }}
+                </div>
+            </div>
             <!-- Descrição -->
             <div class="mb-3">
                 <label class="form-label fw-bold text-secondary">Descrição</label>
                 <div class="p-3 bg-secondary rounded text-light" style="max-height: 120px; overflow-y: auto;">
-                    {{ $store.state.item.description || event.description}}
+                    {{ $store.state.item.description || event.description }}
                 </div>
             </div>
             <!-- Classificação e Tipo -->
@@ -25,6 +32,7 @@
                     <label class="form-label fw-bold text-secondary">Classificação de Risco</label>
                     <input type="text" :class="`form-control bg-${event.classification.visual_style} text-light border-0`" :value="$store.state.item.classification || event.classification.description" readonly v-if="event.classification && event.classification.visual_style != 'warning'">
                     <input type="text" :class="`form-control bg-${$store.state.item.classification.visual_style} text-light border-0`" :value="$store.state.item.classification.description || event.classification.description" readonly v-if="$store.state.item.classification  && $store.state.item.classification.visual_style != 'warning'">
+                    <input type="text" class="form-control bg-secondary text-light border-0" v-if="!$store.state.item.classification && !event.classification" readonly>
                     <div v-if="($store.state.item.classification && $store.state.item.classification.visual_style == 'warning') || (event.classification && event.classification.visual_style == 'warning')">
                         <input type="text" class="form-control bg-warning border-0" :value="$store.state.item.classification || event.classification.description" readonly v-if="event.classification">
                         <input type="text" class="form-control bg-warning border-0`" :value="$store.state.item.classification.description || event.classification.description" readonly v-if="$store.state.item.classification">
@@ -90,6 +98,19 @@
             getEventMetadata() {
                 let url = this.urlBaseEventMetadata + '/show-enabled';
                 utils.axiosGet(url, this, 'eventMetadata');
+            }
+        },
+        computed: {
+            intrusionValue() {
+                return this.$store.state.item.intrusion_normal || this.event.intrusion_normal;
+            },
+            intrusionClass() {
+                const value = (this.intrusionValue || '').toUpperCase();
+
+                if (value === 'INTRUSION') return 'p-3 bg-danger rounded text-light';
+                if (value === 'NORMAL') return 'p-3 bg-success rounded text-light';
+
+                return 'bg-secondary';
             }
         },
         mounted() {

@@ -114,9 +114,10 @@ Vue.filter('formatTypeField', function(valor) {
 });
 
 Vue.filter('formatIntrusionNormalField', function(value) {
+    console.log(value);
     if (value.toUpperCase() === "INTRUSION") {
         return 'Intrusão';
-    } else if (value.toUpperCase === "NORMAL") {
+    } else if (value.toUpperCase() === "NORMAL") {
         return 'Normal';
     } else {
         return '';

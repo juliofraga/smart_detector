@@ -3,7 +3,7 @@
         <modal-component id="modalEventDetail" options="modal-dialog-centered modal-xl" title="Detalhes do Evento">
             <template v-slot:conteudo>
                 <!-- Botão nova aba  -->
-                <div class="mb-3">
+                <div>
                     <a class="btn btn-sm btn-outline-light border-0" target="_blank" :href="`/evento/${$store.state.item.id}`">
                         Nova Aba
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
