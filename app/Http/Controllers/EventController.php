@@ -28,6 +28,15 @@ class EventController extends BaseController
 
     public function store(Request $request): JsonResponse
     {
+        if (config("system_settings.all_events") == 'No' && (!$request->intrusion_normal || $request->intrusion_normal == '')) {
+            $request->merge([
+                'intrusion_normal' => 'Intrusion',
+            ]);
+        }
+        $validateIntrusionField = $this->validateIntrusionField($request);
+        if ($validateIntrusionField['valid'] == false) {
+            return parent::responseGeneric($validateIntrusionField['message'], 401, 'error');
+        }
         if ($request->classification) {
             $classification_id = Classification::where('description', $request->classification)->value('id');
             if ($classification_id) {
@@ -182,5 +191,32 @@ class EventController extends BaseController
         } catch (\Throwable $e) {
             Log::error("Error to update column '{$field_name}': " . $e->getMessage());
         }
+    }
+
+    private function validateIntrusionField(Request $request): array
+    {
+        $intrusionField = $request->intrusion_normal ? ucfirst($request->intrusion_normal) : null;
+        if ($intrusionField == null && config("system_settings.all_events") == 'Yes') {
+            return [
+                'valid' => false,
+                'message' => 'Campo intrusion_normal não foi informado. Ele dever ser "Normal" ou "Intrusion"'
+            ];
+        }
+        if ($intrusionField && ($intrusionField != 'Normal' && $intrusionField != 'Intrusion' && config("system_settings.all_events") == 'Yes')) {
+            return [
+                'valid' => false,
+                'message' => 'Valor para o campo intrusion_normal inválido. Ele dever ser "Normal" ou "Intrusion"'
+            ];
+        }
+
+        if ($intrusionField != 'Intrusion' && config("system_settings.all_events") == 'No') {
+            return [
+                'valid' => false,
+                'message' => '"Ativar Recebimento de Todos os Eventos" está desativado no sistema, portanto o valor "Normal" para o campo intrusion_normal é inválido. Deixe ele em branco ou informe "Intrusion"'
+            ];
+        }
+        return [
+            'valid' => true
+        ];
     }
 }
