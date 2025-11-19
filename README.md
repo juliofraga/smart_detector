@@ -3,19 +3,11 @@
 
   <h1>🔐 Smart Detector</h1>
   <p>Sistema de Detecção Inteligente de Ameaças em Aplicações Web</p>
-
   <br>
-
-  <!-- Tabs -->
-  <a href="#portugues"><b>🇧🇷 Português</b></a> |
-  <a href="#english"><b>🇺🇸 English</b></a>
-
-  <br><br>
 </div>
-
 ---
 
-# 🇧🇷 Português <a name="portugues"></a>
+# Português
 
 ## 🔐 Smart Detector – Sistema de Detecção Inteligente de Ameaças em Aplicações Web
 
@@ -51,7 +43,7 @@ O **Smart Detector** é um sistema desenvolvido para exibir em tempo real evento
 
 ---
 
-# 🇺🇸 English <a name="english"></a>
+# English
 
 ## 🔐 Smart Detector – Intelligent Threat Detection System for Web Applications
 
