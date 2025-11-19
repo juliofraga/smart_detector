@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Schema\Blueprint;
 use App\Traits\FieldNameValidator;
 use App\Http\Controllers\EventAttributeController;
+use App\Http\Controllers\LlmController;
 
 class EventController extends BaseController
 {
@@ -28,6 +29,15 @@ class EventController extends BaseController
 
     public function store(Request $request): JsonResponse
     {
+        if (config("system_settings.use_smart_detector_ia") == 'Yes') {
+            $analyze = LlmController::analyzeIa($request);
+            if ($analyze['status'] == 'success') {
+                $request->merge([
+                    'intrusion_normal' => $analyze['intrusion_normal'],
+                    'analysys' => $analyze['analysys']
+                ]);
+            }
+        }
         if (config("system_settings.all_events") == 'No' && (!$request->intrusion_normal || $request->intrusion_normal == '')) {
             $request->merge([
                 'intrusion_normal' => 'Intrusion',
@@ -196,13 +206,13 @@ class EventController extends BaseController
     private function validateIntrusionField(Request $request): array
     {
         $intrusionField = $request->intrusion_normal ? ucfirst($request->intrusion_normal) : null;
-        if ($intrusionField == null && config("system_settings.all_events") == 'Yes') {
+        if ($intrusionField == null && config("system_settings.all_events") == 'Yes' && config("system_settings.use_smart_detector_ia") == 'No') {
             return [
                 'valid' => false,
                 'message' => 'Campo intrusion_normal não foi informado. Ele dever ser "Normal" ou "Intrusion"'
             ];
         }
-        if ($intrusionField && ($intrusionField != 'Normal' && $intrusionField != 'Intrusion' && config("system_settings.all_events") == 'Yes')) {
+        if ($intrusionField && ($intrusionField != 'Normal' && $intrusionField != 'Intrusion' && config("system_settings.all_events") == 'Yes' && config("system_settings.use_smart_detector_ia") == 'No')) {
             return [
                 'valid' => false,
                 'message' => 'Valor para o campo intrusion_normal inválido. Ele dever ser "Normal" ou "Intrusion"'

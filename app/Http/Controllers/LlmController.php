@@ -8,6 +8,7 @@ use App\Models\system_setting;
 use App\Traits\CurrencyHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Http;
 
 class LlmController extends BaseController
 {
@@ -71,5 +72,48 @@ class LlmController extends BaseController
             return $item;
         });
         return parent::responseGeneric($data);
+    }
+
+    public static function analyzeIa(Request $request): array
+    {
+        $jsonData = json_encode($request->all());
+        $prompt = config('system_settings.llm_prompt') . " Evento: " . $jsonData;
+        $prompt .= "
+        Responda apenas em JSON:
+        {
+            \"intrusion_normal\": intrusion|normal,
+            \"analysys\": \"string\"
+        }";
+        $llm_standard = Llm::where('id', config('system_settings.llm_standard'))->first();
+        $model = $llm_standard->model_id;
+        $temperature = $llm_standard->default_temperature;
+        $api_key = decrypt($llm_standard->api_key);
+        $url = rtrim($llm_standard->api_base_url);
+        $payload = [
+            "model" => $model,
+            "input" => [
+                [
+                    "role" => "system",
+                    "content" => "Você é um analisador IDS."
+                ],
+                [
+                    "role" => "user",
+                    "content" => $prompt
+                ]
+            ],
+            "temperature" => floatval($temperature)
+            ];
+        $response = Http::withOptions([
+                'verify' => false,
+            ])->withToken($api_key)
+            ->post($url, $payload);
+        $aiText = $response->json()['choices'][0]['message']['content'] ?? null;
+        $analysis = json_decode($aiText, true);
+
+        return [
+            'status' => 'success',
+            'intrusion_normal' => 'Intrusion',
+            'analysys' => 'teste'
+        ];
     }
 }
