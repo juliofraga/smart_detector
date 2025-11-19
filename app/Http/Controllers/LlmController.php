@@ -49,7 +49,8 @@ class LlmController extends BaseController
 
     public function update(Request $request, int $id): JsonResponse
     {
-        if ($request->api_key) {
+        $current_api_key = $this->model->where('id', $id)->value('api_key');
+        if ($request->api_key && $request->api_key != $current_api_key) {
             $request->merge([
                 'api_key' => encrypt($request->api_key)
             ]);
