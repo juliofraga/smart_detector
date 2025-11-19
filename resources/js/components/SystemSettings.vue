@@ -2,7 +2,7 @@
     <div>
         <h3 class="text-white">Configurações do Sistema</h3>
         <div class="card p-3 mt-3">
-            <div v-for="(setting, index) in settings" :key="index" class="mb-4 p-3 border border-secondary rounded">
+            <div v-for="(setting, index) in settings" :key="index" class="mb-4 p-3 border border-secondary rounded" v-if="setting.active == 1">
                 <h5 class="text-white">{{ setting.title }}</h5>
                 <p class="text-muted medium mb-2">{{ setting.description }}</p>
 
@@ -22,12 +22,11 @@
                     <optgroup v-if="setting.attribute === 'timezone_selected'" v-for="(zones, region) in timezones" :key="region" :label="region">
                         <option v-for="tz in zones" :key="tz" :value="tz">{{ tz }}</option>
                     </optgroup>
-                    <option v-if="setting.attribute === 'llm_standard'" v-for="llm in llms" :key="llm" :value="llm.id">{{ llm.name }} - {{ llm.provider }} ({{ llm.model_id }})</option>
+                    <option v-if="setting.attribute === 'llm_standard'" v-for="llm in llms" :key="llm.id" :value="llm.id">{{ llm.name }} - {{ llm.provider }} ({{ llm.model_id }})</option>
                 </select>
 
                 <!-- Field textarea -->
                 <textarea v-if="setting.type === 'textarea'" class="form-control" :id="setting.attribute" :name="setting.attribute" v-model="setting.value" @blur="update(setting.attribute, setting.value)" rows="5"></textarea>
-
             </div>
         </div>
         <alert-component type="danger" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'error'"></alert-component>
