@@ -160,6 +160,12 @@
             showModal(modal) {
                 utils.showModal(modal);
             },
+            paginate(l) {
+                if (l.url){
+                    this.urlPaginate = l.url.split('?')[1];
+                    this.loadList();
+                }
+            },
         },
         mounted() {
             EventBus.$on("loadList", this.loadList)

@@ -35,6 +35,3 @@
         }
     }
 </script>
-<li v-for="l, key in data.links" :key="key" class="page-item" @click="paginate(l)">
-    <div v-if="l.active">
-        <a class="page-link dark-paginantion-active" v-html="l.label" 

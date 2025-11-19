@@ -421,7 +421,13 @@
                     .replace(".", ",")
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                 this[field] = "R$ " + value;
-            }
+            },
+            paginate(l) {
+                if (l.url){
+                    this.urlPaginate = l.url.split('?')[1];
+                    this.loadList();
+                }
+            },
         },
         mounted() {
             EventBus.$on("loadList", this.loadList)
