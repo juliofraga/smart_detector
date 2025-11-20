@@ -14,7 +14,7 @@ class Event extends BaseModel
     protected $guarded = [];
 
     protected $casts = [
-        'event_date_time' => 'datetime',
+        'event_date_time' => 'datetime:Y-m-d H:i:s',
     ];
 
     public function rules(): array 

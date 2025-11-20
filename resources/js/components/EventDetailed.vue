@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-bold text-secondary">Data e Hora</label>
-                    <input type="text" class="form-control bg-secondary text-light border-0" :value="$store.state.item.event_date_time || event.event_date_time | formatDateTimeStamp" readonly>
+                    <input type="text" class="form-control bg-secondary text-light border-0" :value="$store.state.item.event_date_time || event.event_date_time | formatDateTime" readonly>
                 </div>
             </div>
             <!-- Custom Fields -->
