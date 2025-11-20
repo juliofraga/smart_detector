@@ -74,7 +74,7 @@ class UserController extends BaseController
         if (!$token) {
             return parent::responseGeneric('Senha temporária inválida, tente novamente!', 403, 'error');
         } else {
-            if (config('system_settings.pass_complexity') === 'Yes' && $this->passwordValidate($request->password)) {
+            if (config('system_settings.pass_complexity') === 'Yes' && !PasswordValidationTrait::passwordValidate($request->password)) {
                 return parent::responseGeneric('A senha não atendeu os requisitos mínimos de segurança, tente novamente!', 400, 'error');
             }
             User::where('email', $data['email'])->update([
