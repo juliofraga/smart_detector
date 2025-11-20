@@ -18,7 +18,7 @@
                     show: false
                 }
             }" 
-            placeholder="Buscar por campo ou valor"
+            placeholder="Buscar por Nome ou Valor de Exibição"
             classSearch="event_attribute"
         ></search-component>
         <div v-if="Object.keys(event_attribute.data).length > 0">

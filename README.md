@@ -1,6 +1,4 @@
-<!-- TABS -->
 <div align="center">
-
   <h1>🔐 Smart Detector</h1>
   <p>Sistema de Detecção Inteligente de Ameaças em Aplicações Web</p>
 </div>

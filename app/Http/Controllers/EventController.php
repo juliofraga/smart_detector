@@ -222,7 +222,7 @@ class EventController extends BaseController
         if ($intrusionField != 'Intrusion' && config("system_settings.all_events") == 'No') {
             return [
                 'valid' => false,
-                'message' => '"Ativar Recebimento de Todos os Eventos" está desativado no sistema, portanto o valor "Normal" para o campo intrusion_normal é inválido. Deixe ele em branco ou informe "Intrusion"'
+                'message' => '"Ativar Recebimento de Todos os Eventos" está desativado no sistema, portanto o valor informado para o campo intrusion_normal é inválido. Deixe ele em branco ou informe "Intrusion"'
             ];
         }
         return [
