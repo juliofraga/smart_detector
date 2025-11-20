@@ -25,7 +25,7 @@
             <event-table-component :data="events.data" title="Eventos Registrados"></event-table-component>
         </div>
         <div v-else-if="loaded === true">
-            <no-itens-component message="Nenhum eventi encontrado"></no-itens-component>
+            <no-itens-component message="Nenhum evento encontrado"></no-itens-component>
         </div>
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
