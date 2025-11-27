@@ -57,10 +57,10 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::prefix('event-attribute')->middleware('admin')->group(function () {
         Route::post('/', 'EventAttributeController@store');
         Route::get('/', 'EventAttributeController@index');
-        Route::get('/show-enabled', 'EventAttributeController@getShowEnabled');
         Route::patch('/{id}', 'EventAttributeController@update');
         Route::delete('/{id}', 'EventAttributeController@destroy');
     });
+    Route::get('event-attribute/show-enabled', 'EventAttributeController@getShowEnabled');
     Route::prefix('system-settings')->middleware('admin')->group(function () {
         Route::get('/', 'SystemSettingController@index');
         Route::patch('/', 'SystemSettingController@update');
