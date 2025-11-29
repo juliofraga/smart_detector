@@ -8,6 +8,7 @@ use App\Models\Type;
 use App\Models\Classification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use Carbon\Carbon;
 use App\Events\EventCreated;
 use Illuminate\Support\Facades\Schema;
@@ -79,7 +80,15 @@ class EventController extends BaseController
         foreach ($disabledFields as $df) {
             $request->request->remove($df);
         }
-        $event = $this->model->create($request->all());
+        try {
+            $event = $this->model->create($request->all());
+        } catch (QueryException $e) {
+            if ($e->errorInfo[1] === 1054) {
+                return parent::responseGeneric('Uma ou mais colunas informadas não existem na tabela. Verifique novamente os campos que você está enviando', 500, 'error');
+            } else {
+                return parent::responseError();
+            }
+        }
         $event->load(['classification', 'analysys', 'type']);
         event(new EventCreated($event));
         return parent::response($event);
