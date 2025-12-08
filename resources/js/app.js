@@ -43,6 +43,7 @@ Vue.component('event-modal-component', require('./components/EventModal.vue').de
 Vue.component('event-detailed-component', require('./components/EventDetailed.vue').default);
 Vue.component('events-component', require('./components/Events.vue').default);
 Vue.component('login-component', require('./components/Login.vue').default);
+Vue.component('ids-component', require('./components/Ids.vue').default);
 Vue.component('llm-component', require('./components/Llm.vue').default);
 Vue.component('home-component', require('./components/Home.vue').default);
 Vue.component('table-component', require('./components/Table.vue').default);

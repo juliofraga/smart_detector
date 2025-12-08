@@ -80,6 +80,12 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
         Route::patch('/{id}', 'LlmController@update');
         Route::delete('/{id}', 'LlmController@destroy');
     });
+    Route::prefix('ids')->middleware('admin')->group(function () {
+        Route::post('/', 'IdsAgentController@store');
+        Route::get('/', 'IdsAgentController@index');
+        Route::patch('/{id}', 'IdsAgentController@update');
+        Route::delete('/{id}', 'IdsAgentController@destroy');
+    });
     Route::post('logout', 'AuthController@logout');
     Route::get('me', 'AuthController@me');
     

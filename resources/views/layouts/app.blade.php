@@ -83,6 +83,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="{{ route('event_attributes') }}">Atributos de Eventos</a></li>
                                             <li><a class="dropdown-item" href="{{ route('classifications') }}">Classificações de Risco</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('ids') }}">IDS's</a></li>
                                             <li><a class="dropdown-item" href="{{ route('llm') }}">LLM's</a></li>
                                             <li><a class="dropdown-item" href="{{ route('types') }}">Tipos de Ameaças</a></li>
                                         </ul>
@@ -147,6 +148,7 @@ function returnActive($menu, $currentPage)
         (in_array($currentPage, ['types']) && $menu == 'Cadastros') ||
         (in_array($currentPage, ['event_attributes']) && $menu == 'Cadastros') ||
         (in_array($currentPage, ['llm']) && $menu == 'Cadastros') ||
+        (in_array($currentPage, ['ids']) && $menu == 'Cadastros') ||
         (in_array($currentPage, ['system_settings']) && $menu == 'Configurações do Sistema')
         ) {
         return 'active';
