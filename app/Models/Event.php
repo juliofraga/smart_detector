@@ -24,7 +24,8 @@ class Event extends BaseModel
             'types_id' => 'required',
             'classifications_id' => 'required',
             'analysys_id' => 'required',
-            'event_date_time' => 'required'
+            'event_date_time' => 'required',
+            'ids_id' => 'required'
         ];
     }
 
@@ -48,5 +49,10 @@ class Event extends BaseModel
     public function type()
     {
         return $this->belongsTo(Type::class, 'types_id');
+    }
+
+    public function idsAgent()
+    {
+        return $this->belongsTo(ids_agent::class, 'ids_id');
     }
 }

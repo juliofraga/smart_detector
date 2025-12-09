@@ -27,4 +27,9 @@ class ids_agent extends BaseModel
             'required' => 'O campo :attribute é obrigatório',
         ];
     }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'ids_id');
+    }
 }

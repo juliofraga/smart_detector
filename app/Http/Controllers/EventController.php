@@ -86,7 +86,7 @@ class EventController extends BaseController
             if ($e->errorInfo[1] === 1054) {
                 return parent::responseGeneric('Uma ou mais colunas informadas não existem na tabela. Verifique novamente os campos que você está enviando', 500, 'error');
             } else {
-                return parent::responseError();
+                return parent::responseGeneric('Não foi possível salvar os dados, verifique se todos os campos obrigatórios foram preenchidos corretamente', 500,'error');
             }
         }
         $event->load(['classification', 'analysys', 'type']);
