@@ -6,6 +6,7 @@ use App\Models\Analysys;
 use App\Models\Event;
 use App\Models\Type;
 use App\Models\Classification;
+use App\Models\ids_agent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -100,6 +101,7 @@ class EventController extends BaseController
                     ->with('classification')
                     ->with('analysys')
                     ->with('type')
+                    ->with('idsAgent')
                     ->whereDate('event_date_time', Carbon::today())
                     ->orderBy('event_date_time', 'desc')
                     ->take($this->qtdEvent)
@@ -123,6 +125,7 @@ class EventController extends BaseController
                     ->with('classification')
                     ->with('analysys')
                     ->with('type')
+                    ->with('idsAgent')
                     ->find($id);
         return parent::response($event);
     }
@@ -145,6 +148,7 @@ class EventController extends BaseController
                     ->with('classification')
                     ->with('analysys')
                     ->with('type')
+                    ->with('idsAgent')
                     ->orderby($by, $direction)
                     ->paginate($qtd);
         return parent::responseGeneric($data);

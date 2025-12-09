@@ -23,6 +23,7 @@
                     ip_address: { title: 'IP Origem', hidden: 'false', type: 'text' },
                     type: { title: 'Tipo de Ameaça', hidden: 'false', type: 'text' },
                     classification: { title: 'Risco', hidden: 'false', type: 'badge' },
+                    ids_agent: { title: 'IDS Origem', hidden: 'false', type: 'text_object'},
                     event_date_time: { title: 'Data/Hora', hidden: 'false', type: 'datetime' },
                     id: { hidden: 'true' },
                     analysys: { hidden: 'true' },

@@ -66,6 +66,9 @@
                                     <span v-if="title[keyValue].type == 'badge' && title[keyValue].hidden == 'false' && (value && value.visual_style != 'warning')" :class="`badge bg-${value.visual_style} w-100`">
                                         {{ value.description }}
                                     </span>
+                                    <span v-if="keyValue == 'ids_agent' && title[keyValue].hidden == 'false' && title[keyValue].type == 'text_object'" class="text-white">
+                                        {{ value.name }}
+                                    </span>
                                 </div>
 
                                 <button 

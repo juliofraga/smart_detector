@@ -15,6 +15,15 @@
                     {{ ($store.state.item.intrusion_normal  || event.intrusion_normal) | formatIntrusionNormalField }}
                 </div>
             </div>
+            <!-- IDS de Origem -->
+            <div class="mb-3">
+                <label class="form-label fw-bold text-secondary">IDS de Origem</label>
+                <div class="p-3 bg-secondary rounded text-light" style="max-height: 120px; overflow-y: auto;">
+                    {{ $store.state.item.ids_agent ? $store.state.item.ids_agent.name : '' || event.ids_agent ? event.ids_agent.name : '' }} - 
+                    {{ $store.state.item.ids_agent ? $store.state.item.ids_agent.hostname : '' || event.ids_agent ? event.ids_agent.hostname : '' }} 
+                    ({{ $store.state.item.ids_agent ? $store.state.item.ids_agent.ip_local : '' || event.ids_agent ? event.ids_agent.ip_local : '' }})
+                </div>
+            </div>
             <!-- Descrição -->
             <div class="mb-3">
                 <label class="form-label fw-bold text-secondary">Descrição</label>
