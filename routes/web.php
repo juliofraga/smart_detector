@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/configuracoes-do-sistema', 'SystemSettingController@show')->middleware('admin')->name('system_settings');
     Route::get('/llm', 'LlmController@show')->middleware('admin')->name('llm');
     Route::get('/ids', 'IdsAgentController@show')->middleware('admin')->name('ids');
+    Route::view('/dashboards', 'dashboards')->middleware('admin')->name('dashboards');
 });
 
 Route::get('/login/update-password', function () {
