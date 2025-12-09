@@ -35,7 +35,9 @@ const store = new Vuex.Store({
 Vue.component('account-component', require('./components/Account.vue').default);
 Vue.component('add-cancel-buttons-component', require('./components/AddCancelButtons.vue').default);
 Vue.component('alert-component', require('./components/Alert.vue').default);
+Vue.component('categories-dashboard-component', require('./components/CategoriesDashboard.vue').default);
 Vue.component('classification-component', require('./components/Classification.vue').default);
+Vue.component('dashboards-component', require('./components/Dashboards.vue').default);
 Vue.component('event-attribute-component', require('./components/EventAttributes.vue').default);
 Vue.component('event-summary-component', require('./components/EventSummary.vue').default);
 Vue.component('event-table-component', require('./components/EventTable.vue').default);
@@ -50,15 +52,21 @@ Vue.component('table-component', require('./components/Table.vue').default);
 Vue.component('modal-component', require('./components/Modal.vue').default);
 Vue.component('modal-delete-component', require('./components/ModalDelete.vue').default);
 Vue.component('no-itens-component', require('./components/NoItens.vue').default);
+Vue.component('overview-dashboard-component', require('./components/OverviewDashboard.vue').default);
 Vue.component('search-component', require('./components/Search.vue').default);
-Vue.component('users-component', require('./components/Users.vue').default);
 Vue.component('paginate-component', require('./components/Paginate.vue').default);
+Vue.component('severity-dashboard-component', require('./components/SeverityDashboard.vue').default);
 Vue.component('spinner-component', require('./components/Spinner.vue').default);
 Vue.component('system-settings-component', require('./components/SystemSettings.vue').default);
 Vue.component('type-component', require('./components/Type.vue').default);
 Vue.component('updates-button-component', require('./components/UpdatesButton.vue').default);
 Vue.component('update-password-component', require('./components/UpdatePassword.vue').default);
+Vue.component('users-component', require('./components/Users.vue').default);
 Vue.component('welcome-component', require('./components/Welcome.vue').default);
+
+
+
+
 
 Vue.filter('formatDateTime', function(valor){
     if (!valor) {
