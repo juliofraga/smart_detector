@@ -50,14 +50,18 @@ class EventController extends BaseController
             return parent::responseGeneric($validateIntrusionField['message'], 401, 'error');
         }
         if ($request->classification) {
-            $classification_id = Classification::where('description', $request->classification)->value('id');
-            if ($classification_id) {
-                $request->merge([
-                    'classifications_id' => $classification_id,
-                ]);
+            if (config("system_settings.all_events") == 'Yes' && $request->intrusion_normal == 'Normal') {
                 $request->request->remove('classification');
             } else {
-                return parent::responseGeneric('Classificação informada não foi encontrada no sistema, tente novamente.', 401, 'error');
+                $classification_id = Classification::where('description', $request->classification)->value('id');
+                if ($classification_id) {
+                    $request->merge([
+                        'classifications_id' => $classification_id,
+                    ]);
+                    $request->request->remove('classification');
+                } else {
+                    return parent::responseGeneric('Classificação informada não foi encontrada no sistema, tente novamente.', 401, 'error');
+                }
             }
         }
         if ($request->analysys) {
@@ -90,7 +94,7 @@ class EventController extends BaseController
                 return parent::responseGeneric('Não foi possível salvar os dados, verifique se todos os campos obrigatórios foram preenchidos corretamente', 500,'error');
             }
         }
-        $event->load(['classification', 'analysys', 'type']);
+        $event->load(['classification', 'analysys', 'type', 'idsAgent']);
         event(new EventCreated($event));
         return parent::response($event);
     }
