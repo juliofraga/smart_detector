@@ -102,19 +102,21 @@
         methods: {
             getData() {
                 let url = this.urlBaseEvent + '/get/dashboards?from=' + this.startDate + '&to=' + this.endDate + '&ids=' + this.ids;
-                utils.axiosGet(url, this, 'data');
+                utils.axiosGet(url, this, 'data', (data) => {
+                    this.totals.totalEvents = data.totalEvents;
+                    this.totals.totalIntrusions = data.totalIntrusions;
+                    this.totals.totalNormal = data.totalNormal;
+                });
             },
             resetValues() {
                 this.startDate = utils.getDateTimeOneWeekAgo();
                 this.endDate = utils.getCurrentDateTime();
                 this.ids = '';
-                this.totals.totalEvents = 0;
-                this.totals.totalIntrusions = 0;
-                this.totals.totalNormal = 0;
+                this.getData();
             }
         },
         mounted() {
-            
+            this.getData();
         }
     }
 </script>

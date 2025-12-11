@@ -60,7 +60,7 @@ class Controller extends BaseController
         return response()->json(['error' => 'Dado não encontrado'], 404);
     }
 
-    public static function responseGeneric($data, $statusCode = 201, $type = 'message')
+    public static function responseGeneric($data, $statusCode = 201, $type = 'message'): JsonResponse
     {
         if (is_string($data)) {
             return response()->json([$type => $data], $statusCode);

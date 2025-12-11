@@ -93,14 +93,15 @@ export function axiosDelete(url, obj) {
         })
 }
 
-export function axiosGet(url, obj, attr) {
+export function axiosGet(url, obj, attr, callback = null) {
     axios.get(url)
         .then(response => {
             obj[attr] = response.data;
             obj.loaded = true;
+            if (callback) callback(response.data);
         })
         .catch(errors => {
-            if (errors.response.status == 500) {
+            if (errors.response?.status == 500) {
                 obj.feedbackTitle = "Erro no servidor";
                 obj.status = 'error';
                 obj.feedbackMessage = {message: "Desculpe, não conseguimos processar a sua requisição, tente novamente ou entre em contato com a equipe de suporte"}
@@ -109,7 +110,7 @@ export function axiosGet(url, obj, attr) {
                 obj.status = 'error';
                 obj.feedbackMessage = errors;
             }
-        })
+        });
 }
 
 export function cleanFeedbackMessage(obj) {

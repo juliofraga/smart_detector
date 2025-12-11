@@ -158,11 +158,17 @@ class EventController extends BaseController
         return parent::responseGeneric($data);
     }
 
-    public function getDashboards(Request $request)
+    public function getDashboards(Request $request): JsonResponse
     {
         $from = $request->query('from');
         $to   = $request->query('to');
         $ids  = $request->query('ids');
+        $data = [
+            'totalEvents' => $this->getTotalEvents($from, $to, $ids),
+            'totalIntrusions' => $this->getTotalIntrusionsNormal($from, $to, $ids, 'Intrusion'),
+            'totalNormal' => $this->getTotalIntrusionsNormal($from, $to, $ids, 'Normal')
+        ];
+        return response()->json($data, 201);
     }
 
     public static function addTableColumn(string $field, string $type_field = 'text'): bool
@@ -252,5 +258,38 @@ class EventController extends BaseController
         return [
             'valid' => true
         ];
+    }
+
+    private function getTotalEvents($from = null, $to = null, $ids = null): int
+    {
+        $count = $this->model->query()
+            ->when(!empty($from), function ($query) use ($from) {
+                $query->where('event_date_time', '>=', $from);
+            })
+            ->when(!empty($to), function ($query) use ($to) {
+                $query->where('event_date_time', '<=', $to);
+            })
+            ->when(!empty($ids), function ($query) use ($ids) {
+                $query->where('ids_id', $ids);
+            })
+            ->count();
+        return $count;
+    }
+
+    private function getTotalIntrusionsNormal($from = null, $to = null, $ids = null, $intrusion_normal): int
+    {
+        $count = $this->model->query()
+            ->when(!empty($from), function ($query) use ($from) {
+                $query->where('event_date_time', '>=', $from);
+            })
+            ->when(!empty($to), function ($query) use ($to) {
+                $query->where('event_date_time', '<=', $to);
+            })
+            ->when(!empty($ids), function ($query) use ($ids) {
+                $query->where('ids_id', $ids);
+            })
+            ->where('intrusion_normal', $intrusion_normal)
+            ->count();
+        return $count;
     }
 }
