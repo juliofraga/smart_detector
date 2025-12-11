@@ -158,6 +158,13 @@ class EventController extends BaseController
         return parent::responseGeneric($data);
     }
 
+    public function getDashboards(Request $request)
+    {
+        $from = $request->query('from');
+        $to   = $request->query('to');
+        $ids  = $request->query('ids');
+    }
+
     public static function addTableColumn(string $field, string $type_field = 'text'): bool
     {
         try {

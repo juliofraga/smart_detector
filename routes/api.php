@@ -41,6 +41,7 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
             ->middleware('throttle:store-events');
         Route::get('/{id}', 'EventController@get');
         Route::get('/get/all', 'EventController@getAll');
+        Route::get('/get/dashboards', 'EventController@getDashboards');
     });
     Route::prefix('classification')->middleware('admin')->group(function () {
         Route::post('/', 'ClassificationController@store');

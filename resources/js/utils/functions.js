@@ -139,3 +139,24 @@ export function removeRequiredFieldMessage(elements) {
         }
     });   
 }
+
+export function getCurrentDateTime() {
+    const now = new Date();
+    const year   = now.getFullYear();
+    const month  = String(now.getMonth() + 1).padStart(2, '0');
+    const day    = String(now.getDate()).padStart(2, '0');
+    const hour   = String(now.getHours()).padStart(2, '0');
+    const minute = String(now.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hour}:${minute}`
+}
+
+export function getDateTimeOneWeekAgo() {
+    const now = new Date();
+    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const year   = oneWeekAgo.getFullYear();
+    const month  = String(oneWeekAgo.getMonth() + 1).padStart(2, '0');
+    const day    = String(oneWeekAgo.getDate()).padStart(2, '0');
+    const hour   = String(oneWeekAgo.getHours()).padStart(2, '0');
+    const minute = String(oneWeekAgo.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hour}:${minute}`;
+}
