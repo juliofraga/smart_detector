@@ -23,12 +23,6 @@ export default {
         this.applyRange();
     },
     watch: {
-        startdate() {
-            this.applyRange();
-        },
-        enddate() {
-            this.applyRange();
-        },
         totalbyday() {
             this.applyRange();
         },
