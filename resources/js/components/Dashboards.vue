@@ -66,7 +66,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <overview-dashboard-component></overview-dashboard-component>
+                <overview-dashboard-component :startdate="startDate" :enddate="endDate" :totalbyday="totals.totalByDay"></overview-dashboard-component>
             </div>
         </div>
         <div class="row mb-4">
@@ -95,7 +95,8 @@
                 totals: {
                     totalEvents: 0,
                     totalIntrusions: 0,
-                    totalNormal: 0
+                    totalNormal: 0,
+                    totalByDay: []
                 },
             };
         },
@@ -106,6 +107,7 @@
                     this.totals.totalEvents = data.totalEvents;
                     this.totals.totalIntrusions = data.totalIntrusions;
                     this.totals.totalNormal = data.totalNormal;
+                    this.totals.totalByDay = data.totalsByDay;
                 });
             },
             resetValues() {

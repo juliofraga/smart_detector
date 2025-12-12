@@ -166,7 +166,8 @@ class EventController extends BaseController
         $data = [
             'totalEvents' => $this->getTotalEvents($from, $to, $ids),
             'totalIntrusions' => $this->getTotalIntrusionsNormal($from, $to, $ids, 'Intrusion'),
-            'totalNormal' => $this->getTotalIntrusionsNormal($from, $to, $ids, 'Normal')
+            'totalNormal' => $this->getTotalIntrusionsNormal($from, $to, $ids, 'Normal'),
+            'totalsByDay' => $this->getTotalsByDay($from, $to, $ids)
         ];
         return response()->json($data, 201);
     }
@@ -291,5 +292,28 @@ class EventController extends BaseController
             ->where('intrusion_normal', $intrusion_normal)
             ->count();
         return $count;
+    }
+
+    private function getTotalsByDay($from = null, $to = null, $ids = null)
+    {
+        return $this->model->query()
+            ->when(!empty($from), function ($query) use ($from) {
+                $query->where('event_date_time', '>=', $from);
+            })
+            ->when(!empty($to), function ($query) use ($to) {
+                $query->where('event_date_time', '<=', $to);
+            })
+            ->when(!empty($ids), function ($query) use ($ids) {
+                $query->where('ids_id', $ids);
+            })
+            ->selectRaw("
+                DATE(event_date_time) as day,
+                COUNT(*) as totalEvents,
+                SUM(CASE WHEN intrusion_normal = 'Intrusion' THEN 1 ELSE 0 END) as totalIntrusions,
+                SUM(CASE WHEN intrusion_normal = 'Normal' THEN 1 ELSE 0 END) as totalNormal
+            ")
+            ->groupBy('day')
+            ->orderBy('day', 'asc')
+            ->get();
     }
 }
