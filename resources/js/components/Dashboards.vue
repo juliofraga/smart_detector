@@ -17,10 +17,11 @@
                 </div>
                 <div class="col-sm-2 mt-2">
                     <div class="form-floating">
-                        <select class="form-control" id="ids" name="ids" v-model="ids">
-                            <option value="">Todos</option>
-                            <option value="1">ids 1</option>
-                            <option value="2">ids 2</option>
+                        <select class="form-control" id="ids" name="ids" v-model="idsInput">
+                            <option value="" selected>Todos</option>
+                            <option v-for="idsagent in ids" :key="idsagent.id" :value="idsagent.id">
+                                {{ idsagent.name }}
+                            </option>
                         </select>
                         <label class="form-label">IDS</label>
                     </div>
@@ -88,10 +89,12 @@
         data() {
             return {
                 data: {data: {}},
+                ids: {data: {}},
+                idsInput: '',
                 urlBaseEvent: utils.API_URL + '/api/v1/event',
+                urlBaseIds: utils.API_URL + '/api/v1/ids',
                 startDate: utils.getDateTimeOneWeekAgo(),
                 endDate: utils.getCurrentDateTime(),
-                ids: '',
                 totals: {
                     totalEvents: 0,
                     totalIntrusions: 0,
@@ -104,7 +107,7 @@
         },
         methods: {
             getData() {
-                let url = this.urlBaseEvent + '/get/dashboards?from=' + this.startDate + '&to=' + this.endDate + '&ids=' + this.ids;
+                let url = this.urlBaseEvent + '/get/dashboards?from=' + this.startDate + '&to=' + this.endDate + '&ids=' + this.idsInput;
                 utils.axiosGet(url, this, 'data', (data) => {
                     this.totals.totalEvents = data.totalEvents;
                     this.totals.totalIntrusions = data.totalIntrusions;
@@ -113,11 +116,14 @@
                     this.totals.totalByClassification = data.classifications;
                     this.totals.totalByTypes = data.types;
                 });
+                let urlIds = this.urlBaseIds + '/identifiers';
+                utils.axiosGet(urlIds, this, 'ids');
+
             },
             resetValues() {
                 this.startDate = utils.getDateTimeOneWeekAgo();
                 this.endDate = utils.getCurrentDateTime();
-                this.ids = '';
+                this.idsInput = '';
                 this.getData();
             }
         },

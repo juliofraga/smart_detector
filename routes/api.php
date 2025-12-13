@@ -84,6 +84,7 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     Route::prefix('ids')->middleware('admin')->group(function () {
         Route::post('/', 'IdsAgentController@store');
         Route::get('/', 'IdsAgentController@index');
+        Route::get('/identifiers', 'IdsAgentController@getIdentifiers');
         Route::patch('/{id}', 'IdsAgentController@update');
         Route::delete('/{id}', 'IdsAgentController@destroy');
     });

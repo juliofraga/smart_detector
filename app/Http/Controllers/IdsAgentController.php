@@ -23,4 +23,10 @@ class IdsAgentController extends BaseController
     {
         return view('/ids');
     }
+
+    public function getIdentifiers(): JsonResponse
+    {
+        $ids = $this->model->select('id', 'name', 'hostname', 'ip_local')->get();
+        return parent::responseGeneric($ids);
+    }
 }
