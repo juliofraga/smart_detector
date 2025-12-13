@@ -71,7 +71,7 @@
         </div>
         <div class="row mb-4">
             <div class="col-sm-6">
-                <severity-dashboard-component></severity-dashboard-component>
+                <severity-dashboard-component :labels="Object.keys(totals.totalByClassification)" :data="Object.values(totals.totalByClassification)"></severity-dashboard-component>
             </div>
             <div class="col-sm-6">
                 <categories-dashboard-component></categories-dashboard-component>
@@ -96,7 +96,8 @@
                     totalEvents: 0,
                     totalIntrusions: 0,
                     totalNormal: 0,
-                    totalByDay: []
+                    totalByDay: [],
+                    totalByClassification: {}
                 },
             };
         },
@@ -108,6 +109,7 @@
                     this.totals.totalIntrusions = data.totalIntrusions;
                     this.totals.totalNormal = data.totalNormal;
                     this.totals.totalByDay = data.totalsByDay;
+                    this.totals.totalByClassification = data.classifications;
                 });
             },
             resetValues() {

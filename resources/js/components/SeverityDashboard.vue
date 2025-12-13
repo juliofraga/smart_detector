@@ -1,9 +1,10 @@
 <template>
 	<div class="container mt-4">
-		<h3 class="mb-3 text-white">Dashboard de Severidade</h3>
+		<h3 class="mb-3 text-white">Classificação de Risco</h3>
 		<div class="col-md-12 mx-auto">
 			<canvas id="donutChart"></canvas>
 		</div>
+		{{ labels }}
 	</div>
 </template>
   
@@ -11,11 +12,45 @@
   	import { Chart } from "chart.js/auto";
   
 	export default {
-		mounted() {
-			new Chart(document.getElementById("donutChart"), {
-				type: "doughnut",
-				data: { labels: ["Alto", "Médio", "Baixo"], datasets: [{ data: [30, 90, 180] }] }
-			});
-		}
+		props: ['labels', 'data'],
+		data() {
+			return {
+				chart: null
+			};
+		},
+		methods: {
+			mountChart() {
+				if (!this.chart) {
+					this.chart = new Chart(document.getElementById("donutChart"), {
+						type: "doughnut",
+						data: { labels: this.labels, datasets: [{ data: this.data, backgroundColor: this.setColors() }] }
+					});
+				} else {
+					this.updateChart();
+				}
+			},
+			updateChart() {
+				this.chart.data.labels = this.labels;
+				this.chart.data.datasets[0].data = this.data;
+				this.chart.data.datasets[0].backgroundColor = this.setColors();
+				this.chart.update();
+			},
+			setColors() {
+				const colorMap = {
+					"Muito Alto": "black",
+					"Alto": "red",
+					"Médio": "orange",
+					"Baixo": "green",
+					"Muito Baixo": "LightSkyBlue"
+				};
+				const colors = this.labels.map(label => colorMap[label] || "#999");
+				return colors;
+			}
+		},
+		watch: {
+        	data() {
+				this.mountChart();
+			},
+		},
 	};
 </script>
