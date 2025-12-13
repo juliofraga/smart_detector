@@ -168,7 +168,8 @@ class EventController extends BaseController
             'totalIntrusions' => $this->getTotalIntrusionsNormal($from, $to, $ids, 'Intrusion'),
             'totalNormal' => $this->getTotalIntrusionsNormal($from, $to, $ids, 'Normal'),
             'totalsByDay' => $this->getTotalsByDay($from, $to, $ids),
-            'classifications'  => $this->getTotalsByClassification($from, $to, $ids)
+            'classifications'  => $this->getTotalsByClassification($from, $to, $ids),
+            'types' => $this->getTotalsByTypes($from, $to, $ids)
         ];
         return response()->json($data, 201);
     }
@@ -336,6 +337,28 @@ class EventController extends BaseController
                 COUNT(events.id) as total
             ')
             ->groupBy('classifications.description')
+            ->pluck('total', 'description'); 
+    }
+
+    private function getTotalsByTypes($from = null, $to = null, $ids = null)
+    {
+        return $this->model->query()
+            ->join('types', 'events.types_id', '=', 'types.id')
+            ->when(!empty($from), function ($query) use ($from) {
+                $query->where('events.event_date_time', '>=', $from);
+            })
+            ->when(!empty($to), function ($query) use ($to) {
+                $query->where('events.event_date_time', '<=', $to);
+            })
+            ->when(!empty($ids), function ($query) use ($ids) {
+                $query->where('events.ids_id', $ids);
+            })
+            ->where('events.intrusion_normal', '=', 'Intrusion')
+            ->selectRaw('
+                types.description as description,
+                COUNT(events.id) as total
+            ')
+            ->groupBy('types.description')
             ->pluck('total', 'description'); 
     }
 }
