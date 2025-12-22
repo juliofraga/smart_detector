@@ -32,6 +32,7 @@ const store = new Vuex.Store({
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('access-denied-component', require('./components/AcessDenied.vue').default);
 Vue.component('account-component', require('./components/Account.vue').default);
 Vue.component('add-cancel-buttons-component', require('./components/AddCancelButtons.vue').default);
 Vue.component('alert-component', require('./components/Alert.vue').default);
@@ -51,6 +52,7 @@ Vue.component('home-component', require('./components/Home.vue').default);
 Vue.component('table-component', require('./components/Table.vue').default);
 Vue.component('modal-component', require('./components/Modal.vue').default);
 Vue.component('modal-delete-component', require('./components/ModalDelete.vue').default);
+Vue.component('not-found-component', require('./components/NotFound.vue').default);
 Vue.component('no-itens-component', require('./components/NoItens.vue').default);
 Vue.component('overview-dashboard-component', require('./components/OverviewDashboard.vue').default);
 Vue.component('search-component', require('./components/Search.vue').default);
