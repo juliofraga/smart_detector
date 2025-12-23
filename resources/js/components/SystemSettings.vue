@@ -29,8 +29,8 @@
                 <textarea v-if="setting.type === 'textarea'" class="form-control" :id="setting.attribute" :name="setting.attribute" v-model="setting.value" @blur="update(setting.attribute, setting.value)" rows="5"></textarea>
             </div>
         </div>
-        <alert-component type="danger" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'error'"></alert-component>
-        <alert-component type="success" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'success'"></alert-component>
+        <toast-component ref="toastError" type="danger" :details="feedbackMessage" :title="feedbackTitle" v-show="status == 'error'"></toast-component>
+        <toast-component ref="toastSuccess" type="success" :details="feedbackMessage" :title="feedbackTitle" v-show="status == 'success'"></toast-component>
     </div>
 </template>
 
@@ -74,6 +74,20 @@
             loadLlms() {
                 let url = this.urlBaseLlms + '/identifiers';
                 utils.axiosGet(url, this, 'llms');
+            }
+        },
+        watch: {
+            status(newVal) {
+                if (newVal === 'success' || newVal === 'error') {
+                    this.$nextTick(() => {
+                        if (newVal === 'success') {
+                            this.$refs.toastSuccess?.show()
+                        } else if (newVal === 'error') {
+                            this.$refs.toastError?.show()
+                        }
+                        
+                    })
+                }
             }
         },
         mounted() {

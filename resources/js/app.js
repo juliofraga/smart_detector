@@ -61,6 +61,7 @@ Vue.component('severity-dashboard-component', require('./components/SeverityDash
 Vue.component('spinner-component', require('./components/Spinner.vue').default);
 Vue.component('system-settings-component', require('./components/SystemSettings.vue').default);
 Vue.component('type-component', require('./components/Type.vue').default);
+Vue.component('toast-component', require('./components/Toast.vue').default);
 Vue.component('updates-button-component', require('./components/UpdatesButton.vue').default);
 Vue.component('update-password-component', require('./components/UpdatePassword.vue').default);
 Vue.component('users-component', require('./components/Users.vue').default);

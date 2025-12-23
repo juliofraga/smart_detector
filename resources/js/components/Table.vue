@@ -3,8 +3,8 @@
         <alert-component type="warning" title="Não foram encontratos resultados"></alert-component>
     </div>
     <div class="mt-2" v-else>
-        <alert-component type="danger" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'error'"></alert-component>
-        <alert-component type="success" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'success'"></alert-component>
+        <toast-component ref="toastError" type="danger" :details="feedbackMessage" :title="feedbackTitle" v-show="status == 'error'"></toast-component>
+        <toast-component ref="toastSuccess" type="success" :details="feedbackMessage" :title="feedbackTitle" v-show="status == 'success'"></toast-component>
         <div class="card p-3 mt-3">
             <h5 class="mb-3">{{ sectionTitle }}</h5>
             <div class="table-responsive">
@@ -107,6 +107,20 @@
             setStore(obj) {
                 this.$store.state.item = obj;
             },
+        },
+        watch: {
+            status(newVal) {
+                if (newVal === 'success' || newVal === 'error') {
+                    this.$nextTick(() => {
+                        if (newVal === 'success') {
+                            this.$refs.toastSuccess?.show()
+                        } else if (newVal === 'error') {
+                            this.$refs.toastError?.show()
+                        }
+                        
+                    })
+                }
+            }
         },
         computed: {
             filteredData(){

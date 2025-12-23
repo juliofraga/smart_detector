@@ -115,8 +115,8 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-sm-12">
-                            <alert-component type="danger" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'error'"></alert-component>
-                            <alert-component type="success" :details="feedbackMessage" :title="feedbackTitle" v-if="status == 'success'"></alert-component>
+                            <toast-component ref="toastError" type="danger" :details="feedbackMessage" :title="feedbackTitle" v-show="status == 'error'"></toast-component>
+                            <toast-component ref="toastSuccess" type="success" :details="feedbackMessage" :title="feedbackTitle" v-show="status == 'success'"></toast-component>
                         </div>
                     </div>
                 </div>
@@ -176,6 +176,18 @@
                     } else {
                         this.passComplexityActivated = true;
                     }
+                }
+            },
+            status(newVal) {
+                if (newVal === 'success' || newVal === 'error') {
+                    this.$nextTick(() => {
+                        if (newVal === 'success') {
+                            this.$refs.toastSuccess?.show()
+                        } else if (newVal === 'error') {
+                            this.$refs.toastError?.show()
+                        }
+                        
+                    })
                 }
             }
         },
