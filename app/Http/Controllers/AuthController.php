@@ -20,16 +20,16 @@ class AuthController extends Controller
         try {
             $blockUserSetting = system_setting::where('attribute', 'block_user')->first()->value === "Yes" ? true : false;
         } catch (\Throwable $th) {
-            return parent::responseGeneric('Configuração incorreta no sistema, não foi possível fazer o login', 401, 'error');
+            return parent::responseGeneric(__('text.incorrect_system_configuration_login_was_not_possible'), 401, 'error');
         }
         if (!$user) {
-            return parent::responseGeneric('Usuário não cadastrado no sistema', 401, 'error');
+            return parent::responseGeneric(__('text.user_not_found'), 401, 'error');
         }
         $loginError = LoginError::where('user_id', $user->id)->first();
         if ($blockUserSetting) {
             if ($loginError && $loginError->isBlocked()) {
                 if ($this->BlockedByTime($loginError->blocked_at)) {
-                    return parent::responseGeneric('Conta temporariamente bloqueada, tente novamente mais tarde', 403, 'error');
+                    return parent::responseGeneric(__('text.account_temporarily_blocked'), 403, 'error');
                 }
             }
         }
@@ -40,7 +40,7 @@ class AuthController extends Controller
                 $loginError->resetErrors();
             }
             if ($user->updated_pass == 0) {
-                return response()->json(['error' => 'Usuário deve atualizar a senha via login web.', 'status' => 428], 428);
+                return response()->json(['error' => __('text.user_must_update_password'), 'status' => 428], 428);
             }
             UserController::registerUserLogin($email);
             return parent::responseGeneric($token, 201, 'token');
@@ -49,18 +49,18 @@ class AuthController extends Controller
                 $loginError = LoginError::firstOrCreate(['user_id' => $user->id]);
                 if ($loginError->error_count >= 5) {
                     $loginError->block();
-                    return parent::responseGeneric('Sua conta foi temporariamente bloqueada, tente novamente mais tarde', 403, 'error');
+                    return parent::responseGeneric(__('text.your_account_temporarily_blocked'), 403, 'error');
                 }
                 $loginError->incrementErrorCount();
             }
-            return parent::responseGeneric('Credenciais Inválidas', 401, 'error');
+            return parent::responseGeneric(__('text.invalid_credentials'), 401, 'error');
         }
     }
 
     public function logout(): JsonResponse
     {
         auth('api')->logout();
-        return parent::responseGeneric('Logout realizado com sucesso');
+        return parent::responseGeneric(__('text.logout_successful'));
     }
 
     public function me(): JsonResponse
