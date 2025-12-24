@@ -42,22 +42,22 @@ class Controller extends BaseController
 
     public static function responseSuccessDelete(): JsonResponse
     {
-        return response()->json(['message' => 'Registro deletado com sucesso'], 201);
+        return response()->json(['message' => __('text.record_deleted_successfully')], 201);
     }
 
     public static function responseSuccessUpdate(): JsonResponse
     {
-        return response()->json(['message' => 'Registro atualizado com sucesso'], 201);
+        return response()->json(['message' => __('text.record_updated_succesfully')], 201);
     }
 
     public static function responseError(): JsonResponse
     {
-        return response()->json(['error' => 'Aconteceu um erro, tente novamente.'], 500);
+        return response()->json(['error' => __('text.an_error_happened_try_again')], 500);
     }
 
     public static function responseDataNotFound(): JsonResponse
     {
-        return response()->json(['error' => 'Dado não encontrado'], 404);
+        return response()->json(['error' => __('text.data_not_found')], 404);
     }
 
     public static function responseGeneric($data, $statusCode = 201, $type = 'message'): JsonResponse
