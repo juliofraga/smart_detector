@@ -30,7 +30,7 @@ class SystemSettingController extends BaseController
         $attribute = array_key_first($request->all());
         $value = $request->input($attribute);
         if ($attribute === 'request_per_minute' && $value > 5000) {
-            return parent::responseGeneric('O valor não pode ser maior do que 5000', 422, 'error');
+            return parent::responseGeneric(__('text.value_exceed'), 422, 'error');
         }
 
         $data = $this->model->where('attribute', $attribute)->first();

@@ -10,6 +10,7 @@ return [
     'incorrect_system_configuration_login_was_not_possible' => 'Incorrect system configuration, login was not possible',
     'invalid_credentials' => 'Invalid credentials',
     'invalid_enable_receipt_all_events_option' => '"Enable Receipt of All Events" is disabled in the system, therefore the value entered for the intrusion_normal field is invalid. Leave it blank or enter "Intrusion"',
+    'invalid_temporary_password' => 'Invalid temporary password, please try again',
     'logout_successful' => 'Logout successful',
     'normal_intrusion_field_is_invalid' => 'The value for the normal_intrusion field is invalid. It must be "Normal" or "Intrusion"',
     'normal_intrusion_field_not_specified' => 'The normal_intrusion field was not specified. It should be either "Normal" or "Intrusion"',
@@ -18,5 +19,6 @@ return [
     'record_updated_succesfully' => 'Record updated successfully',
     'user_not_found' => 'User not found',
     'user_must_update_password' => 'User must update their password via web login',
+    'value_exceed' => 'The value cannot exceed 5000',
     'your_account_temporarily_blocked' => 'Your account has been temporarily blocked, please try again later'
 ];

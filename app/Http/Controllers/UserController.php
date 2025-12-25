@@ -26,7 +26,7 @@ class UserController extends BaseController
         $user_id = $request->user()->id;
         if ($request->password) {
             if (config('system_settings.pass_complexity') === 'Yes' && !PasswordValidationTrait::passwordValidate($request->password)) {
-                return parent::responseGeneric('A senha não atendeu os requisitos mínimos de segurança, tente novamente!', 400, 'message');
+                return parent::responseGeneric(__('text.password_not_meet_requirements'), 400, 'message');
             }
             $request->merge([
                 'password' => bcrypt($request->password),
@@ -72,10 +72,10 @@ class UserController extends BaseController
         $data = $request->all(['email', 'password', 'passwordNew']);
         $token = auth('api')->attempt(['email' => $data['email'], 'password' => $data['password']]);
         if (!$token) {
-            return parent::responseGeneric('Senha temporária inválida, tente novamente!', 403, 'error');
+            return parent::responseGeneric(__('text.invalid_temporary_password'), 403, 'error');
         } else {
             if (config('system_settings.pass_complexity') === 'Yes' && !PasswordValidationTrait::passwordValidate($request->password)) {
-                return parent::responseGeneric('A senha não atendeu os requisitos mínimos de segurança, tente novamente!', 400, 'error');
+                return parent::responseGeneric(__('text.password_not_meet_requirements'), 400, 'error');
             }
             User::where('email', $data['email'])->update([
                 'password' => bcrypt($data['passwordNew'])
