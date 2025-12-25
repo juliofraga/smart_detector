@@ -27,7 +27,7 @@ Class BaseController extends Controller
         $request->validate($this->model->rules(), $this->model->feedback());
         if ($request->password) {
             if (config('system_settings.pass_complexity') === 'Yes' && !PasswordValidationTrait::passwordValidate($request->password)) {
-                return parent::responseGeneric('A senha não atendeu os requisitos mínimos de segurança, tente novamente!', 400, 'message');
+                return parent::responseGeneric(__('text.password_not_meet_requirements'), 400, 'message');
             }
             $request->merge([
                 'password' => bcrypt($request->password)

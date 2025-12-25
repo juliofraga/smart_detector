@@ -60,7 +60,7 @@ class EventController extends BaseController
                     ]);
                     $request->request->remove('classification');
                 } else {
-                    return parent::responseGeneric('Classificação informada não foi encontrada no sistema, tente novamente.', 401, 'error');
+                    return parent::responseGeneric(__('text.classification_not_found'), 401, 'error');
                 }
             }
         }
@@ -89,9 +89,9 @@ class EventController extends BaseController
             $event = $this->model->create($request->all());
         } catch (QueryException $e) {
             if ($e->errorInfo[1] === 1054) {
-                return parent::responseGeneric('Uma ou mais colunas informadas não existem na tabela. Verifique novamente os campos que você está enviando', 500, 'error');
+                return parent::responseGeneric(__('text.column_not_found'), 500, 'error');
             } else {
-                return parent::responseGeneric('Não foi possível salvar os dados, verifique se todos os campos obrigatórios foram preenchidos corretamente', 500,'error');
+                return parent::responseGeneric(__('text.data_could_not_be_saved'), 500,'error');
             }
         }
         $event->load(['classification', 'analysys', 'type', 'idsAgent']);
@@ -242,20 +242,20 @@ class EventController extends BaseController
         if ($intrusionField == null && config("system_settings.all_events") == 'Yes' && config("system_settings.use_smart_detector_ia") == 'No') {
             return [
                 'valid' => false,
-                'message' => 'Campo intrusion_normal não foi informado. Ele dever ser "Normal" ou "Intrusion"'
+                'message' => __('text.normal_intrusion_field_not_specified')
             ];
         }
         if ($intrusionField && ($intrusionField != 'Normal' && $intrusionField != 'Intrusion' && config("system_settings.all_events") == 'Yes' && config("system_settings.use_smart_detector_ia") == 'No')) {
             return [
                 'valid' => false,
-                'message' => 'Valor para o campo intrusion_normal inválido. Ele dever ser "Normal" ou "Intrusion"'
+                'message' => __('text.normal_intrusion_field_is_invalid')
             ];
         }
 
         if ($intrusionField != 'Intrusion' && config("system_settings.all_events") == 'No') {
             return [
                 'valid' => false,
-                'message' => '"Ativar Recebimento de Todos os Eventos" está desativado no sistema, portanto o valor informado para o campo intrusion_normal é inválido. Deixe ele em branco ou informe "Intrusion"'
+                'message' => __('text.invalid_enable_receipt_all_events_option')
             ];
         }
         return [
