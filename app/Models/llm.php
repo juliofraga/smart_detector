@@ -38,8 +38,7 @@ class Llm extends Model
     public function feedback(): array 
     {
         return [
-            'required' => 'O campo :attribute é obrigatório',
-            'name.unique' => 'Já existe um registro com esse nome. Informe outro nome, por favor.'
+            'name.unique' => __('validation.custom.name.unique')
         ];
     }
 }

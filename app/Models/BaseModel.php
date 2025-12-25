@@ -14,7 +14,5 @@ abstract class BaseModel extends Model
     protected $fillable = [];
     
     abstract public function rules(): array;
-
-    abstract public function feedback(): array;
-    
+   
 }

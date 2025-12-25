@@ -20,11 +20,4 @@ class Classification extends BaseModel
             'visual_style' => 'required'
         ];
     }
-
-    public function feedback(): array 
-    {
-        return [
-            'required' => 'O campo :attribute é obrigatório'
-        ];
-    }
 }

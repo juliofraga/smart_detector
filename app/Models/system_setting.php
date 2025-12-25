@@ -20,13 +20,6 @@ class system_setting extends BaseModel
         ];
     }
 
-    public function feedback(): array 
-    {
-        return [
-            'required' => 'O campo :attribute é obrigatório'
-        ];
-    }
-
     protected static function booted()
     {
         static::saved(function () {

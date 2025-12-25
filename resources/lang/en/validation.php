@@ -115,6 +115,17 @@ return [
     'string' => 'The :attribute must be a string.',
     'timezone' => 'The :attribute must be a valid zone.',
     'unique' => 'The :attribute has already been taken.',
+    'custom' => [
+        'name' => [
+            'unique' => 'There is already a record with that name. Please provide another name',
+        ],
+        'field_name' => [
+            'unique' => 'The :attribute has already been taken'
+        ],
+        'email' => [
+            'unique' => 'This email address is already registered in our system. Please provide another one'
+        ]
+    ],
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',

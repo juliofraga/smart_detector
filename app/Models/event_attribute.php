@@ -28,8 +28,7 @@ class event_attribute extends BaseModel
     public function feedback(): array 
     {
         return [
-            'required' => 'O campo :attribute é obrigatório',
-            'field_name.unique' => 'Já existe um campo com esse nome. Informe outro nome, por favor.'
+            'field_name.unique' => __('validation.custom.field_name.unique'),
         ];
     }
 }

@@ -29,13 +29,6 @@ class Event extends BaseModel
         ];
     }
 
-    public function feedback(): array 
-    {
-        return [
-            'required' => 'O campo :attribute é obrigatório'
-        ];
-    }
-
     public function classification()
     {
         return $this->belongsTo(Classification::class, 'classifications_id');

@@ -21,13 +21,6 @@ class ids_agent extends BaseModel
         ];
     }
 
-    public function feedback(): array 
-    {
-        return [
-            'required' => 'O campo :attribute é obrigatório',
-        ];
-    }
-
     public function events()
     {
         return $this->hasMany(Event::class, 'ids_id');

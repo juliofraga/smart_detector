@@ -18,11 +18,4 @@ class Type extends BaseModel
             'description' => 'required'
         ];
     }
-
-    public function feedback(): array 
-    {
-        return [
-            'required' => 'O campo :attribute é obrigatório'
-        ];
-    }
 }
