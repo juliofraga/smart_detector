@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use App\Traits\PasswordValidationTrait;
+use Illuminate\Support\Facades\Lang;
 
 class UserController extends BaseController
 {
@@ -58,7 +59,10 @@ class UserController extends BaseController
 
     public function showMyAccount()
     {
-        return view('/my-account');
+        $text = Lang::get('text.my_account_domain');
+        $buttons = Lang::get('text.buttons');
+        $translations = array_merge($text, $buttons);
+        return view('/my-account', ['translations' => $translations]);
     }
 
     public static function registerUserLogin(string $email): void
