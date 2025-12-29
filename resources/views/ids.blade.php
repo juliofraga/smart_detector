@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <ids-component></ids-component>
+    <ids-component :translations='@json($translations)'></ids-component>
 @endsection

@@ -93,6 +93,22 @@ return [
         'smart_detector' => 'SmartDetector',
         'view_events_real_time' => 'View events in real time'
     ],
+    'ids_domain' => [
+        'add_ids' => 'Add IDS',
+        'creation_date' => 'Creation Date',
+        'edit' => 'Edit',
+        'hostname' => 'Hostname',
+        'id' => 'ID',
+        'inform_name' => 'Enter the name',
+        'ip_address' => 'IP Address',
+        'intrusion_detection_system' => 'Intrusion Detection System',
+        'last_update' => 'Last Update',
+        'name' => 'Name',
+        'no_ids_found' => 'No IDS found',
+        'registered_ids' => "Registered IDS's",
+        'search_by' => 'Search by name, hostname or IP',
+        'update_ids' => 'Update IDS',
+    ],
     'my_account_domain' => [
         'creation_date' => 'Creation Date',
         'email' => 'Email',

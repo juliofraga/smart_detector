@@ -93,6 +93,22 @@ return [
         'smart_detector' => 'SmartDetector',
         'view_events_real_time' => 'Visualize eventos em tempo real'
     ],
+    'ids_domain' => [
+        'add_ids' => 'Adicionar IDS',
+        'creation_date' => 'Data de Criação',
+        'edit' => 'Editar',
+        'hostname' => 'Hostname',
+        'id' => 'ID',
+        'inform_name' => 'Informe o nome',
+        'ip_address' => 'Endereço IP',
+        'intrusion_detection_system' => 'Sistema de Detecção de Intrusão',
+        'last_update' => 'Última atualização',
+        'name' => 'Nome',
+        'no_ids_found' => 'Nenhum IDS encontrado',
+        'registered_ids' => "IDS's Cadastrados",
+        'search_by' => 'Buscar por nome, hostname ou IP',
+        'update_ids' => 'Atualizar IDS',
+    ],
     'my_account_domain' => [
         'creation_date' => 'Data de criação',
         'email' => 'E-mail',

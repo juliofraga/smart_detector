@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Models\ids_agent;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Lang;
 
 class IdsAgentController extends BaseController
 {
@@ -21,7 +22,8 @@ class IdsAgentController extends BaseController
 
     public function show(int $id = null)
     {
-        return view('/ids');
+        $translations = Lang::get('text.ids_domain');
+        return view('/ids', ['translations' => $translations]);
     }
 
     public function getIdentifiers(): JsonResponse

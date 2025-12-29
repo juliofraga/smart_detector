@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <search-component 
-            title="Sistema de Detecção de Intrusão" 
+            :title="translations.intrusion_detection_system" 
             :buttons=" {
                 add: {
                     show: true,
@@ -18,58 +18,58 @@
                     show: false
                 }
             }" 
-            placeholder="Buscar por nome, hostname ou IP"
+            :placeholder="translations.search_by"
             classSearch="ids"
         ></search-component>
         <div v-if="Object.keys(ids.data).length > 0">
             <table-component
                 :title="{
-                    id: {title: 'ID', hidden: 'false', type:'text'},
-                    name: {title: 'Nome', hidden: 'false', type:'text'},           
-                    hostname: {title: 'Hostname', hidden: 'false', type: 'text'},
-                    ip_local: {title: 'Endereço IP', hidden: 'false', type: 'text'},
-                    created_at: {title: 'Data de Criação', hidden: 'false', type: 'timestamp'},
+                    id: {title: translations.id, hidden: 'false', type:'text'},
+                    name: {title: translations.name, hidden: 'false', type:'text'},           
+                    hostname: {title: translations.hostname, hidden: 'false', type: 'text'},
+                    ip_local: {title: translations.ip_address, hidden: 'false', type: 'text'},
+                    created_at: {title: translations.creation_date, hidden: 'false', type: 'timestamp'},
                     editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
                 }" 
                 :data="ids.data"
                 :status="status"
                 :feedbackMessage="feedbackMessage"
                 :feedbackTitle="feedbackTitle"
-                sectionTitle="Tipos de Ameaças Cadastradas"
+                :sectionTitle="translations.registered_ids"
                 classList="type"
             ></table-component>
         </div>
         <div v-else-if="loaded === true">
-            <no-itens-component message="Nenhum IDS encontrado"></no-itens-component>
+            <no-itens-component :message="translations.no_ids_found"></no-itens-component>
         </div>
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
         </div>
         <paginate-component :data = "ids"></paginate-component>
         <!-- Modal para adicionar IDS -->
-        <modal-component id="modalAdd" title="Adicionar IDS">
+        <modal-component id="modalAdd" :title="translations.add_ids">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Nome*" v-model="name">
-                                <label class="form-label">Nome*</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="`${translations.name}`*" v-model="name">
+                                <label class="form-label">{{ translations.name }}*</label>
                                 <div id="invalidFeedbackName" class="invalid-feedback">
-                                    Informe o nome.
+                                    {{ translations.inform_name }}.
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="hostname" name="hostname" placeholder="Hostname" v-model="hostname">
-                                <label class="form-label">Hostname</label>
+                                <input type="text" class="form-control" id="hostname" name="hostname" placeholder="`${translations.hostname}`" v-model="hostname">
+                                <label class="form-label">{{ translations.hostname }}</label>
                             </div>
                         </div>
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="ip_local" name="ip_local" placeholder="Endereço IP" v-model="ip_local">
-                                <label class="form-label">Endereço IP</label>
+                                <input type="text" class="form-control" id="ip_local" name="ip_local" placeholder="`${translations.ip_address}`" v-model="ip_local">
+                                <label class="form-label">{{ translations.ip_address }}</label>
                             </div>
                         </div>
                     </div>
@@ -80,40 +80,40 @@
             </template>
         </modal-component>
         <!-- Modal para atualizar IDS -->
-        <modal-component id="modalUpdate" title="Atualizar IDS">
+        <modal-component id="modalUpdate" :title="translations.update_ids">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="nameUpdate" name="nameUpdate" placeholder="Nome*" v-model="$store.state.item.name">
-                                <label class="form-label">Nome*</label>
+                                <input type="text" class="form-control" id="nameUpdate" name="nameUpdate" placeholder="`${translations.name}`*" v-model="$store.state.item.name">
+                                <label class="form-label">{{ translations.name }}*</label>
                                 <div id="invalidFeedbackNameUpdate" class="invalid-feedback">
-                                    Informe o nome.
+                                    {{ translations.inform_name }}
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="hostnameUpdate" name="hostnameUpdate" placeholder="Hostname" v-model="$store.state.item.hostname">
-                                <label class="form-label">Hostname</label>
+                                <input type="text" class="form-control" id="hostnameUpdate" name="hostnameUpdate" placeholder="`${translations.hostname}`" v-model="$store.state.item.hostname">
+                                <label class="form-label">{{ translations.hostname }}</label>
                             </div>
                         </div>
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="ip_localUpdate" name="ip_localUpdate" placeholder="Endereço IP" v-model="$store.state.item.ip_local">
-                                <label class="form-label">Endereço IP</label>
+                                <input type="text" class="form-control" id="ip_localUpdate" name="ip_localUpdate" placeholder="`${translations.ip_address}`" v-model="$store.state.item.ip_local">
+                                <label class="form-label">{{ translations.ip_address }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12">
-                            <label class="form-label text-light"><i>Data de criação: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
+                            <label class="form-label text-light"><i>{{ translations.creation_date }}: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <label class="form-label text-light"><i>Última atualização: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
+                            <label class="form-label text-light"><i>{{ translations.last_update }}: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
                         </div>
                     </div>
                 </div>
@@ -131,6 +131,7 @@
     import { EventBus } from "./eventBus.js";
     import * as utils from '../utils/functions';
     export default {
+        props: ['translations'],
         data() {
             return {
                 ids: {data: {}},
