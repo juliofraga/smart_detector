@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Models\Classification;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Lang;
 
 class ClassificationController extends BaseController
 {
@@ -21,6 +22,9 @@ class ClassificationController extends BaseController
 
     public function show(int $id = null)
     {
-        return view('/classifications');
+        $text = Lang::get('text.classification_domain');
+        $buttons = Lang::get('text.buttons');
+        $translations = array_merge($text, $buttons);
+        return view('/classifications', ['translations' => $translations]);
     }
 }

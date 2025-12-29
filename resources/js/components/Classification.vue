@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <search-component 
-            title="Classificações de Risco" 
+            :title="translations.risk_classification" 
             :buttons=" {
                 add: {
                     show: true,
@@ -18,44 +18,44 @@
                     show: false
                 }
             }" 
-            placeholder="Buscar por descrição"
+            :placeholder="translations.search_by"
             classSearch="classification"
         ></search-component>
         <div v-if="Object.keys(classifications.data).length > 0">
             <table-component
                 :title="{
-                    id: {title: 'ID', hidden: 'true', type:'text'},
-                    description: {title: 'Descrição', hidden: 'false', type:'text'},
-                    visual_style: {title: 'Estilo', hidden: 'false', type:'badge'},               
-                    created_at: {title: 'Data de Criação', hidden: 'false', type: 'timestamp'},
-                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
+                    id: {title: translations.id, hidden: 'true', type:'text'},
+                    description: {title: translations.description, hidden: 'false', type:'text'},
+                    visual_style: {title: translations.style, hidden: 'false', type:'badge'},               
+                    created_at: {title: translations.creation_date, hidden: 'false', type: 'timestamp'},
+                    editar: {title: translations.edit, hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
                 }" 
                 :data="classifications.data"
                 :status="status"
                 :feedbackMessage="feedbackMessage"
                 :feedbackTitle="feedbackTitle"
-                sectionTitle="Classificações de Risco Cadastradas"
+                :sectionTitle="translations.registered_risk_classifications"
                 classList="classification"
             ></table-component>
         </div>
         <div v-else-if="loaded === true">
-            <no-itens-component message="Nenhuma classificação de risco encontrada"></no-itens-component>
+            <no-itens-component :message="translations.no_risk_found"></no-itens-component>
         </div>
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
         </div>
         <paginate-component :data = "classifications"></paginate-component>
         <!-- Modal para adicionar classificações de risco -->
-        <modal-component id="modalAdd" title="Adicionar Classificação de Risco">
+        <modal-component id="modalAdd" :title="translations.add_risk_classification">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="description" name="description" placeholder="Descrição*" v-model="description">
-                                <label class="form-label">Descrição*</label>
+                                <input type="text" class="form-control" id="description" name="description" placeholder="`${translations.description}`*" v-model="description">
+                                <label class="form-label">{{ translations.description }}*</label>
                                 <div id="invalidFeedbackDescricao" class="invalid-feedback">
-                                    Informe a descrição.
+                                    {{ translations.inform_description }}
                                 </div>
                             </div>
                         </div>
@@ -63,8 +63,8 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <select class="form-control" id="visualStyle" name="visualStyle" placeholder="Estilo*" v-model="visualStyle" style="background-color: white;">
-                                    <option value="">Selecione...</option>
+                                <select class="form-control" id="visualStyle" name="visualStyle" placeholder="`${translations.style}`*" v-model="visualStyle" style="background-color: white;">
+                                    <option value="">{{ translations.select }}...</option>
                                     <option value="primary" class="bg-primary text-white">Primary</option>
                                     <option value="secondary" class="bg-secondary text-white">Secondary</option>
                                     <option value="success" class="bg-success text-white">Success</option>
@@ -74,9 +74,9 @@
                                     <option value="light" class="bg-light">Light</option>
                                     <option value="dark" class="bg-dark text-white" style="color:">Dark</option>
                                 </select>
-                                <label class="form-label">Estilo*</label>
+                                <label class="form-label">{{ translations.style }}*</label>
                                 <div id="invalidFeedbackEstilo" class="invalid-feedback">
-                                    Informe o estilo do alerta
+                                    {{ translations.specify_alert_style }}
                                 </div>
                             </div>
                         </div>
@@ -88,16 +88,16 @@
             </template>
         </modal-component>
         <!-- Modal para atualizar classificações de risco -->
-        <modal-component id="modalUpdate" title="Atualizar Classificação de Risco">
+        <modal-component id="modalUpdate" :title="translations.update_risk_classification">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="descriptionUpdate" name="descriptionUpdate" placeholder="Descrição*" v-model="$store.state.item.description">
-                                <label class="form-label">Descrição*</label>
+                                <input type="text" class="form-control" id="descriptionUpdate" name="descriptionUpdate" placeholder="`${translations.description}`*" v-model="$store.state.item.description">
+                                <label class="form-label">{{ translations.description }}*</label>
                                 <div id="invalidFeedbackDescricaoUpdate" class="invalid-feedback">
-                                    Informe a descrição.
+                                    {{ translations.inform_description }}
                                 </div>
                             </div>
                         </div>
@@ -105,8 +105,8 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <select class="form-control" id="visualStyleUpdate" name="visualStyleUpdate" placeholder="Estilo*" v-model="$store.state.item.visual_style" style="background-color: white;">
-                                    <option value="">Selecione...</option>
+                                <select class="form-control" id="visualStyleUpdate" name="visualStyleUpdate" placeholder="`${translations.style}`*" v-model="$store.state.item.visual_style" style="background-color: white;">
+                                    <option value="">{{ translations.select }}...</option>
                                     <option value="primary" class="bg-primary text-white">Primary</option>
                                     <option value="secondary" class="bg-secondary text-white">Secondary</option>
                                     <option value="success" class="bg-success text-white">Success</option>
@@ -116,21 +116,21 @@
                                     <option value="light" class="bg-light">Light</option>
                                     <option value="dark" class="bg-dark text-white" style="color:">Dark</option>
                                 </select>
-                                <label class="form-label">Estilo*</label>
+                                <label class="form-label">{{ translations.style }}*</label>
                                 <div id="invalidFeedbackEstiloUpdate" class="invalid-feedback">
-                                    Informe o estilo do alerta
+                                    {{ translations.specify_alert_style }}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12">
-                            <label class="form-label text-light"><i>Data de criação: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
+                            <label class="form-label text-light"><i>{{ translations.creation_date }}: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <label class="form-label text-light"><i>Última atualização: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
+                            <label class="form-label text-light"><i>{{ translations.last_update }}: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
                         </div>
                     </div>
                 </div>
@@ -148,6 +148,7 @@
     import { EventBus } from "./eventBus.js";
     import * as utils from '../utils/functions';
     export default {
+        props: ['translations'],
         data() {
             return {
                 classifications: {data: {}},

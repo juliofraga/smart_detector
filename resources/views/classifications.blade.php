@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <classification-component></classification-component>
+    <classification-component :translations='@json($translations)'></classification-component>
 @endsection

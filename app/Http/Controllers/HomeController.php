@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Contracts\View\Factory as ViewFactory;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class HomeController extends Controller
 {
 
     public function index()
     {
-        return view('home');
+        $translations = Lang::get('text.home_domain');
+        return view('home', ['translations' => $translations]);
     }
 }

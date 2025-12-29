@@ -7,6 +7,7 @@ use App\Models\event_attribute;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\EventController;
+use Illuminate\Support\Facades\Lang;
 
 class EventAttributeController extends BaseController
 {
@@ -22,7 +23,10 @@ class EventAttributeController extends BaseController
 
     public function show(int $id = null)
     {
-        return view('/event_attributes');
+        $text = Lang::get('text.event_attributes_domain');
+        $buttons = Lang::get('text.buttons');
+        $translations = array_merge($text, $buttons);
+        return view('/event_attributes', ['translations' => $translations]);
     }
 
     public function store(Request $request): JsonResponse

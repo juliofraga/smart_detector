@@ -2,15 +2,15 @@
     <div class="container">
         <div class="container-fluid p-4">
             <div class="mb-4">
-                <h2 class="fw-bold">Painel de Monitoramento <span class="highlight">SmartDetector</span></h2>
-                <p class="text-secondary">Visualize eventos em tempo real.</p>
+                <h2 class="fw-bold">{{ translations.monitoring_panel }} <span class="highlight">{{ translations.smart_detector }}</span></h2>
+                <p class="text-secondary">{{ translations.view_events_real_time }}</p>
             </div>
             <div v-if="Object.keys(events.data).length > 0">
                 <event-summary-component :events="events"></event-summary-component>
-                <event-table-component :data="events.data" title="Eventos Recentes"></event-table-component>
+                <event-table-component :data="events.data" title="`${translations.recent_events}`"></event-table-component>
             </div>
             <div v-else-if="loaded === true">
-                <no-itens-component message="Não há eventos registrados na data de hoje"></no-itens-component>
+                <no-itens-component :message="translations.no_events_today"></no-itens-component>
             </div>
             <div v-else-if="loaded === false">
                 <spinner-component></spinner-component>
@@ -23,6 +23,7 @@
 <script>
     import * as utils from '../utils/functions';
     export default {
+        props: ['translations'],
         data() {
             return {
                 events: {data: {}},
@@ -46,7 +47,7 @@
                         this.loaded = true;
                     })
                     .catch(errors => {
-                        this.feedbackTitle = "Houve um erro";
+                        this.feedbackTitle = this.translations.an_error_happened;
                         this.status = 'error';
                         this.feedbackMessage = errors;
                     })                  
