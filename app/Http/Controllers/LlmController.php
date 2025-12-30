@@ -9,6 +9,7 @@ use App\Traits\CurrencyHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Lang;
 
 class LlmController extends BaseController
 {
@@ -44,7 +45,8 @@ class LlmController extends BaseController
 
     public function show(int $id = null)
     {
-        return view('/llm');
+        $translations = Lang::get('text.llm_domain');
+        return view('/llm', ['translations' => $translations]);
     }
 
     public function update(Request $request, int $id): JsonResponse

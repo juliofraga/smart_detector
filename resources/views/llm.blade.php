@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <llm-component></llm-component>
+    <llm-component :translations='@json($translations)'></llm-component>
 @endsection

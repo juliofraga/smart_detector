@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <search-component 
-            title="LLM's" 
+            :title="translations.llms" 
             :buttons=" {
                 add: {
                     show: true,
@@ -18,55 +18,55 @@
                     show: false
                 }
             }" 
-            placeholder="Buscar por nome, provider ou modelo"
+            :placeholder="translations.search_by"
             classSearch="llm"
         ></search-component>
         <div v-if="Object.keys(llms.data).length > 0">
             <table-component
                 :title="{
-                    id: {title: 'ID', hidden: 'true', type:'text'},
-                    name: {title: 'Nome', hidden: 'false', type:'text'},           
-                    provider: {title: 'Provider', hidden: 'false', type: 'text'},
-                    model_id: {title: 'Modelo', hidden: 'false', type: 'text'},
-                    notes: {title: 'Notas', hidden: 'false', type: 'text'},
-                    api_base_url: {title: 'URL', hidden: 'true', type: 'text'},
-                    api_key: {title: 'API Key', hidden: 'true', type: 'text'},
-                    max_tokens: {title: 'Máximo de Tokens', hidden: 'true', type: 'text'},
-                    default_temperature: {title: 'Temperatura', hidden: 'true', type: 'text'},
-                    context_length: {title: 'Contexto', hidden: 'true', type: 'text'},
-                    pricing_prompt_token: {title: 'Custo por 1k tokens de prompt', hidden: 'true', type: 'text'},
-                    pricing_completion_token: {title: 'Custo por 1k tokens de resposta', hidden: 'true', type: 'text'},
-                    active: {title: 'Ativo', hidden: 'true', type: 'yesno'},
-                    created_at: {title: 'Criado em', hidden: 'true', type: 'timestamp'},
-                    updated_at: {title: 'Atualizado em', hidden: 'true', type: 'timestamp'},
-                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
+                    id: {title: translations.id, hidden: 'true', type:'text'},
+                    name: {title: translations.name, hidden: 'false', type:'text'},           
+                    provider: {title: translations.provider, hidden: 'false', type: 'text'},
+                    model_id: {title: translations.model, hidden: 'false', type: 'text'},
+                    notes: {title: translations.notes, hidden: 'false', type: 'text'},
+                    api_base_url: {title: translations.url, hidden: 'true', type: 'text'},
+                    api_key: {title: translations.api_key, hidden: 'true', type: 'text'},
+                    max_tokens: {title: translations.max_tokens, hidden: 'true', type: 'text'},
+                    default_temperature: {title: translations.temperature, hidden: 'true', type: 'text'},
+                    context_length: {title: translations.context, hidden: 'true', type: 'text'},
+                    pricing_prompt_token: {title: translations.pricing_prompt_token, hidden: 'true', type: 'text'},
+                    pricing_completion_token: {title: translations.pricing_completion_token, hidden: 'true', type: 'text'},
+                    active: {title: translations.active, hidden: 'true', type: 'yesno'},
+                    created_at: {title: translations.created_at, hidden: 'true', type: 'timestamp'},
+                    updated_at: {title: translations.updated_at, hidden: 'true', type: 'timestamp'},
+                    editar: {title: translations.edit, hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
                 }" 
                 :data="llms.data"
                 :status="status"
                 :feedbackMessage="feedbackMessage"
                 :feedbackTitle="feedbackTitle"
-                sectionTitle="LLM's Cadastradas"
+                :sectionTitle="translations.registered_llms"
                 classList="llm"
             ></table-component>
         </div>
         <div v-else-if="loaded === true">
-            <no-itens-component message="Nenhuma LLM encontrada"></no-itens-component>
+            <no-itens-component :message="translations.no_llm_found"></no-itens-component>
         </div>
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
         </div>
         <paginate-component :data = "llms"></paginate-component>
         <!-- Modal para adicionar LLM's -->
-        <modal-component id="modalAdd" options="modal-dialog-centered modal-md" title="Adicionar LLM">
+        <modal-component id="modalAdd" options="modal-dialog-centered modal-md" :title="translations.add_llm">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Nome (ex: 'GPT-5', 'Claude 3.5', 'Gemini 1.5')*" v-model="name">
-                                <label class="form-label">Nome (ex: 'GPT-5', 'Claude 3.5', 'Gemini 1.5')*</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="`${translations.name_with_examples`*" v-model="name">
+                                <label class="form-label">{{ translations.name_with_examples }}*</label>
                                 <div id="invalidFeedbackName" class="invalid-feedback">
-                                    Informe o nome.
+                                    {{ translations.inform_name }}
                                 </div>
                             </div>
                         </div>
@@ -74,10 +74,10 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="provider" name="provider" placeholder="Provider (ex: 'OpenAI', 'Google')*" v-model="provider">
-                                <label class="form-label">Provider (ex: 'OpenAI', 'Google')*</label>
+                                <input type="text" class="form-control" id="provider" name="provider" placeholder="`${translations.provider_with_examples}`*" v-model="provider">
+                                <label class="form-label">{{ translations.provider_with_examples }}*</label>
                                 <div id="invalidFeedbackProvider" class="invalid-feedback">
-                                    Informe a provider.
+                                    {{ translations.inform_provider }}
                                 </div>
                             </div>
                         </div>
@@ -85,10 +85,10 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="model_id" name="model_id" placeholder="Model ID (ex: gpt-5, gemini-1.5-pro)*" v-model="model_id">
-                                <label class="form-label">Model ID (ex: gpt-5, gemini-1.5-pro)*</label>
+                                <input type="text" class="form-control" id="model_id" name="model_id" placeholder="`${translations.model_with_examples}`*" v-model="model_id">
+                                <label class="form-label">{{ translations.model_with_examples }}*</label>
                                 <div id="invalidFeedbackModelId" class="invalid-feedback">
-                                    Informe o Model ID.
+                                    {{ translations.inform_model }}
                                 </div>
                             </div>
                         </div>
@@ -96,10 +96,10 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="api_base_url" name="api_base_url" placeholder="API URL (ex: https://api.openai.com/v1)*" v-model="api_base_url">
-                                <label class="form-label">API URL (ex: https://api.openai.com/v1)*</label>
+                                <input type="text" class="form-control" id="api_base_url" name="api_base_url" placeholder="`${translations.api_url_with_example}`*" v-model="api_base_url">
+                                <label class="form-label">{{ translations.api_url_with_example }}*</label>
                                 <div id="invalidFeedbackApiBaseUrl" class="invalid-feedback">
-                                    Informe a URL da API.
+                                    {{ translations.inform_api_url }}
                                 </div>
                             </div>
                         </div>
@@ -107,10 +107,10 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="api_key" name="api_key" placeholder="API Key*" v-model="api_key">
-                                <label class="form-label">API Key*</label>
+                                <input type="password" class="form-control" id="api_key" name="api_key" placeholder="`${translations.api_key}`*" v-model="api_key">
+                                <label class="form-label">{{ translations.api_key }}*</label>
                                 <div id="invalidFeedbackApiKey" class="invalid-feedback">
-                                    Informe a API Key.
+                                    {{ translations.inform_api_key }}
                                 </div>
                             </div>
                         </div>
@@ -118,34 +118,34 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="pricing_prompt_token" name="pricing_prompt_token" placeholder="Custo por 1k tokens de prompt" v-model="pricing_prompt_token" @input="maskMoney('pricing_prompt_token')">
-                                <label class="form-label">Custo por 1k tokens de prompt</label>
+                                <input type="text" class="form-control" id="pricing_prompt_token" name="pricing_prompt_token" placeholder="`${translations.pricing_prompt_token}`" v-model="pricing_prompt_token" @input="maskMoney('pricing_prompt_token')">
+                                <label class="form-label">{{ translations.pricing_prompt_token }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="pricing_completion_token" name="pricing_completion_token" placeholder="Custo por 1k tokens de resposta" v-model="pricing_completion_token" @input="maskMoney('pricing_completion_token')">
-                                <label class="form-label">Custo por 1k tokens de resposta</label>
+                                <input type="text" class="form-control" id="pricing_completion_token" name="pricing_completion_token" placeholder="`${translations.pricing_completion_token}`" v-model="pricing_completion_token" @input="maskMoney('pricing_completion_token')">
+                                <label class="form-label">{{ translations.pricing_completion_token }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="max_tokens" name="max_tokens" placeholder="Limite de tokens permitido por requisição" v-model="max_tokens">
-                                <label class="form-label">Limite de tokens permitido por requisição</label>
+                                <input type="number" class="form-control" id="max_tokens" name="max_tokens" placeholder="`${translations.max_tokens_per_request}`" v-model="max_tokens">
+                                <label class="form-label">{{ translations.max_tokens_per_request }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="default_temperature" name="default_temperature" placeholder="Temperatura Padrão*" v-model="default_temperature">
-                                <label class="form-label">Temperatura Padrão*</label>
+                                <input type="number" class="form-control" id="default_temperature" name="default_temperature" placeholder="`${translations.temperature_standard}`*" v-model="default_temperature">
+                                <label class="form-label">{{ translations.temperature_standard }}*</label>
                                 <div id="invalidFeedbackDefaultTemperature" class="invalid-feedback">
-                                    Informe a temperatura padrão.
+                                    {{ translations.inform_temperature }}
                                 </div>
                             </div>
                         </div>
@@ -153,8 +153,8 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="context_length" name="context_length" placeholder="Quantos tokens o modelo aceita no contexto?" v-model="context_length">
-                                <label class="form-label">Quantos tokens o modelo aceita no contexto?</label>
+                                <input type="number" class="form-control" id="context_length" name="context_length" placeholder="`${translations.context_length_accept}`" v-model="context_length">
+                                <label class="form-label">{{ translations.context_length_accept }}</label>
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,7 @@
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <textarea class="form-control rounded border-0" rows="10" id="notes" name="notes" style="height: auto;" v-model="notes"></textarea>
-                                <label class="form-label">Notas*</label>
+                                <label class="form-label">{{ translations.notes }}*</label>
                             </div>
                         </div>
                     </div>
@@ -173,16 +173,16 @@
             </template>
         </modal-component>
         <!-- Modal para atualizar LLM's -->
-        <modal-component id="modalUpdate" options="modal-dialog-centered modal-md" title="Atualizar LLM">
+        <modal-component id="modalUpdate" options="modal-dialog-centered modal-md" :title="translations.update_llm">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="nameUpdate" name="nameUpdate" placeholder="Nome (ex: 'GPT-5', 'Claude 3.5', 'Gemini 1.5')*" v-model="$store.state.item.name">
-                                <label class="form-label">Nome (ex: 'GPT-5', 'Claude 3.5', 'Gemini 1.5')*</label>
+                                <input type="text" class="form-control" id="nameUpdate" name="nameUpdate" placeholder="`${translations.name_with_examples}`*" v-model="$store.state.item.name">
+                                <label class="form-label">{{ translations.name_with_examples }}*</label>
                                 <div id="invalidFeedbackName" class="invalid-feedback">
-                                    Informe o nome.
+                                    {{ translations.inform_name }}
                                 </div>
                             </div>
                         </div>
@@ -190,10 +190,10 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="providerUpdate" name="providerUpdate" placeholder="Provider (ex: 'OpenAI', 'Google')*" v-model="$store.state.item.provider">
-                                <label class="form-label">Provider (ex: 'OpenAI', 'Google')*</label>
+                                <input type="text" class="form-control" id="providerUpdate" name="providerUpdate" placeholder="`${translations.provider_with_examples}`*" v-model="$store.state.item.provider">
+                                <label class="form-label">{{ translations.provider_with_examples }}*</label>
                                 <div id="invalidFeedbackProvider" class="invalid-feedback">
-                                    Informe a provider.
+                                    {{ translations.inform_provider }}
                                 </div>
                             </div>
                         </div>
@@ -201,10 +201,10 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="model_idUpdate" name="model_idUpdate" placeholder="Model ID (ex: gpt-5, gemini-1.5-pro)*" v-model="$store.state.item.model_id">
-                                <label class="form-label">Model ID (ex: gpt-5, gemini-1.5-pro)*</label>
+                                <input type="text" class="form-control" id="model_idUpdate" name="model_idUpdate" placeholder="`${translations.model_with_examples}`" v-model="$store.state.item.model_id">
+                                <label class="form-label">{{ translations.model_with_examples }}*</label>
                                 <div id="invalidFeedbackModelId" class="invalid-feedback">
-                                    Informe o Model ID.
+                                    {{ translations.inform_model }}
                                 </div>
                             </div>
                         </div>
@@ -212,10 +212,10 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="api_base_urlUpdate" name="api_base_urlUpdate" placeholder="API URL (ex: https://api.openai.com/v1)*" v-model="$store.state.item.api_base_url">
-                                <label class="form-label">API URL (ex: https://api.openai.com/v1)*</label>
+                                <input type="text" class="form-control" id="api_base_urlUpdate" name="api_base_urlUpdate" placeholder="`${translations.api_url_with_example}`*" v-model="$store.state.item.api_base_url">
+                                <label class="form-label">{{ translations.api_url_with_example }}*</label>
                                 <div id="invalidFeedbackApiBaseUrl" class="invalid-feedback">
-                                    Informe a URL da API.
+                                    {{ translations.inform_api_url }}
                                 </div>
                             </div>
                         </div>
@@ -223,10 +223,10 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="api_keyUpdate" name="api_keyUpdate" placeholder="API Key*" v-model="$store.state.item.api_key">
-                                <label class="form-label">API Key*</label>
+                                <input type="password" class="form-control" id="api_keyUpdate" name="api_keyUpdate" placeholder="`${translations.api_key}`*" v-model="$store.state.item.api_key">
+                                <label class="form-label">{{ translations.api_key }}*</label>
                                 <div id="invalidFeedbackApiKey" class="invalid-feedback">
-                                    Informe a API Key.
+                                    {{ translations.inform_api_key }}
                                 </div>
                             </div>
                         </div>
@@ -234,34 +234,34 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="pricing_prompt_tokenUpdate" name="pricing_prompt_tokenUpdate" placeholder="Custo por 1k tokens de prompt" v-model="$store.state.item.pricing_prompt_token">
-                                <label class="form-label">Custo por 1k tokens de prompt</label>
+                                <input type="text" class="form-control" id="pricing_prompt_tokenUpdate" name="pricing_prompt_tokenUpdate" placeholder="`${translations.pricing_prompt_token}`" v-model="$store.state.item.pricing_prompt_token">
+                                <label class="form-label">{{ translations.pricing_prompt_token }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="pricing_completion_tokenUpdate" name="pricing_completion_tokenUpdate" placeholder="Custo por 1k tokens de resposta" v-model="$store.state.item.pricing_completion_token">
-                                <label class="form-label">Custo por 1k tokens de resposta</label>
+                                <input type="text" class="form-control" id="pricing_completion_tokenUpdate" name="pricing_completion_tokenUpdate" placeholder="`${translations.pricing_completion_token}`" v-model="$store.state.item.pricing_completion_token">
+                                <label class="form-label">{{ translations.pricing_completion_token }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="max_tokensUpdate" name="max_tokensUpdate" placeholder="Limite de tokens permitido por requisição" v-model="$store.state.item.max_tokens">
-                                <label class="form-label">Limite de tokens permitido por requisição</label>
+                                <input type="number" class="form-control" id="max_tokensUpdate" name="max_tokensUpdate" placeholder="`${translations.max_tokens_per_request}`" v-model="$store.state.item.max_tokens">
+                                <label class="form-label">{{ translations.max_tokens_per_request }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="default_temperatureUpdate" name="default_temperatureUpdate" placeholder="Temperatura Padrão*" v-model="$store.state.item.default_temperature">
-                                <label class="form-label">Temperatura Padrão*</label>
+                                <input type="number" class="form-control" id="default_temperatureUpdate" name="default_temperatureUpdate" placeholder="`${translations.temperature_standard}`*" v-model="$store.state.item.default_temperature">
+                                <label class="form-label">{{ translations.temperature_standard }}*</label>
                                 <div id="invalidFeedbackDefaultTemperature" class="invalid-feedback">
-                                    Informe a temperatura padrão.
+                                    {{ translations.inform_temperature }}
                                 </div>
                             </div>
                         </div>
@@ -269,8 +269,8 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="context_lengthUpdate" name="context_lengthUpdate" placeholder="Quantos tokens o modelo aceita no contexto?" v-model="$store.state.item.context_length">
-                                <label class="form-label">Quantos tokens o modelo aceita no contexto?</label>
+                                <input type="number" class="form-control" id="context_lengthUpdate" name="context_lengthUpdate" placeholder="`${translations.context_length_accept}`" v-model="$store.state.item.context_length">
+                                <label class="form-label">{{ translations.context_length_accept }}</label>
                             </div>
                         </div>
                     </div>
@@ -278,18 +278,18 @@
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
                                 <textarea class="form-control rounded border-0" rows="10" id="notesUpdate" name="notesUpdate" style="height: auto;" v-model="$store.state.item.notes"></textarea>
-                                <label class="form-label">Notas*</label>
+                                <label class="form-label">{{ translations.notes }}*</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12">
-                            <label class="form-label text-light"><i>Data de criação: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
+                            <label class="form-label text-light"><i>{{ translations.creation_date }}: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <label class="form-label text-light"><i>Última atualização: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
+                            <label class="form-label text-light"><i>{{ translations.last_update }}: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
                         </div>
                     </div>
                 </div>
@@ -307,6 +307,7 @@
     import { EventBus } from "./eventBus.js";
     import * as utils from '../utils/functions';
     export default {
+        props: ['translations'],
         data() {
             return {
                 llms: {data: {}},
