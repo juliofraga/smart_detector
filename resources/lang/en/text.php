@@ -165,5 +165,20 @@ return [
         'password' => 'Password',
         'password_no_match' => 'This password does not match the password entered in the previous field or is empty',
         'repeat_password' => 'Repeat password'
-    ]
+    ],
+    'type_domain' => [
+        'add_type_of_threat' => 'Add Type of Threat',
+        'creation_date' => 'Creation Date',
+        'description' => 'Description',
+        'edit' => 'Edit',
+        'id' => 'ID',
+        'inform_description' => 'Enter the description',
+        'last_update' => 'Last Update',
+        'no_type_found' => 'No type of threat found',
+        'search_by' => 'Search by description',
+        'type_of_threats' => 'Types of Threats',
+        'type_of_threats_registered' => 'Registered Types of Threats',
+        'update_type_of_threat' => 'Update Type of Threat',
+    ],
+    
 ];

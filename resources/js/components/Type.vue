@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <search-component 
-            title="Tipos de Ameaças" 
+            :title="translations.type_of_threats" 
             :buttons=" {
                 add: {
                     show: true,
@@ -18,43 +18,43 @@
                     show: false
                 }
             }" 
-            placeholder="Buscar por descrição"
+            :placeholder="translations.search_by"
             classSearch="type"
         ></search-component>
         <div v-if="Object.keys(types.data).length > 0">
             <table-component
                 :title="{
-                    id: {title: 'ID', hidden: 'true', type:'text'},
-                    description: {title: 'Descrição', hidden: 'false', type:'text'},           
-                    created_at: {title: 'Data de Criação', hidden: 'false', type: 'timestamp'},
-                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
+                    id: {title: translations.id, hidden: 'true', type:'text'},
+                    description: {title: translations.description, hidden: 'false', type:'text'},           
+                    created_at: {title: translations.creation_date, hidden: 'false', type: 'timestamp'},
+                    editar: {title: translations.edit, hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
                 }" 
                 :data="types.data"
                 :status="status"
                 :feedbackMessage="feedbackMessage"
                 :feedbackTitle="feedbackTitle"
-                sectionTitle="Tipos de Ameaças Cadastradas"
+                :sectionTitle="translations.type_of_threats_registered"
                 classList="type"
             ></table-component>
         </div>
         <div v-else-if="loaded === true">
-            <no-itens-component message="Nenhum tipo de ameaça encontrada"></no-itens-component>
+            <no-itens-component :message="translations.no_type_found"></no-itens-component>
         </div>
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
         </div>
         <paginate-component :data = "types"></paginate-component>
         <!-- Modal para adicionar tipo de ameaça -->
-        <modal-component id="modalAdd" title="Adicionar Tipo de Ameaça">
+        <modal-component id="modalAdd" :title="translations.add_type_of_threat">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="description" name="description" placeholder="Descrição*" v-model="description">
-                                <label class="form-label">Descrição*</label>
+                                <input type="text" class="form-control" id="description" name="description" placeholder="`${translations.description}`*" v-model="description">
+                                <label class="form-label">{{ translations.description }}*</label>
                                 <div id="invalidFeedbackDescricao" class="invalid-feedback">
-                                    Informe a descrição.
+                                    {{ translations.inform_description }}
                                 </div>
                             </div>
                         </div>
@@ -66,28 +66,28 @@
             </template>
         </modal-component>
         <!-- Modal para atualizar tipo de ameaça -->
-        <modal-component id="modalUpdate" title="Atualizar Tipo de Ameaça">
+        <modal-component id="modalUpdate" :title="translations.update_type_of_threat">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="descriptionUpdate" name="descriptionUpdate" placeholder="Descrição*" v-model="$store.state.item.description">
-                                <label class="form-label">Descrição*</label>
+                                <input type="text" class="form-control" id="descriptionUpdate" name="descriptionUpdate" placeholder="`${translations.description}`*" v-model="$store.state.item.description">
+                                <label class="form-label">{{ translations.description }}*</label>
                                 <div id="invalidFeedbackDescricaoUpdate" class="invalid-feedback">
-                                    Informe a descrição.
+                                    {{ translations.inform_description }}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12">
-                            <label class="form-label text-light"><i>Data de criação: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
+                            <label class="form-label text-light"><i>{{ translations.creation_date }}: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <label class="form-label text-light"><i>Última atualização: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
+                            <label class="form-label text-light"><i>{{ translations.last_update }}: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
                         </div>
                     </div>
                 </div>
@@ -105,6 +105,7 @@
     import { EventBus } from "./eventBus.js";
     import * as utils from '../utils/functions';
     export default {
+        props: ['translations'],
         data() {
             return {
                 types: {data: {}},

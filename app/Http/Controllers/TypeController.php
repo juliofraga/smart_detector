@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Lang;
 
 class TypeController extends BaseController
 {
@@ -21,6 +22,7 @@ class TypeController extends BaseController
 
     public function show(int $id = null)
     {
-        return view('/types');
+        $translations = Lang::get('text.type_domain');
+        return view('/types', ['translations' => $translations]);
     }
 }

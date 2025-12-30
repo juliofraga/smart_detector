@@ -165,5 +165,20 @@ return [
         'password' => 'Mot de passe',
         'password_no_match' => 'Ce mot de passe ne correspond pas à celui saisi précédemment ou est vide',
         'repeat_password' => 'Répéter le mot de passe'
-    ]
+    ],
+    'type_domain' => [
+        'add_type_of_threat' => 'Ajouter un Type de Menace',
+        'creation_date' => 'Date de Création',
+        'description' => 'Description',
+        'edit' => 'Modifier',
+        'id' => 'ID',
+        'inform_description' => 'Indiquez la description',
+        'last_update' => 'Dernière mise à jour',
+        'no_type_found' => 'Aucun type de menace trouvé',
+        'search_by' => 'Rechercher par description',
+        'type_of_threats' => 'Types de Menaces',
+        'type_of_threats_registered' => 'Types de Menaces Enregistrés',
+        'update_type_of_threat' => 'Mettre à jour le Type de Menace',
+    ],
+    
 ];

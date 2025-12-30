@@ -165,5 +165,19 @@ return [
         'password' => 'Senha',
         'password_no_match' => 'Esta senha não confere com a senha digitada no campo anterior ou está vazio',
         'repeat_password' => 'Repetir senha'
+    ],
+    'type_domain' => [
+        'add_type_of_threat' => 'Adicionar Tipo de Ameaça',
+        'creation_date' => 'Data de Criação',
+        'description' => 'Descrição',
+        'edit' => 'Editar',
+        'id' => 'ID',
+        'inform_description' => 'Informe a descrição',
+        'last_update' => 'Última atualização',
+        'no_type_found' => 'Nenhum tipo de ameaça encontrada',
+        'search_by' => 'Buscar por descrição',
+        'type_of_threats' => 'Tipos de Ameaças',    
+        'type_of_threats_registered' => 'Tipos de Ameaças Cadastradas',
+        'update_type_of_threat' => 'Atualizar Tipo de Ameaça',
     ]
 ];
