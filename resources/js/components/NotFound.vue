@@ -14,7 +14,22 @@
 </template>
         
 <script>
-    export default {  
+    import * as utils from '../utils/functions';
+    export default {
+        data() {
+			return {
+				translations: {},
+                loaded: false
+			};
+		},
+        methods: {
+            loadtranslations() {
+
+            }
+        },
+        mounted() {
+            this.loadtranslations();
+        }
     };
 </script>
     

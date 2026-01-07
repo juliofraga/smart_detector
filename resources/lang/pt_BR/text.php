@@ -14,6 +14,7 @@ return [
     'home' => 'Home',
     'idss' => "IDS's",
     'incorrect_system_configuration_login_was_not_possible' => 'Configuração incorreta no sistema, não foi possível fazer o login',
+    'inform_domain_error' => 'Informe um domínio para tradução',
     'invalid_credentials' => 'Credenciais inválidas',
     'invalid_enable_receipt_all_events_option' => '"Ativar Recebimento de Todos os Eventos" está desativado no sistema, portanto o valor informado para o campo intrusion_normal é inválido. Deixe ele em branco ou informe "Intrusion"',
     'invalid_temporary_password' => 'Senha temporária inválida, tente novamente',

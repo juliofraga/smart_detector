@@ -95,3 +95,4 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
 
 Route::post('login', 'AuthController@login');
 Route::post('user/update-password/', 'UserController@updatePassword');
+Route::get('translation/{domain}', 'TranslationsController@getTranslation');
