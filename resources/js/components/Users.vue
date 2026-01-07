@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <search-component 
-            title="Usuários" 
+            :title="translations.users" 
             :buttons=" {
                 add: {
                     show: true,
@@ -18,47 +18,47 @@
                     show: false
                 }
             }" 
-            placeholder="Buscar por nome ou e-mail"
+            :placeholder="translations.search_by"
             classSearch="user"
         ></search-component>
         <div v-if="Object.keys(users.data).length > 0">
             <table-component
                 :title="{
-                    id: {title: 'ID', hidden: 'true', type:'text'},
-                    name: {title: 'Nome', hidden: 'false', type:'text'},
-                    email: {title: 'E-mail', hidden: 'false', type:'text'},               
-                    profile: {title: 'Perfil', hidden: 'false', type: 'profile'},
-                    last_access: {title: 'Último Acesso', hidden: 'false', type:'datetime'},
-                    editar: {title: 'Editar', hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
-                    updated_at: {title: 'Última Atualização', hidden: 'true', type: 'datetime'},
-                    created_at: {title: 'Data de Criação', hidden: 'true', type: 'datetime'},
+                    id: {title: translations.id, hidden: 'true', type:'text'},
+                    name: {title: translations.name, hidden: 'false', type:'text'},
+                    email: {title: translations.email, hidden: 'false', type:'text'},               
+                    profile: {title: translations.profile, hidden: 'false', type: 'profile'},
+                    last_access: {title: translations.last_access, hidden: 'false', type:'datetime'},
+                    editar: {title: translations.edit, hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
+                    updated_at: {title: translations.last_update, hidden: 'true', type: 'datetime'},
+                    created_at: {title: translations.creation_date, hidden: 'true', type: 'datetime'},
                     
                 }" 
                 :data="users.data"
                 :status="status"
                 :feedbackMessage="feedbackMessage"
                 :feedbackTitle="feedbackTitle"
-                sectionTitle="Usuários Cadastrados"
+                :sectionTitle="translations.registered_users"
             ></table-component>
         </div>
         <div v-else-if="loaded === true">
-            <no-itens-component message="Nenhum usuário encontrado"></no-itens-component>
+            <no-itens-component :message="translations.no_user_found"></no-itens-component>
         </div>
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
         </div>
         <paginate-component :data = "users"></paginate-component>
         <!-- Modal para adicionar usuários -->
-        <modal-component id="modalAdd" title="Adicionar Usuário">
+        <modal-component id="modalAdd" :title="translations.add_user">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Nome*" v-model="name">
-                                <label class="form-label">Name*</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="`${translations.name}`*" v-model="name">
+                                <label class="form-label">{{ translations.name }}*</label>
                                 <div id="invalidFeedbackName" class="invalid-feedback">
-                                    Informe o nome.
+                                    {{ translations.inform_name }}
                                 </div>
                             </div>
                         </div>
@@ -66,10 +66,10 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="email" name="email" placeholder="E-mail*" v-model="email">
-                                <label class="form-label">E-mail*</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="`${translations.email}`*" v-model="email">
+                                <label class="form-label">{{ translations.email }}*</label>
                                 <div id="invalidFeedbackEmail" class="invalid-feedback">
-                                    Insira um e-mail válido.
+                                    {{ translations.inform_valid_email }}
                                 </div>
                             </div>
                         </div>
@@ -77,15 +77,15 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <select class="form-control" id="profile" name="profile" placeholder="Perfil*" v-model="profile" style="background-color: white;">
-                                    <option value="">Selecione...</option>
+                                <select class="form-control" id="profile" name="profile" placeholder="`${translations.profile}`*" v-model="profile" style="background-color: white;">
+                                    <option value="">{{ translations.select }}...</option>
                                     <option v-for="profile in profiles" :key="profile.id" :value="profile.id">
                                         {{ profile.description }}
                                     </option>
                                 </select>
-                                <label class="form-label">Perfil*</label>
+                                <label class="form-label">{{ translations.profile }}*</label>
                                 <div id="invalidFeedbackProfile" class="invalid-feedback">
-                                    Informe o perfil do usuário
+                                    {{ translations.inform_user_profile }}
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <input type="password" :type="showPassword ? 'text' : 'password'" class="form-control" id="password" name="password" placeholder="Senha*" v-model="password" @input="(checkPasswordStrength('add'))">
+                                <input type="password" :type="showPassword ? 'text' : 'password'" class="form-control" id="password" name="password" placeholder="`${translations.password}`*" v-model="password" @input="(checkPasswordStrength('add'))">
                                 <span class="password-toggle" @click="showPassword = !showPassword">
                                     <svg v-if="!showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                         <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
@@ -105,25 +105,25 @@
                                         <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/>
                                     </svg>
                                 </span>
-                                <label class="form-label">Senha*</label>
+                                <label class="form-label">{{ translations.password }}*</label>
                                 <div id="invalidFeedbackPassword" class="invalid-feedback">
-                                    Informe a senha.
+                                    {{ translations.inform_password }}
                                 </div>
                             </div>
                             <!-- Indicador de requisitos da senha -->
                             <ul v-if="passComplexityActivated && passwordStarted" class="mt-2 ps-3" style="font-size: 0.9rem; list-style: none;">
-                                <li :style="{ color: passwordChecks.length ? 'green' : 'red' }">• Mínimo de 8 caracteres</li>
-                                <li :style="{ color: passwordChecks.uppercase ? 'green' : 'red' }">• Pelo menos uma letra maiúscula</li>
-                                <li :style="{ color: passwordChecks.lowercase ? 'green' : 'red' }">• Pelo menos uma letra minúscula</li>
-                                <li :style="{ color: passwordChecks.number ? 'green' : 'red' }">• Pelo menos um número</li>
-                                <li :style="{ color: passwordChecks.special ? 'green' : 'red' }">• Pelo menos um caractere especial</li>
+                                <li :style="{ color: passwordChecks.length ? 'green' : 'red' }">• {{ translations.mininum_characters }}</li>
+                                <li :style="{ color: passwordChecks.uppercase ? 'green' : 'red' }">• {{ translations.one_capital_letter }}</li>
+                                <li :style="{ color: passwordChecks.lowercase ? 'green' : 'red' }">• {{ translations.one_lowercase_letter }}</li>
+                                <li :style="{ color: passwordChecks.number ? 'green' : 'red' }">• {{ translations.one_number }}</li>
+                                <li :style="{ color: passwordChecks.special ? 'green' : 'red' }">• {{ translations.one_spcecial_character }}</li>
                             </ul>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <input :type="showPasswordRepeat ? 'text' : 'password'" class="form-control" id="repeatPassword" name="repeatPassword" placeholder="Repetir Senha*" v-model="repeatPassword">
+                                <input :type="showPasswordRepeat ? 'text' : 'password'" class="form-control" id="repeatPassword" name="repeatPassword" placeholder="`${translations.repeat_password}`*" v-model="repeatPassword">
                                 <span class="password-toggle" @click="showPasswordRepeat = !showPasswordRepeat">
                                     <svg v-if="!showPasswordRepeat" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                         <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
@@ -135,9 +135,9 @@
                                         <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/>
                                     </svg>
                                 </span>
-                                <label class="form-label">Repetir Senha*</label>
+                                <label class="form-label">{{ translations.repeat_password }}*</label>
                                 <div id="invalidFeedbackRepeatPassword" class="invalid-feedback">
-                                    Esta senha não confere com a senha digitada no campo anterior ou está vazio.
+                                    {{ translations.password_no_match }}
                                 </div>
                             </div>
                         </div>
@@ -149,16 +149,16 @@
             </template>
         </modal-component>
         <!-- Modal para atualizar usuários -->
-        <modal-component id="modalUpdate" title="Atualizar Usuário">
+        <modal-component id="modalUpdate" :title="translations.update_user">
             <template v-slot:conteudo>
                 <div class="form-group">
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-3">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="nameUpdate" name="nameUpdate" placeholder="Nome*" v-model="$store.state.item.name">
-                                <label class="form-label">Nome*</label>
+                                <input type="text" class="form-control" id="nameUpdate" name="nameUpdate" placeholder="`${translations.name}`*" v-model="$store.state.item.name">
+                                <label class="form-label">{{ translations.name }}*</label>
                                 <div id="invalidFeedbackNameUpdate" class="invalid-feedback">
-                                    Informe o nome completo.
+                                    {{ translations.inform_name }}
                                 </div>
                             </div>
                         </div>
@@ -166,27 +166,27 @@
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="emailUpdate" name="emailUpdate" placeholder="E-mail*" v-model="$store.state.item.email" readonly>
-                                <label class="form-label">E-mail*</label>
+                                <input type="email" class="form-control" id="emailUpdate" name="emailUpdate" placeholder="`${translations.email}`*" v-model="$store.state.item.email" readonly>
+                                <label class="form-label">{{ translations.email }}*</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <select class="form-control" id="profileUpdate" name="profileUpdate" placeholder="Perfil*" style="background-color: white;" v-model="$store.state.item.profile.id">
+                                <select class="form-control" id="profileUpdate" name="profileUpdate" placeholder="`${translations.profile}`*" style="background-color: white;" v-model="$store.state.item.profile.id">
                                     <option v-for="profile in profiles" :key="profile.id" :value="profile.id">
                                         {{ profile.description }}
                                     </option>
                                 </select>
-                                <label class="form-label">Perfil*</label>
+                                <label class="form-label">{{ translations.profile }}*</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <input :type="showPasswordUpdate ? 'text' : 'password'" class="form-control" id="passwordUpdate" name="passwordUpdate" placeholder="Senha*" v-model="passwordUpdate" @input="checkPasswordStrength('update')">
+                                <input :type="showPasswordUpdate ? 'text' : 'password'" class="form-control" id="passwordUpdate" name="passwordUpdate" placeholder="`${translations.password}`*" v-model="passwordUpdate" @input="checkPasswordStrength('update')">
                                 <span class="password-toggle" @click="showPasswordUpdate = !showPasswordUpdate">
                                     <svg v-if="!showPasswordUpdate" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                         <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
@@ -198,25 +198,25 @@
                                         <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/>
                                     </svg>
                                 </span>
-                                <label class="form-label">Senha*</label>
+                                <label class="form-label">{{ translations.password }}*</label>
                                 <div id="invalidFeedbackPasswordUpdate" class="invalid-feedback">
-                                    Informe a senha.
+                                    {{ translations.inform_password }}
                                 </div>
                             </div>
                             <!-- Indicador de requisitos da senha -->
                             <ul v-if="passComplexityActivated && passwordUpdateStarted" class="mt-2 ps-3" style="font-size: 0.9rem; list-style: none;">
-                                <li :style="{ color: passwordChecks.length ? 'green' : 'red' }">• Mínimo de 8 caracteres</li>
-                                <li :style="{ color: passwordChecks.uppercase ? 'green' : 'red' }">• Pelo menos uma letra maiúscula</li>
-                                <li :style="{ color: passwordChecks.lowercase ? 'green' : 'red' }">• Pelo menos uma letra minúscula</li>
-                                <li :style="{ color: passwordChecks.number ? 'green' : 'red' }">• Pelo menos um número</li>
-                                <li :style="{ color: passwordChecks.special ? 'green' : 'red' }">• Pelo menos um caractere especial</li>
+                                <li :style="{ color: passwordChecks.length ? 'green' : 'red' }">• {{ translations.mininum_characters }}</li>
+                                <li :style="{ color: passwordChecks.uppercase ? 'green' : 'red' }">• {{ translations.one_capital_letter }}</li>
+                                <li :style="{ color: passwordChecks.lowercase ? 'green' : 'red' }">• {{ translations.one_lowercase_letter }}</li>
+                                <li :style="{ color: passwordChecks.number ? 'green' : 'red' }">• {{ translations.one_number }}</li>
+                                <li :style="{ color: passwordChecks.special ? 'green' : 'red' }">• {{ translations.one_spcecial_character }}</li>
                             </ul>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12 mt-2">
                             <div class="form-floating">
-                                <input :type="showPasswordRepeatUpdate ? 'text' : 'password'" class="form-control" id="repeatPasswordUpdate" name="repeatPasswordUpdate" placeholder="Repetir Senha*" v-model="repeatPasswordUpdate">
+                                <input :type="showPasswordRepeatUpdate ? 'text' : 'password'" class="form-control" id="repeatPasswordUpdate" name="repeatPasswordUpdate" placeholder="`${translations.repeat_password}`*" v-model="repeatPasswordUpdate">
                                 <span class="password-toggle" @click="showPasswordRepeatUpdate = !showPasswordRepeatUpdate">
                                     <svg v-if="!showPasswordRepeatUpdate" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                         <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
@@ -228,26 +228,26 @@
                                         <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/>
                                     </svg>
                                 </span>
-                                <label class="form-label">Repetir Senha*</label>
+                                <label class="form-label">{{ translations.repeat_password }}*</label>
                                 <div id="invalidFeedbackRepeatPasswordUpdate" class="invalid-feedback">
-                                    Esta senha não confere com a senha digitada no campo anterior ou está vazio.
+                                    {{ translations.password_no_match }}
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-sm-12">
-                            <label class="form-label text-light"><i>Último acesso: {{ $store.state.item.last_access | formatDateTime}}</i></label>
+                            <label class="form-label text-light"><i>{{ translations.last_access }}: {{ $store.state.item.last_access | formatDateTime}}</i></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <label class="form-label text-light"><i>Data de criação: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
+                            <label class="form-label text-light"><i>{{ translations.creation_date }}: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <label class="form-label text-light"><i>Última atualização: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
+                            <label class="form-label text-light"><i>{{ translations.last_update }}: {{ $store.state.item.updated_at | formatDateTimeStamp}}</i></label>
                         </div>
                     </div>
                 </div>
@@ -265,6 +265,7 @@
     import { EventBus } from "./eventBus.js";
     import * as utils from '../utils/functions';
     export default {
+        props: ['translations'],
         data() {
             return {
                 users: {data: {}},

@@ -54,7 +54,8 @@ class UserController extends BaseController
 
     public function show(int $id = null)
     {
-        return view('/users');
+        $translations = Lang::get('text.user_domain');
+        return view('/users', ['translations' => $translations]);
     }
 
     public function showMyAccount()
