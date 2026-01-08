@@ -39,6 +39,11 @@ return [
     'buttons' => [
         'update' => 'Atualizar'
     ],
+    'access_denied_domain' => [
+        'access_denied' => 'Acesso negado',
+        'you_dont_have_permisson' => 'Você não tem permissão para acessar esta página',
+        'back' => 'Voltar para o início'
+    ],
     'classification_domain' => [
         'add_risk_classification' => 'Adicionar Classificação de Risco',
         'creation_date' => 'Data de criação',

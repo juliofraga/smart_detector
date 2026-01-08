@@ -39,6 +39,11 @@ return [
     'buttons' => [
         'update' => 'Update'
     ],
+    'access_denied_domain' => [
+        'access_denied' => 'Access denied',
+        'you_dont_have_permisson' => 'You do not have permission to access this page',
+        'back' => 'Back to home'
+    ],    
     'classification_domain' => [
         'add_risk_classification' => 'Add Risk Classification',
         'creation_date' => 'Creation Date',
