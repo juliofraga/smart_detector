@@ -37,8 +37,15 @@ return [
     'value_exceed' => 'La valeur ne peut pas être supérieure à 5000',
     'your_account_temporarily_blocked' => 'Votre compte a été temporairement bloqué, veuillez réessayer plus tard',
     'buttons' => [
-        'update' => 'Mettre à jour'
+        'add' => 'Ajouter',
+        'cancel' => 'Annuler',
+        'clean' => 'Effacer',
+        'delete' => 'Supprimer',
+        'save' => 'Enregistrer',
+        'search' => 'Rechercher',
+        'update' => 'Mettre à jour',
     ],
+    
     'access_denied_domain' => [
         'access_denied' => 'Accès refusé',
         'you_dont_have_permisson' => 'Vous n’avez pas la permission d’accéder à cette page',
