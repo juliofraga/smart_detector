@@ -167,6 +167,11 @@ return [
         'password_no_match' => 'Esta contraseña no coincide con la ingresada en el campo anterior o está vacía',
         'repeat_password' => 'Repetir contraseña'
     ],
+    'not_found_domain' => [
+        'page_not_found' => 'Página no encontrada',
+        'resource_not_exists' => 'El recurso al que intenta acceder no existe o ha sido movido',
+        'back' => 'Volver al inicio'
+    ],
     'type_domain' => [
         'add_type_of_threat' => 'Agregar Tipo de Amenaza',
         'creation_date' => 'Fecha de Creación',

@@ -167,6 +167,11 @@ return [
         'password_no_match' => 'This password does not match the password entered in the previous field or is empty',
         'repeat_password' => 'Repeat password'
     ],
+    'not_found_domain' => [
+        'page_not_found' => 'Page not found',
+        'resource_not_exists' => 'The resource you are trying to access does not exist or has been moved',
+        'back' => 'Back to home'
+    ],    
     'type_domain' => [
         'add_type_of_threat' => 'Add Type of Threat',
         'creation_date' => 'Creation Date',

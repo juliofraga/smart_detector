@@ -5,16 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Lang;
 
-class TranslationsController extends BaseController
+class TranslationsController
 {
 
     public function getTranslation(string $domain): JsonResponse
     {
         if (!empty($domain)) {
             $translations = Lang::get('text.' . $domain);
-            return parent::responseGeneric($translations);
+            return response()->json($translations, 201);
         }
-        return parent::responseGeneric(__('text.inform_domain_error'), 500, 'error');
+        return response()->json(['error' => __('text.inform_domain_error')], 500);
     }
 
 }

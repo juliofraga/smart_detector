@@ -167,6 +167,11 @@ return [
         'password_no_match' => 'Esta senha não confere com a senha digitada no campo anterior ou está vazio',
         'repeat_password' => 'Repetir senha'
     ],
+    'not_found_domain' => [
+        'page_not_found' => 'Página não encontrada',
+        'resource_not_exists' => 'O recurso que você está tentando acessar não existe ou foi movido',
+        'back' => 'Voltar para o início'
+    ],
     'type_domain' => [
         'add_type_of_threat' => 'Adicionar Tipo de Ameaça',
         'creation_date' => 'Data de Criação',

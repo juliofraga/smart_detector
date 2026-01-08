@@ -167,6 +167,11 @@ return [
         'password_no_match' => 'Ce mot de passe ne correspond pas à celui saisi précédemment ou est vide',
         'repeat_password' => 'Répéter le mot de passe'
     ],
+    'not_found_domain' => [
+        'page_not_found' => 'Page non trouvée',
+        'resource_not_exists' => 'La ressource que vous essayez d’accéder n’existe pas ou a été déplacée',
+        'back' => 'Retour à l’accueil'
+    ],
     'type_domain' => [
         'add_type_of_threat' => 'Ajouter un Type de Menace',
         'creation_date' => 'Date de Création',
