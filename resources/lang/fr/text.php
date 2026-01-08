@@ -45,11 +45,13 @@ return [
         'search' => 'Rechercher',
         'update' => 'Mettre à jour',
     ],
-    
     'access_denied_domain' => [
         'access_denied' => 'Accès refusé',
         'you_dont_have_permisson' => 'Vous n’avez pas la permission d’accéder à cette page',
         'back' => 'Retour à l’accueil'
+    ],
+    'categories_dashboard_domain' => [
+        'threat_categories' => 'Catégories de menaces'
     ],
     'classification_domain' => [
         'add_risk_classification' => 'Ajouter une Classification de Risque',

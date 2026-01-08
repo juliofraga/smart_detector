@@ -44,13 +44,15 @@ return [
         'save' => 'Save',
         'search' => 'Search',
         'update' => 'Update',
-    ],
-    
+    ],    
     'access_denied_domain' => [
         'access_denied' => 'Access denied',
         'you_dont_have_permisson' => 'You do not have permission to access this page',
         'back' => 'Back to home'
-    ],    
+    ],
+    'categories_dashboard_domain' => [
+        'threat_categories' => 'Threat Categories'
+    ],
     'classification_domain' => [
         'add_risk_classification' => 'Add Risk Classification',
         'creation_date' => 'Creation Date',

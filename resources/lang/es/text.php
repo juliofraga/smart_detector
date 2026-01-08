@@ -45,12 +45,14 @@ return [
         'search' => 'Buscar',
         'update' => 'Actualizar',
     ],
-    
     'access_denied_domain' => [
         'access_denied' => 'Acceso denegado',
         'you_dont_have_permisson' => 'No tiene permiso para acceder a esta página',
         'back' => 'Volver al inicio'
-    ],    
+    ],
+    'categories_dashboard_domain' => [
+        'threat_categories' => 'Categorías de amenazas'
+    ],
     'classification_domain' => [
         'add_risk_classification' => 'Agregar Clasificación de Riesgo',
         'creation_date' => 'Fecha de Creación',
