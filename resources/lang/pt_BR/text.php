@@ -53,6 +53,16 @@ return [
     'categories_dashboard_domain' => [
         'threat_categories' => 'Categorias de Ameaças'
     ],
+    'dashboards_domain' => [
+        'all' => 'Todos',
+        'end_date' => 'Data final',
+        'dashboards' => 'Dashboards',
+        'ids' => 'IDS',
+        'intrusions' => 'Intrusões',
+        'normals' => 'Normais',
+        'start_date' => 'Data inicial',
+        'total_events' => 'Total de Eventos'
+    ],
     'classification_domain' => [
         'add_risk_classification' => 'Adicionar Classificação de Risco',
         'creation_date' => 'Data de criação',

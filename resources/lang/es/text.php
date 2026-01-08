@@ -70,6 +70,16 @@ return [
         'style' => 'Estilo',
         'update_risk_classification' => 'Actualizar Clasificación de Riesgo'
     ],
+    'dashboards_domain' => [
+        'all' => 'Todos',
+        'end_date' => 'Fecha Final',
+        'dashboards' => 'Paneles',
+        'ids' => 'IDS',
+        'intrusions' => 'Intrusiones',
+        'normals' => 'Normales',
+        'start_date' => 'Fecha Inicial',
+        'total_events' => 'Total de Eventos'
+    ],    
     'event_attributes_domain' => [
         'add_event_attribute' => 'Agregar Atributo de Evento',
         'creation_date' => 'Fecha de Creación',
