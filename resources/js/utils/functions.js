@@ -163,6 +163,6 @@ export function getDateTimeOneWeekAgo() {
 }
 
 export function loadTranslations(obj, domain, attr) {
-    let url = obj.urlBaseTranslation + '/' + domain;
+    let url = API_URL + '/api/translation/' + domain;
     axiosGet(url, obj, attr);
 }

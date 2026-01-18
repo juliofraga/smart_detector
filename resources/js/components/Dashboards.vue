@@ -107,8 +107,7 @@
                     totalByTypes: {}
                 },
                 translations: {},
-                loaded: false,
-                urlBaseTranslation: utils.API_URL + '/api/translation',
+                loaded: false
             };
         },
         methods: {

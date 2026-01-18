@@ -123,7 +123,13 @@ return [
     'event_modal_domain' => [
         'event_details' => 'detalles del evento',
         'new_tab' => 'Nueva Pestaña'
-    ],       
+    ],
+    'events_domain' => [
+        'events' => 'Eventos',
+        'no_event_found' => 'No se encontraron eventos',
+        'recorded_events' => 'Eventos Registrados',
+        'search_event' => 'Buscar Evento',
+    ],    
     'home_domain' => [
         'an_error_happened' => 'Ocurrió un error',
         'no_events_today' => 'No hay eventos registrados en la fecha de hoy',

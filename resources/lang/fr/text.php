@@ -123,7 +123,13 @@ return [
     'event_modal_domain' => [
         'event_details' => "détails de l'événement",
         'new_tab' => 'Nouvel Onglet'
-    ],    
+    ],
+    'events_domain' => [
+        'events' => 'Événements',
+        'no_event_found' => 'Aucun événement trouvé',
+        'recorded_events' => 'Événements Enregistrés',
+        'search_event' => 'Rechercher un Événement',
+    ],     
     'home_domain' => [
         'an_error_happened' => 'Une erreur est survenue',
         'no_events_today' => 'Aucun événement enregistré aujourd’hui',

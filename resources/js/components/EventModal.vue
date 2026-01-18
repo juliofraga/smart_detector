@@ -23,7 +23,6 @@
     export default {
         data() {
             return {
-                urlBaseTranslation: utils.API_URL + '/api/translation',
                 translations: {},
             }
         },

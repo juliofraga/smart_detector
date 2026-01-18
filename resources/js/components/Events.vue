@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <search-component 
-            title="Eventos" 
+            :title="translations.events" 
             :buttons=" {
                 add: {
                     show: false
@@ -18,14 +18,14 @@
                     field: 'event_date_time'
                 }
             }" 
-            placeholder="Buscar Evento"
+            :placeholder="translations.search_event"
             classSearch="event"
         ></search-component>
         <div v-if="Object.keys(events.data).length > 0">
-            <event-table-component :data="events.data" title="Eventos Registrados"></event-table-component>
+            <event-table-component :data="events.data" :title="translations.recorded_events"></event-table-component>
         </div>
         <div v-else-if="loaded === true">
-            <no-itens-component message="Nenhum evento encontrado"></no-itens-component>
+            <no-itens-component :message="translations.no_event_found"></no-itens-component>
         </div>
         <div v-else-if="loaded === false">
             <spinner-component></spinner-component>
@@ -48,7 +48,8 @@
                 status: '',
                 feedbackMessage: {},
                 feedbackTitle: '',
-                loaded: false
+                loaded: false,
+                translations: {}
             }
         },
         methods: {
@@ -71,6 +72,7 @@
             EventBus.$on("setUrlFilter", this.setUrlFilter);
             EventBus.$on("paginate", this.paginate);
             this.loadList();
+            utils.loadTranslations(this, 'events_domain', 'translations');
         }
     }
 </script>

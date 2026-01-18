@@ -89,7 +89,6 @@
             return {
                 urlBase: utils.API_URL + '/api/v1/event',
                 urlBaseEventMetadata: utils.API_URL + '/api/v1/event-attribute',
-                urlBaseTranslation: utils.API_URL + '/api/translation',
                 translations: {},
                 event: '',
                 eventMetadata: '',

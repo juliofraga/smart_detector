@@ -124,6 +124,12 @@ return [
         'event_details' => 'Detalhes do Evento',
         'new_tab' => 'Nova Aba'
     ],
+    'events_domain' => [
+        'events' => 'Eventos',
+        'no_event_found' => 'Nenhum evento encontrado',
+        'recorded_events' => 'Eventos Registrados',
+        'search_event' => 'Buscar Evento',
+    ],
     'home_domain' => [
         'an_error_happened' => 'Houve um erro',
         'no_events_today' => 'Não há eventos registrados na data de hoje',

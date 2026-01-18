@@ -25,7 +25,6 @@
 			return {
 				translations: {},
                 loaded: false,
-                urlBaseTranslation: utils.API_URL + '/api/translation',
 			};
 		},
         mounted() {

@@ -123,6 +123,12 @@ return [
     'event_modal_domain' => [
         'event_details' => 'Event Details',
         'new_tab' => 'New Tab'
+    ],
+    'events_domain' => [
+        'events' => 'Events',
+        'no_event_found' => 'No events found',
+        'recorded_events' => 'Recorded Events',
+        'search_event' => 'Search Event',
     ],    
     'home_domain' => [
         'an_error_happened' => 'An error occurred',
