@@ -121,6 +121,7 @@ return [
         'ai_analysys' => 'Analyse de l’IA'
     ],
     'event_modal_domain' => [
+        'event_details' => "détails de l'événement",
         'new_tab' => 'Nouvel Onglet'
     ],    
     'home_domain' => [

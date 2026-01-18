@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <modal-component id="modalEventDetail" options="modal-dialog-centered modal-xl" title="Detalhes do Evento">
+        <modal-component id="modalEventDetail" options="modal-dialog-centered modal-xl" :title="translations.event_details">
             <template v-slot:conteudo>
                 <!-- Botão nova aba  -->
                 <div>

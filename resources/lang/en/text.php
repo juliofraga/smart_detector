@@ -121,8 +121,9 @@ return [
         'ai_analysys' => 'AI Analysis'
     ],
     'event_modal_domain' => [
+        'event_details' => 'Event Details',
         'new_tab' => 'New Tab'
-    ],     
+    ],    
     'home_domain' => [
         'an_error_happened' => 'An error occurred',
         'no_events_today' => 'There are no events recorded today',
