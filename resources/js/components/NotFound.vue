@@ -25,17 +25,11 @@
 			return {
 				translations: {},
                 loaded: false,
-                urlBase: utils.API_URL + '/api/translation',
+                urlBaseTranslation: utils.API_URL + '/api/translation',
 			};
 		},
-        methods: {
-            loadtranslations() {
-                let url = this.urlBase + '/not_found_domain';
-                utils.axiosGet(url, this, 'translations');
-            }
-        },
         mounted() {
-            this.loadtranslations();
+            utils.loadTranslations(this, 'not_found_domain', 'translations');
         }
     };
 </script>

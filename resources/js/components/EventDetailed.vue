@@ -109,10 +109,6 @@
             getEventMetadata() {
                 let url = this.urlBaseEventMetadata + '/show-enabled';
                 utils.axiosGet(url, this, 'eventMetadata');
-            },
-            loadtranslations() {
-                let url = this.urlBaseTranslation + '/event_detailed_domain';
-                utils.axiosGet(url, this, 'translations');
             }
         },
         computed: {
@@ -131,7 +127,7 @@
         mounted() {
             this.getEvent();
             this.getEventMetadata();
-            this.loadtranslations();
+            utils.loadTranslations(this, 'event_detailed_domain', 'translations');
         }
     }
 </script>

@@ -23,18 +23,12 @@
     export default {
         data() {
             return {
-                urlBase: utils.API_URL + '/api/translation',
+                urlBaseTranslation: utils.API_URL + '/api/translation',
                 translations: {},
             }
         },
-        methods: {
-            loadtranslations() {
-                let url = this.urlBase + '/event_modal_domain';
-                utils.axiosGet(url, this, 'translations');
-            }
-        },
         mounted() {
-            this.loadtranslations();
+            utils.loadTranslations(this, 'event_modal_domain', 'translations');
         }
     }
 </script>

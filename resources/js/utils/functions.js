@@ -161,3 +161,8 @@ export function getDateTimeOneWeekAgo() {
     const minute = String(oneWeekAgo.getMinutes()).padStart(2, '0');
     return `${year}-${month}-${day} ${hour}:${minute}`;
 }
+
+export function loadTranslations(obj, domain, attr) {
+    let url = obj.urlBaseTranslation + '/' + domain;
+    axiosGet(url, obj, attr);
+}

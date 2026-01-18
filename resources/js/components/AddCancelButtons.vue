@@ -31,20 +31,16 @@
 			return {
 				translations: {},
                 loaded: false,
-                urlBase: utils.API_URL + '/api/translation',
+                urlBaseTranslation: utils.API_URL + '/api/translation',
 			};
 		},
         methods: {
             save() {
                 EventBus.$emit("save");
             },
-            loadtranslations() {
-                let url = this.urlBase + '/buttons';
-                utils.axiosGet(url, this, 'translations');
-            }
         },
         mounted() {
-            this.loadtranslations();
+            utils.loadTranslations(this, 'buttons', 'translations');
         }
     }
 </script>

@@ -108,7 +108,7 @@
                 },
                 translations: {},
                 loaded: false,
-                urlBase: utils.API_URL + '/api/translation',
+                urlBaseTranslation: utils.API_URL + '/api/translation',
             };
         },
         methods: {
@@ -132,13 +132,9 @@
                 this.idsInput = '';
                 this.getData();
             },
-            loadtranslations() {
-                let url = this.urlBase + '/dashboards_domain__buttons';
-                utils.axiosGet(url, this, 'translations');
-            },
         },
         mounted() {
-            this.loadtranslations();
+            utils.loadTranslations(this, 'dashboards_domain__buttons', 'translations');
             this.getData();
         }
     }

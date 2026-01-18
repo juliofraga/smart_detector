@@ -17,7 +17,7 @@
 				chart: null,
 				translations: {},
                 loaded: false,
-                urlBase: utils.API_URL + '/api/translation',
+                urlBaseTranslation: utils.API_URL + '/api/translation',
 			};
 		},
         methods: {
@@ -36,10 +36,6 @@
 				this.chart.data.datasets[0].data = this.data;
 				this.chart.update();
 			},
-			loadtranslations() {
-                let url = this.urlBase + '/categories_dashboard_domain';
-                utils.axiosGet(url, this, 'translations');
-            }
 		},
 		watch: {
         	data() {
@@ -47,7 +43,7 @@
 			},
 		},
         mounted() {
-            this.loadtranslations();
+            utils.loadTranslations(this, 'categories_dashboard_domain', 'translations');
         }
     };
 </script>
