@@ -120,6 +120,9 @@ return [
         'date_time' => 'Data e Hora',
         'ai_analysys' => 'Análise da IA'
     ],
+    'event_modal_domain' => [
+        'new_tab' => 'Nova Aba'
+    ],
     'home_domain' => [
         'an_error_happened' => 'Houve um erro',
         'no_events_today' => 'Não há eventos registrados na data de hoje',

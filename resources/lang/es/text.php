@@ -119,7 +119,10 @@ return [
         'source_ip' => 'IP de Origen',
         'date_time' => 'Fecha y Hora',
         'ai_analysys' => 'Análisis de IA'
-    ],    
+    ],
+    'event_modal_domain' => [
+        'new_tab' => 'Nueva Pestaña'
+    ],       
     'home_domain' => [
         'an_error_happened' => 'Ocurrió un error',
         'no_events_today' => 'No hay eventos registrados en la fecha de hoy',

@@ -119,6 +119,9 @@ return [
         'source_ip' => 'IP Source',
         'date_time' => 'Date et Heure',
         'ai_analysys' => 'Analyse de l’IA'
+    ],
+    'event_modal_domain' => [
+        'new_tab' => 'Nouvel Onglet'
     ],    
     'home_domain' => [
         'an_error_happened' => 'Une erreur est survenue',
