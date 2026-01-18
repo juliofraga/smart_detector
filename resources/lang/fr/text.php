@@ -110,6 +110,16 @@ return [
         'update_event_attribute' => 'Mettre à jour l’Attribut d’Événement',
         'yes' => 'Oui',
     ],
+    'event_detailed_domain' => [
+        'classification' => 'Classification',
+        'source_ids' => 'IDS Source',
+        'description' => 'Description',
+        'type_threat' => 'Type de Menace',
+        'risk_classification' => 'Classification du Risque',
+        'source_ip' => 'IP Source',
+        'date_time' => 'Date et Heure',
+        'ai_analysys' => 'Analyse de l’IA'
+    ],    
     'home_domain' => [
         'an_error_happened' => 'Une erreur est survenue',
         'no_events_today' => 'Aucun événement enregistré aujourd’hui',

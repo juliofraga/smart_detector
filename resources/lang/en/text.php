@@ -110,6 +110,16 @@ return [
         'update_event_attribute' => 'Update Event Attribute',
         'yes' => 'Yes',
     ],
+    'event_detailed_domain' => [
+        'classification' => 'Classification',
+        'source_ids' => 'Source IDS',
+        'description' => 'Description',
+        'type_threat' => 'Threat Type',
+        'risk_classification' => 'Risk Classification',
+        'source_ip' => 'Source IP',
+        'date_time' => 'Date and Time',
+        'ai_analysys' => 'AI Analysis'
+    ],    
     'home_domain' => [
         'an_error_happened' => 'An error occurred',
         'no_events_today' => 'There are no events recorded today',
