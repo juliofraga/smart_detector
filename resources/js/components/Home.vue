@@ -7,7 +7,7 @@
             </div>
             <div v-if="Object.keys(events.data).length > 0">
                 <event-summary-component :events="events"></event-summary-component>
-                <event-table-component :data="events.data" title="`${translations.recent_events}`"></event-table-component>
+                <event-table-component :data="events.data" :title=translations.recent_events></event-table-component>
             </div>
             <div v-else-if="loaded === true">
                 <no-itens-component :message="translations.no_events_today"></no-itens-component>
