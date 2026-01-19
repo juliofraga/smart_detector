@@ -124,6 +124,9 @@ return [
         'event_details' => 'Event Details',
         'new_tab' => 'New Tab'
     ],
+    'event_summary_domain' => [
+        'today_events' => 'Today Events',
+    ],
     'events_domain' => [
         'events' => 'Events',
         'no_event_found' => 'No events found',

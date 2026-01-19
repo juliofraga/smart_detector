@@ -5,7 +5,7 @@
                 <strong class="me-auto">{{ title }}</strong>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <div :class="styleBody" v-if="this.type == 'danger' && details.message">
+            <div :class="styleBody" v-if="this.type == 'danger' && details && details.message">
                 <p>{{ details.message }}</p>
                 <ul v-if="details.data">
                     <li v-for="(d, key) in details.data" :key="key">

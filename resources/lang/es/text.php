@@ -124,6 +124,9 @@ return [
         'event_details' => 'detalles del evento',
         'new_tab' => 'Nueva Pestaña'
     ],
+    'event_summary_domain' => [
+        'today_events' => 'Eventos de Hoy',
+    ],
     'events_domain' => [
         'events' => 'Eventos',
         'no_event_found' => 'No se encontraron eventos',

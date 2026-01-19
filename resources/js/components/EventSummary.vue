@@ -3,7 +3,7 @@
         <div class="row g-4 mb-4">
             <div class="col-md-12">
                 <div class="card p-3 text-center">
-                    <h5>Eventos Hoje</h5>
+                    <h5>{{ translations.today_events }}</h5>
                     <h2 class="highlight">{{ today }}</h2>
                 </div>
             </div>
@@ -18,7 +18,16 @@
 </template>
   
 <script>
+    import * as utils from '../utils/functions';
     export default {
+        data() {
+            return {
+                translations: {}
+            }
+        },
+        mounted() {
+            utils.loadTranslations(this, 'event_summary_domain', 'translations');
+        },
         props: ['events'],
         computed: {
             today() {
@@ -37,7 +46,7 @@
                     return acc;
                 }, {});
             return Object.values(map).sort((a, b) => b.count - a.count);
-        },
+        }
     },
 };
 </script>

@@ -129,7 +129,10 @@ return [
         'no_event_found' => 'Aucun événement trouvé',
         'recorded_events' => 'Événements Enregistrés',
         'search_event' => 'Rechercher un Événement',
-    ],     
+    ],
+    'event_summary_domain' => [
+        'today_events' => "Événements D'aujourd'hui",
+    ],
     'home_domain' => [
         'an_error_happened' => 'Une erreur est survenue',
         'no_events_today' => 'Aucun événement enregistré aujourd’hui',

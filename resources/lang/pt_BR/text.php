@@ -124,6 +124,9 @@ return [
         'event_details' => 'Detalhes do Evento',
         'new_tab' => 'Nova Aba'
     ],
+    'event_summary_domain' => [
+        'today_events' => 'Eventos Hoje',
+    ],
     'events_domain' => [
         'events' => 'Eventos',
         'no_event_found' => 'Nenhum evento encontrado',
