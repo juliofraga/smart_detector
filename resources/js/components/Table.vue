@@ -1,6 +1,6 @@
 <template>
     <div class="mt-3" v-if="(Array.isArray(data) && data.length === 0)">
-        <alert-component type="warning" title="Não foram encontratos resultados"></alert-component>
+        <alert-component type="warning" :title="translation"></alert-component>
     </div>
     <div class="mt-2" v-else>
         <toast-component ref="toastError" type="danger" :details="feedbackMessage" :title="feedbackTitle" v-show="status == 'error'"></toast-component>
@@ -100,6 +100,7 @@
     export default {
         data () {
             return {
+                translation: ''
             }
         },
         props: ['title', 'data', 'status', 'feedbackTitle', 'feedbackMessage', 'classList', 'sectionTitle'],
@@ -107,6 +108,15 @@
             setStore(obj) {
                 this.$store.state.item = obj;
             },
+            setText(locale) {
+                const translations = {
+                    pt_BR: 'Não foram encontratos resultados',
+                    es: 'No se encontraron resultados',
+                    fr: "Aucun résultat n'a été trouvé",
+                    en: 'No results found'
+                };
+                this.translation = translations[locale] || translations.en;
+            }
         },
         watch: {
             status(newVal) {
@@ -138,5 +148,11 @@
                 }
             }
         },
+        mounted() {
+            const locale = document
+                .querySelector('meta[name="app-locale"]')
+                .getAttribute('content');
+            this.setText(locale);
+        }
     }
 </script>
