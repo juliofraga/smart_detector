@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 mt-5">
                 <div class="card mt-5">
-                    <div class="card-header bg-dark text-white">Informe suas credenciais</div>
+                    <div class="card-header bg-dark text-white">{{ translations.inform_your_credentials }}</div>
                     <div class="card-body">
                         <form method="POST" action="" @submit.prevent="login($event)">
                             <input type="hidden" name="_token" :value="csrf_token">
@@ -11,7 +11,7 @@
                                 <div class="col-md-12">
                                     <div class="form-floating">
                                         <input id="email" type="email" class="form-control" name="email" value="" required autofocus v-model="email">
-                                        <label class="form-label">E-mail*</label>
+                                        <label class="form-label">{{ translations.email }}*</label>
                                     </div>
                                 </div>
                             </div>
@@ -19,14 +19,14 @@
                                 <div class="col-md-12">
                                     <div class="form-floating">
                                         <input id="password" type="password" class="form-control" name="password" required v-model="password">
-                                        <label class="form-label">Senha*</label>
+                                        <label class="form-label">{{ translations.password }}*</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group mt-3">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn btn-md btn-dark w-100">Acessar</button>
+                                        <button type="submit" class="btn btn-md btn-dark w-100">{{ translations.access }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="form-group mt-3">
-                    <alert-component type="danger" :details="details" title="Erro ao tentar acessar o sistema" v-if="statusLogin == 'error'"></alert-component>
+                    <alert-component type="danger" :details="details" :title="translations.error_login_attempt" v-if="statusLogin == 'error'"></alert-component>
                 </div>
             </div>
         </div>
@@ -50,7 +50,8 @@
                 email: '',
                 password: '',
                 details: {message: 'error'},
-                statusLogin: ''
+                statusLogin: '',
+                translations: {}
             }
         },
         methods: {
@@ -80,8 +81,10 @@
                             e.target.submit();
                         }
                     })
-                
             }
-        }
+        },
+        mounted() {
+            utils.loadTranslations(this, 'login_domain', 'translations');
+        },
     }
 </script>

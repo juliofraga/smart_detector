@@ -195,6 +195,13 @@ return [
         'updated_at' => 'Mis à jour le',
         'update_llm' => 'Mettre à jour le LLM',
         'url' => 'URL',
+    ],
+    'login_domain' => [
+        'access' => 'Accéder',
+        'email' => 'E-mail',
+        'error_login_attempt' => 'Erreur lors de la tentative d’accès au système',
+        'inform_your_credentials' => 'Saisissez vos identifiants',
+        'password' => 'Mot de passe'
     ],    
     'my_account_domain' => [
         'creation_date' => 'Date de Création',

@@ -196,6 +196,13 @@ return [
         'update_llm' => 'Update LLM',
         'url' => 'URL',
     ],
+    'login_domain' => [
+        'access' => 'Access',
+        'email' => 'Email',
+        'error_login_attempt' => 'Error while trying to access the system',
+        'inform_your_credentials' => 'Enter your credentials',
+        'password' => 'Password'
+    ],
     'my_account_domain' => [
         'creation_date' => 'Creation Date',
         'email' => 'Email',
