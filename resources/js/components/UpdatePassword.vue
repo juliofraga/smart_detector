@@ -3,15 +3,15 @@
         <div class="row justify-content-center">
             <div class="col-md-8 mt-5">
                 <div class="card mt-5">
-                    <div class="card-header bg-dark text-white">Atualização de Senha</div>
+                    <div class="card-header bg-dark text-white">{{ translations.password_update }}</div>
                     <div class="card-body">
                         <form method="POST" action="" @submit.prevent="login($event)">
                             <input type="hidden" name="_token" :value="csrf_token">
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input id="email" type="email" class="form-control" name="email" value="" required autocomplete="email" autofocus v-model="email" placeholder="E-mail*" readonly>
-                                        <label class="form-label">E-mail*</label>
+                                        <input id="email" type="email" class="form-control" name="email" value="" required autocomplete="email" autofocus v-model="email" placeholder="`${translations.email}`*" readonly>
+                                        <label class="form-label">{{ translations.email }}*</label>
                                         <span class="invalid-feedback" role="alert">
                                             <strong></strong>
                                         </span>
@@ -21,8 +21,8 @@
                             <div class="form-group row mt-3">
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input id="passwordTemp" :type="showPasswordTemp ? 'text' : 'password'" class="form-control" name="passwordTemp" value="" required autocomplete="current-password" v-model="passwordTemp" placeholder="Senha Temporária*">
-                                        <label class="form-label">Senha Temporária*</label>
+                                        <input id="passwordTemp" :type="showPasswordTemp ? 'text' : 'password'" class="form-control" name="passwordTemp" value="" required autocomplete="current-password" v-model="passwordTemp" placeholder="`${translations.temporary_password}`*">
+                                        <label class="form-label">{{ translations.temporary_password }}*</label>
                                         <span class="password-toggle" @click="showPasswordTemp = !showPasswordTemp">
                                             <svg v-if="!showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                                 <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
@@ -40,7 +40,7 @@
                             <div class="form-group row mt-3">
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input id="passwordNew" :type="showPasswordNew ? 'text' : 'password'" class="form-control" name="passwordNew" value="" required autocomplete="current-password" v-model="passwordNew" placeholder="Nova Senha*">
+                                        <input id="passwordNew" :type="showPasswordNew ? 'text' : 'password'" class="form-control" name="passwordNew" value="" required autocomplete="current-password" v-model="passwordNew" placeholder="`${translations.new_password}`*">
                                         <span class="password-toggle" @click="showPasswordNew = !showPasswordNew">
                                             <svg v-if="!showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                                 <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
@@ -52,24 +52,24 @@
                                                 <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/>
                                             </svg>
                                         </span>
-                                        <label class="form-label">Nova Senha*</label>
+                                        <label class="form-label">{{ translations.new_password }}*</label>
                                     </div>
                                     <div v-if="passComplexityActivated && passwordStarted" class="mt-2 text-white small">
                                         <ul class="mb-0">
                                             <li :class="{'text-success': passwordLengthOk, 'text-danger': !passwordLengthOk}">
-                                                Mínimo de 8 caracteres
+                                                {{ translations.mininum_characters }}
                                             </li>
                                             <li :class="{'text-success': passwordUpperOk, 'text-danger': !passwordUpperOk}">
-                                                Pelo menos uma letra maiúscula
+                                                {{ translations.one_capital_letter }}
                                             </li>
                                             <li :class="{'text-success': passwordLowerOk, 'text-danger': !passwordLowerOk}">
-                                                Pelo menos uma letra minúscula
+                                                {{ translations.one_lowercase_letter }}
                                             </li>
                                             <li :class="{'text-success': passwordNumberOk, 'text-danger': !passwordNumberOk}">
-                                                Pelo menos um número
+                                                {{ translations.one_number }}
                                             </li>
                                             <li :class="{'text-success': passwordSpecialOk, 'text-danger': !passwordSpecialOk}">
-                                                Pelo menos um caractere especial
+                                                {{ translations.one_spcecial_character }}
                                             </li>
                                         </ul>
                                     </div>
@@ -78,7 +78,7 @@
                             <div class="form-group row mt-3">
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input id="passwordNewRepeat" :type="showPasswordNewRepeat ? 'text' : 'password'" class="form-control" name="passwordNewRepeat" required autocomplete="current-password" v-model="passwordNewRepeat" value="" placeholder="Repetir Nova Senha*">
+                                        <input id="passwordNewRepeat" :type="showPasswordNewRepeat ? 'text' : 'password'" class="form-control" name="passwordNewRepeat" required autocomplete="current-password" v-model="passwordNewRepeat" value="" placeholder="`${translations.repeat_new_password}`*">
                                         <span class="password-toggle" @click="showPasswordNewRepeat = !showPasswordNewRepeat">
                                             <svg v-if="!showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                                 <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
@@ -90,7 +90,7 @@
                                                 <path d="M3.35 5.47q-.27.24-.518.487A13 13 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7 7 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12z"/>
                                             </svg>
                                         </span>
-                                        <label class="form-label">Repetir Nova Senha*</label>
+                                        <label class="form-label">{{ translations.repeat_new_password }}*</label>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-dark text-white w-100" :disabled="isButtonDisabled">
-                                            Alterar
+                                            {{ translations.update }}
                                         </button>
                                     </div>
                                 </div>
@@ -139,6 +139,7 @@
                 showPasswordTemp: false,
                 showPasswordNew: false,
                 showPasswordNewRepeat: false,
+                translations: {}
             }
         },
         methods: {
@@ -217,6 +218,7 @@
                 window.location.href = '/login/';
             }
             this.loadSettings();
+            utils.loadTranslations(this, 'user_domain__buttons', 'translations');
         },
         computed: {
             isButtonDisabled() {
