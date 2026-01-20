@@ -236,6 +236,9 @@ return [
     'overview_dashboard_domain' => [
         'overview' => 'Descripción General'
     ],
+    'severity_dashboard_domain' => [
+        'risk_classification' => 'Clasificación de Riesgo'
+    ],
     'type_domain' => [
         'add_type_of_threat' => 'Agregar Tipo de Amenaza',
         'creation_date' => 'Fecha de Creación',

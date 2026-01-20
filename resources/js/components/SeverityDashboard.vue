@@ -1,6 +1,6 @@
 <template>
 	<div class="container mt-4">
-		<h3 class="mb-3 text-white">Classificação de Risco</h3>
+		<h3 class="mb-3 text-white">{{ translations.risk_classification }}</h3>
 		<div class="col-md-12 mx-auto">
 			<canvas id="donutChart"></canvas>
 		</div>
@@ -10,13 +10,17 @@
   
 <script>
   	import { Chart } from "chart.js/auto";
-  
+	import * as utils from '../utils/functions';
 	export default {
 		props: ['labels', 'data'],
 		data() {
 			return {
-				chart: null
+				chart: null,
+				translations: {}
 			};
+		},
+		mounted() {
+			utils.loadTranslations(this, 'severity_dashboard_domain', 'translations');
 		},
 		methods: {
 			mountChart() {

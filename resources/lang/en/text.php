@@ -235,7 +235,10 @@ return [
     ],
     'overview_dashboard_domain' => [
         'overview' => 'Overview'
-    ], 
+    ],
+    'severity_dashboard_domain' => [
+        'risk_classification' => 'Risk Classification'
+    ],
     'type_domain' => [
         'add_type_of_threat' => 'Add Type of Threat',
         'creation_date' => 'Creation Date',
