@@ -230,7 +230,10 @@ return [
         'page_not_found' => 'Page not found',
         'resource_not_exists' => 'The resource you are trying to access does not exist or has been moved',
         'back' => 'Back to home'
-    ],    
+    ],
+    'overview_dashboard_domain' => [
+        'overview' => 'Overview'
+    ], 
     'type_domain' => [
         'add_type_of_threat' => 'Add Type of Threat',
         'creation_date' => 'Creation Date',

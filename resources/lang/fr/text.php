@@ -231,6 +231,9 @@ return [
         'resource_not_exists' => 'La ressource que vous essayez d’accéder n’existe pas ou a été déplacée',
         'back' => 'Retour à l’accueil'
     ],
+    'overview_dashboard_domain' => [
+        'overview' => 'Aperçu'
+    ],
     'type_domain' => [
         'add_type_of_threat' => 'Ajouter un Type de Menace',
         'creation_date' => 'Date de Création',

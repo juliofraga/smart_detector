@@ -231,6 +231,9 @@ return [
         'resource_not_exists' => 'O recurso que você está tentando acessar não existe ou foi movido',
         'back' => 'Voltar para o início'
     ],
+    'overview_dashboard_domain' => [
+        'overview' => 'Visão Geral'
+    ],
     'type_domain' => [
         'add_type_of_threat' => 'Adicionar Tipo de Ameaça',
         'creation_date' => 'Data de Criação',

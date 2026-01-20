@@ -1,6 +1,6 @@
 <template>
     <div class="container mt-4">
-        <h3 class="mb-3 text-white">Visão Geral</h3>
+        <h3 class="mb-3 text-white">{{ translations.overview }}</h3>
         <div class="row mt-4">
             <div class="col-md-12">
                 <canvas id="overviewChart"></canvas>
@@ -11,16 +11,18 @@
 
 <script>
 import Chart from "chart.js/auto";
-
+import * as utils from '../utils/functions';
 export default {
     props: ['startdate', 'enddate', 'totalbyday'],
     data() {
         return {
-            chart: null
+            chart: null,
+            translations: {}
         };
     },
     mounted() {
         this.applyRange();
+        utils.loadTranslations(this, 'overview_dashboard_domain', 'translations');
     },
     watch: {
         totalbyday() {
