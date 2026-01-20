@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 class="text-white">Configurações do Sistema</h3>
+        <h3 class="text-white">{{ translations.system_settings }}</h3>
         <div class="card p-3 mt-3">
             <div v-for="(setting, index) in settings" :key="index" class="mb-4 p-3 border border-secondary rounded" v-if="setting.active == 1">
                 <h5 class="text-white">{{ setting.title }}</h5>
@@ -13,7 +13,7 @@
                 <div v-else-if="setting.type === 'YesNo'" class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" :id="setting.attribute" :name="setting.attribute" :checked="setting.value === 'Yes'" @change="toggleYesNo(setting)" />
                     <label class="form-check-label text-white" :for="setting.attribute">
-                        {{ setting.value === 'Yes' ? 'Ativado' : 'Desativado' }}
+                        {{ setting.value === 'Yes' ? translations.activated : translations.deactivated }}
                     </label>
                 </div>
 
@@ -47,7 +47,8 @@
                 feedbackTitle: '',
                 loaded: false,
                 timezones: [],
-                llms: []
+                llms: [],
+                translations: {}
             }
         },
         methods: {
@@ -94,6 +95,7 @@
             this.loadList();
             this.loadTimezones();
             this.loadLlms();
+            utils.loadTranslations(this, 'system_settings_domain', 'translations');
         }
     }
 </script>

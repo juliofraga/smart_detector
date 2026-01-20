@@ -239,6 +239,11 @@ return [
     'severity_dashboard_domain' => [
         'risk_classification' => 'Classificação de Risco'
     ],
+    'system_settings_domain' => [
+        'activated' => 'Ativado',
+        'deactivated' => 'Desativado',
+        'system_settings' => 'Configurações do Sistema'
+    ],
     'type_domain' => [
         'add_type_of_threat' => 'Adicionar Tipo de Ameaça',
         'creation_date' => 'Data de Criação',
