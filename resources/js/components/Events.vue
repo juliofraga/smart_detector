@@ -22,7 +22,7 @@
             classSearch="event"
         ></search-component>
         <div v-if="Object.keys(events.data).length > 0">
-            <event-table-component :data="events.data" :title="translations.recorded_events"></event-table-component>
+            <event-table-component :data="events.data" :title="translations.recorded_events" :locale="locale"></event-table-component>
         </div>
         <div v-else-if="loaded === true">
             <no-itens-component :message="translations.no_event_found"></no-itens-component>
@@ -39,6 +39,7 @@
     import { EventBus } from "./eventBus.js";
     import * as utils from '../utils/functions';
     export default {
+        props: ['locale'],
         data() {
             return {
                 events: {data: {}},

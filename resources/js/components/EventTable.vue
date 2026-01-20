@@ -12,30 +12,13 @@
 <script>
     import * as utils from '../utils/functions';
     export default {
-        props:['data', 'title'],
+        props:['data', 'title', 'locale'],
         data() {
             return {
                 urlBaseEventMetadata: utils.API_URL + '/api/v1/event-attribute',
                 urlBaseSettings: utils.API_URL + '/api/v1/system-settings',
                 eventMetadata: [],
-                baseTitle: {
-                    description: { title: 'Descrição', hidden: 'false', type: 'text' },
-                    ip_address: { title: 'IP Origem', hidden: 'false', type: 'text' },
-                    type: { title: 'Tipo de Ameaça', hidden: 'false', type: 'text' },
-                    classification: { title: 'Risco', hidden: 'false', type: 'badge' },
-                    ids_agent: { title: 'IDS Origem', hidden: 'false', type: 'text_object'},
-                    event_date_time: { title: 'Data/Hora', hidden: 'false', type: 'datetime' },
-                    id: { hidden: 'true' },
-                    analysys: { hidden: 'true' },
-                    detalhes: {
-                        title: 'Detalhes',
-                        hidden: 'false',
-                        type: 'buttonModal',
-                        modalId: '#modalEventDetail',
-                        buttonType: 'view'
-                    }
-                },
-                settings: {data: {}},
+                settings: { data: {} },
                 allEvents: false,
             }
         },
@@ -52,30 +35,13 @@
         watch: {
             settings(newVal) {
                 if (Array.isArray(newVal) && newVal.length > 0) {
-                const allEvents = newVal.find(item => item.attribute === 'all_events');
-                    if (allEvents) {
-                        if (allEvents.value == 'Yes') {
-                            this.allEvents = true;
-                            const newBase = {};
-                            for (const key in this.baseTitle) {
-                                newBase[key] = this.baseTitle[key];
+                    const allEvents = newVal.find(
+                        item => item.attribute === 'all_events'
+                    );
 
-                                if (key === 'classification') {
-                                    newBase['intrusion_normal'] = {
-                                        title: "Classificação",
-                                        hidden: 'false',
-                                        type: 'badge'
-                                    };
-                                }
-                            }
-                            this.baseTitle = newBase;
-                        } else {
-                            this.allEvents = false;
-                            this.$delete(this.baseTitle, 'intrusion_normal');
-                        }
-                    } else {
-                        this.allEvents = false;
-                    }
+                    this.allEvents = allEvents?.value === 'Yes';
+                } else {
+                    this.allEvents = false;
                 }
             }
         },
@@ -91,6 +57,80 @@
                 }, {});
 
                 return { ...this.baseTitle, ...dynamicTitles };
+            },
+            baseTitle() {
+                const translations = {
+                    pt_BR: {
+                        description: 'Descrição',
+                        ip_address: 'IP Origem',
+                        type: 'Tipo de Ameaça',
+                        classification: 'Risco',
+                        intrusion_normal: 'Classificação',
+                        ids_agent: 'IDS Origem',
+                        event_date_time: 'Data/Hora',
+                        details: 'Detalhes'
+                    },
+                    en: {
+                        description: 'Description',
+                        ip_address: 'Source IP',
+                        type: 'Threat Type',
+                        classification: 'Risk',
+                        intrusion_normal: 'Classification',
+                        ids_agent: 'Source IDS',
+                        event_date_time: 'Date/Time',
+                        details: 'Details'
+                    },
+                    es: {
+                        description: 'Descripción',
+                        ip_address: 'IP de Origen',
+                        type: 'Tipo de Amenaza',
+                        classification: 'Riesgo',
+                        intrusion_normal: 'Clasificación',
+                        ids_agent: 'IDS de Origen',
+                        event_date_time: 'Fecha/Hora',
+                        details: 'Detalles'
+                    },
+                    fr: {
+                        description: 'Description',
+                        ip_address: 'IP Source',
+                        type: 'Type de Menace',
+                        classification: 'Risque',
+                        intrusion_normal: 'Classification',
+                        ids_agent: 'IDS Source',
+                        event_date_time: 'Date/Heure',
+                        details: 'Détails'
+                    }
+                };
+
+                const t = translations[this.locale] || translations.pt_BR;
+
+                const base = {
+                    description: { title: t.description, hidden: 'false', type: 'text' },
+                    ip_address: { title: t.ip_address, hidden: 'false', type: 'text' },
+                    type: { title: t.type, hidden: 'false', type: 'text' },
+                    classification: { title: t.classification, hidden: 'false', type: 'badge' },
+                    ids_agent: { title: t.ids_agent, hidden: 'false', type: 'text_object' },
+                    event_date_time: { title: t.event_date_time, hidden: 'false', type: 'datetime' },
+                    id: { hidden: 'true' },
+                    analysys: { hidden: 'true' },
+                    detalhes: {
+                        title: t.details,
+                        hidden: 'false',
+                        type: 'buttonModal',
+                        modalId: '#modalEventDetail',
+                        buttonType: 'view'
+                    }
+                };
+
+                if (this.allEvents) {
+                    base.intrusion_normal = {
+                        title: t.intrusion_normal,
+                        hidden: 'false',
+                        type: 'badge'
+                    };
+                }
+
+                return base;
             }
         },
         mounted() {

@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <events-component></events-component>
+    <events-component locale="{{ app()->getLocale() }}"></events-component>
 @endsection
