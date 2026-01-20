@@ -16,15 +16,13 @@
 		},
         methods: {
             setText(locale) {
-                if (locale == 'pt_BR') {
-                    this.translation = 'Carregando';
-                } else if (locale == 'es') {
-                    this.translation = 'Cargando';
-                } else if (locale == 'fr') {
-                    this.translation = 'Chargement';
-                } else {
-                    this.translation = 'Loading';
-                }
+                const translations = {
+                    pt_BR: 'Carregando',
+                    es: 'Cargando',
+                    fr: 'Chargement',
+                    en: 'Loading'
+                };
+                this.translation = translations[locale] || translations.en;
             }
         },
         mounted() {
