@@ -41,8 +41,10 @@ return [
         'cancel' => 'Annuler',
         'clean' => 'Effacer',
         'delete' => 'Supprimer',
+        'from' => 'Depuis',
         'save' => 'Enregistrer',
         'search' => 'Rechercher',
+        'to' => 'À',
         'update' => 'Mettre à jour',
     ],
     'access_denied_domain' => [
