@@ -203,6 +203,11 @@ return [
         'inform_your_credentials' => 'Informe suas credenciais',
         'password' => 'Senha'
     ],
+    'modal_delete_domain' => [
+        'are_you_sure' => 'Você tem certeza?',
+        'no' => 'Não',
+        'yes' => 'Sim'
+    ],
     'my_account_domain' => [
         'creation_date' => 'Data de criação',
         'email' => 'E-mail',

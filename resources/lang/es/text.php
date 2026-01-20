@@ -202,7 +202,12 @@ return [
         'error_login_attempt' => 'Error al intentar acceder al sistema',
         'inform_your_credentials' => 'Ingrese sus credenciales',
         'password' => 'Contraseña'
-    ],    
+    ],
+    'modal_delete_domain' => [
+        'are_you_sure' => '¿Estás seguro?',
+        'no' => 'No',
+        'yes' => 'Sí'
+    ],
     'my_account_domain' => [
         'creation_date' => 'Fecha de Creación',
         'email' => 'Correo Electrónico',
