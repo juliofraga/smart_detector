@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
             SystemSettingsSeeder::class,
             ClassificationsSeeder::class,
-            TypesSeeder::class
+            TypesSeeder::class,
+            LanguagesSeeder::class,
         ]);
     }
 }
