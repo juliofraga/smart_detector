@@ -10,10 +10,10 @@ class LanguagesSeeder extends Seeder
     public function run(): void
     {
         DB::table('languages')->insert([
-            ['lang' => 'pt_BR'],
-            ['lang' => 'en'],
-            ['lang' => 'es'],
-            ['lang' => 'fr'],
+            ['lang' => 'pt_BR', 'description' => 'Português'],
+            ['lang' => 'en', 'description' => 'Inglês'],
+            ['lang' => 'es', 'description' => 'Espanhol'],
+            ['lang' => 'fr', 'description' => 'Francês'],
         ]);
     }
 }

@@ -25,6 +25,13 @@
                     <option v-if="setting.attribute === 'llm_standard'" v-for="llm in llms" :key="llm.id" :value="llm.id">{{ llm.name }} - {{ llm.provider }} ({{ llm.model_id }})</option>
                 </select>
 
+                <!-- Field picklist -->
+                <select v-else-if="setting.type === 'picklist'" class="form-control" v-model="setting.value" @change="update(setting.attribute, setting.value)">
+                    <option v-if="setting.picklist === 'languages'" v-for="language in languages" :key="language.id" :value="language.lang">
+                        {{ language.description }} ({{ language.lang }})
+                    </option>
+                </select>
+
                 <!-- Field textarea -->
                 <textarea v-if="setting.type === 'textarea'" class="form-control" :id="setting.attribute" :name="setting.attribute" v-model="setting.value" @blur="update(setting.attribute, setting.value)" rows="5"></textarea>
             </div>
@@ -42,13 +49,15 @@
                 settings: {data: {}},
                 urlBase: utils.API_URL + '/api/v1/system-settings',
                 urlBaseLlms: utils.API_URL + '/api/v1/llm',
+                urlBaseLanguages: utils.API_URL + '/api/v1/languages',
                 status: '',
                 feedbackMessage: {},
                 feedbackTitle: '',
                 loaded: false,
                 timezones: [],
                 llms: [],
-                translations: {}
+                translations: {},
+                languages: []
             }
         },
         methods: {
@@ -75,6 +84,9 @@
             loadLlms() {
                 let url = this.urlBaseLlms + '/identifiers';
                 utils.axiosGet(url, this, 'llms');
+            },
+            loadLanguages() {
+                utils.axiosGet(this.urlBaseLanguages, this, 'languages');
             }
         },
         watch: {
@@ -95,6 +107,7 @@
             this.loadList();
             this.loadTimezones();
             this.loadLlms();
+            this.loadLanguages();
             utils.loadTranslations(this, 'system_settings_domain', 'translations');
         }
     }

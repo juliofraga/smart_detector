@@ -92,7 +92,7 @@ class SystemSettingsSeeder extends Seeder
             'description' => 'Selecione a linguagem padrão do sistema.',
             'type' => 'picklist',
             'picklist' => 'languages',
-            'value' => '1',
+            'value' => 'pt_BR',
             'orderby' => '5',
             'active' => 1
         ]);

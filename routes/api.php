@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,7 +91,11 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     });
     Route::post('logout', 'AuthController@logout');
     Route::get('me', 'AuthController@me');
-    
+    Route::get('/languages', function () {
+        return response()->json(
+            DB::table('languages')->select('lang', 'description')->get()
+        );
+    });
 });
 
 Route::post('login', 'AuthController@login');
