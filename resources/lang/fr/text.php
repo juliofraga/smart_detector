@@ -290,5 +290,16 @@ return [
         'temporary_password' => 'Mot de Passe Temporaire',
         'update_user' => 'Mettre à Jour l’Utilisateur',
         'users' => 'Utilisateurs',
-    ],       
+    ],
+    'welcome_domain' => [
+        'advanced_security' => 'Sécurité Avancée',
+        'ai' => 'Intelligence Artificielle',
+        'attack_detection' => 'Détection des attaques en temps réel telles que l’injection SQL, le XSS et la force brute',
+        'follow_real_time_events' => 'Suivez les événements en temps réel avec une interface moderne et accessible',
+        'intuitive_panel' => 'Tableau de Bord Intuitif',
+        'login' => 'Connexion',
+        'monitore_real_time' => 'Surveillez les menaces en temps réel avec l’intelligence artificielle et protégez vos applications web contre les attaques',
+        'smart_analysys' => 'Analyses intelligentes pour différencier le trafic légitime des menaces réelles',
+        'why_choose' => 'Pourquoi choisir SmartDetector ?'
+    ],
 ];

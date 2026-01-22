@@ -291,4 +291,15 @@ return [
         'update_user' => 'Actualizar Usuario',
         'users' => 'Usuarios',
     ],
+    'welcome_domain' => [
+        'advanced_security' => 'Seguridad Avanzada',
+        'ai' => 'Inteligencia Artificial',
+        'attack_detection' => 'Detección de ataques en tiempo real como SQL Injection, XSS y fuerza bruta',
+        'follow_real_time_events' => 'Siga eventos en tiempo real con una interfaz moderna y accesible',
+        'intuitive_panel' => 'Panel Intuitivo',
+        'login' => 'Ingresar',
+        'monitore_real_time' => 'Monitoree amenazas en tiempo real con inteligencia artificial y proteja sus aplicaciones web contra ataques',
+        'smart_analysys' => 'Análisis inteligentes para diferenciar el tráfico legítimo de amenazas reales',
+        'why_choose' => '¿Por qué elegir SmartDetector?'
+    ],    
 ];

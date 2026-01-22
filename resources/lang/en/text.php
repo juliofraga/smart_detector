@@ -290,5 +290,16 @@ return [
         'temporary_password' => 'Temporary Password',
         'update_user' => 'Update User',
         'users' => 'Users',
-    ],     
+    ],
+    'welcome_domain' => [
+        'advanced_security' => 'Advanced Security',
+        'ai' => 'Artificial Intelligence',
+        'attack_detection' => 'Real-time attack detection such as SQL Injection, XSS, and brute force',
+        'follow_real_time_events' => 'Track real-time events with a modern and accessible interface',
+        'intuitive_panel' => 'Intuitive Dashboard',
+        'login' => 'Login',
+        'monitore_real_time' => 'Monitor threats in real time with artificial intelligence and protect your web applications against attacks',
+        'smart_analysys' => 'Smart analysis to differentiate legitimate traffic from real threats',
+        'why_choose' => 'Why choose SmartDetector?'
+    ],         
 ];
