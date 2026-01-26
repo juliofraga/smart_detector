@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\system_setting;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cookie;
 
 class SystemSettingController extends BaseController
 {
@@ -36,6 +37,9 @@ class SystemSettingController extends BaseController
         $data = $this->model->where('attribute', $attribute)->first();
         if (!$data) {
             return parent::responseDataNotFound();
+        }
+        if ($attribute === 'select_language') {
+            Cookie::queue('app_locale', $request->select_language, 525600);
         }
 
         $data->value = $value;

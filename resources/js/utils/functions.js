@@ -50,7 +50,7 @@ export function axiosPost(url, data, obj) {
         })
 }
 
-export function axiosPatch(url, data, obj) {
+export function axiosPatch(url, data, obj, attribute = null) {
     axios.patch(url, data)
         .then(response => {
             obj.status = 'success';
@@ -61,6 +61,9 @@ export function axiosPatch(url, data, obj) {
             }
             if (typeof obj.cleanAddFormData === 'function') {
                 obj.cleanAddFormData();
+            }
+            if (attribute === 'select_language') {
+                window.location.reload();
             }
         })
         .catch(errors => {

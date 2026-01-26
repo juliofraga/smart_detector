@@ -75,7 +75,7 @@
                     [attribute]: value
                 };
                 let url = this.urlBase;
-                utils.axiosPatch(url, data, this);
+                utils.axiosPatch(url, data, this, attribute);
             },
             loadTimezones() {
                 let url = this.urlBase + '/timezones';
