@@ -244,6 +244,30 @@ return [
         'deactivated' => 'Desativado',
         'system_settings' => 'Configurações do Sistema'
     ],
+    'system_settings_domain_data' => [
+        'title' => [
+            'all_events' => 'Ativar Recebimento de Todos os Eventos.',
+            'block_user' => 'Ativar Bloqueador de Usuário Após 5 Erros Consecutivos de Senha.',
+            'llm_prompt' => 'LLM - Prompt',
+            'llm_standard' => 'LLM Padrão',
+            'pass_complexity' => 'Ativar Complexidade de Senha.',
+            'request_per_minute' => 'Número Máximo de Requisições Por Minuto Na Inserção de Eventos de Anomalias (máximo: 5000).',
+            'select_language' => 'Selecione a Linguagem do Sistema',
+            'timezone_selected' => 'Selecione o Time Zone.',
+            'use_smart_detector_ia' => 'Usar IA Para Classificar Eventos Dentro do SmartDetector (BETA)'
+        ],
+        'description' => [
+            'all_events' => 'Quando ativado, o sistema passa a aceitar todos os eventos enviados, incluindo tanto detecções de intrusão quanto eventos normais.',
+            'block_user' => 'Quando esta opção estiver ativada, o usuário será bloqueado após errar a senha 5 vezes consecutivas. Caso esteja desativada, o usuário não será bloqueado, mesmo após 5 tentativas incorretas.',
+            'llm_prompt' => 'Escreva o prompt desejado para a IA processar. Insira uma instrução clara, informando o contexto e o resultado esperado.',
+            'llm_standard' => 'O modelo selecionado será o modelo utilizado para fazer as análises dos eventos de anomalia.',
+            'pass_complexity' => 'Com esta opção ativada, o usuário deverá definir uma senha que atenda aos requisitos de complexidade. Caso esteja desativada, o usuário poderá utilizar senhas sem qualquer critério de complexidade.',
+            'request_per_minute' => 'O valor definido nesta opção determina o némero máximo de requisições por minuto permitidas para a inserção de eventos de anomalias. Esse limite pode impactar o funcionamento da tela Home e o modo como os eventos são registrados no sistema, já que, ao atingir o número máximo, alguns eventos poderão ser descartados.',
+            'select_language' => 'Selecione a linguagem padrão do sistema.',
+            'timezone_selected' => 'Selecione o time zone que será considerado na utilização do sistema. Na dúvida de como configurar o time zone, consulte os valores disponíveis: https://www.php.net/manual/en/timezones.php',
+            'use_smart_detector_ia' => 'Quando esta opção estiver ativada, a classificação dos eventos pela IA será realizada pelo SmartDetector, e não pelo seu IDS. Obs.: Essa opção apenas funcionará se a opção "Ativar Recebimento de Todos os Eventos." estiver ativada.'
+        ]
+    ],
     'type_domain' => [
         'add_type_of_threat' => 'Adicionar Tipo de Ameaça',
         'creation_date' => 'Data de Criação',

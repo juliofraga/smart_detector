@@ -243,7 +243,31 @@ return [
         'activated' => 'Activated',
         'deactivated' => 'Deactivated',
         'system_settings' => 'System Settings'
-    ],    
+    ],
+    'system_settings_domain_data' => [
+        'title' => [
+            'all_events' => 'Enable Receiving of All Events.',
+            'block_user' => 'Enable User Blocking After 5 Consecutive Incorrect Password Attempts.',
+            'llm_prompt' => 'LLM - Prompt',
+            'llm_standard' => 'Default LLM',
+            'pass_complexity' => 'Enable Password Complexity.',
+            'request_per_minute' => 'Maximum Number of Requests Per Minute for Anomaly Event Insertion (maximum: 5000).',
+            'select_language' => 'Select System Language',
+            'timezone_selected' => 'Select the Time Zone.',
+            'use_smart_detector_ia' => 'Use AI to Classify Events Within SmartDetector (BETA)'
+        ],
+        'description' => [
+            'all_events' => 'When enabled, the system will accept all submitted events, including both intrusion detections and normal events.',
+            'block_user' => 'When this option is enabled, the user will be blocked after entering an incorrect password five consecutive times. If disabled, the user will not be blocked, even after five incorrect attempts.',
+            'llm_prompt' => 'Write the desired prompt for the AI to process. Provide a clear instruction, specifying the context and the expected result.',
+            'llm_standard' => 'The selected model will be used to analyze anomaly events.',
+            'pass_complexity' => 'When enabled, the user must define a password that meets complexity requirements. If disabled, the user may use passwords without any complexity criteria.',
+            'request_per_minute' => 'The value defined in this option determines the maximum number of requests per minute allowed for inserting anomaly events. This limit may impact the Home screen behavior and how events are recorded in the system, since once the maximum is reached, some events may be discarded.',
+            'select_language' => 'Select the system’s default language.',
+            'timezone_selected' => 'Select the time zone to be used by the system. If you are unsure how to configure the time zone, refer to the available values: https://www.php.net/manual/en/timezones.php',
+            'use_smart_detector_ia' => 'When this option is enabled, event classification by AI will be performed by SmartDetector instead of your IDS. Note: This option will only work if the "Enable Receiving of All Events." option is enabled.'
+        ]
+    ],
     'type_domain' => [
         'add_type_of_threat' => 'Add Type of Threat',
         'creation_date' => 'Creation Date',

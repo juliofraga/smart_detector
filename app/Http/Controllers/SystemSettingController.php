@@ -17,7 +17,14 @@ class SystemSettingController extends BaseController
 
     public function index(Request $request, array $attributes = null): JsonResponse
     {
-        $data = $this->model->orderby('orderby', 'asc')->get();
+        $data = $this->model
+            ->orderBy('orderby', 'asc')
+            ->get()
+            ->map(function ($item) {
+                $item->title = __('text.system_settings_domain_data.title.' . $item->attribute);
+                $item->description = __('text.system_settings_domain_data.description.' . $item->attribute);
+                return $item;
+            });
         return parent::responseGeneric($data);
     }
 

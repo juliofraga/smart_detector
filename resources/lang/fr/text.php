@@ -244,6 +244,30 @@ return [
         'deactivated' => 'Désactivé',
         'system_settings' => 'Paramètres du Système'
     ],
+    'system_settings_domain_data' => [
+        'title' => [
+            'all_events' => 'Activer la Réception de Tous les Événements.',
+            'block_user' => 'Activer le Blocage de l’Utilisateur Après 5 Tentatives de Mot de Passe Incorrectes Consécutives.',
+            'llm_prompt' => 'LLM - Prompt',
+            'llm_standard' => 'LLM par Défaut',
+            'pass_complexity' => 'Activer la Complexité du Mot de Passe.',
+            'request_per_minute' => 'Nombre Maximum de Requêtes par Minute pour l’Insertion d’Événements d’Anomalies (maximum : 5000).',
+            'select_language' => 'Sélectionnez la Langue du Système',
+            'timezone_selected' => 'Sélectionnez le Fuseau Horaire.',
+            'use_smart_detector_ia' => 'Utiliser l’IA pour Classifier les Événements dans SmartDetector (BETA)'
+        ],
+        'description' => [
+            'all_events' => 'Lorsqu’elle est activée, le système accepte tous les événements envoyés, y compris les détections d’intrusion et les événements normaux.',
+            'block_user' => 'Lorsque cette option est activée, l’utilisateur sera bloqué après avoir saisi un mot de passe incorrect cinq fois consécutives. Si elle est désactivée, l’utilisateur ne sera pas bloqué, même après cinq tentatives incorrectes.',
+            'llm_prompt' => 'Rédigez le prompt souhaité pour que l’IA le traite. Fournissez une instruction claire en précisant le contexte et le résultat attendu.',
+            'llm_standard' => 'Le modèle sélectionné sera utilisé pour analyser les événements d’anomalies.',
+            'pass_complexity' => 'Lorsque cette option est activée, l’utilisateur doit définir un mot de passe répondant aux exigences de complexité. Si elle est désactivée, l’utilisateur peut utiliser des mots de passe sans aucun critère de complexité.',
+            'request_per_minute' => 'La valeur définie dans cette option détermine le nombre maximal de requêtes par minute autorisées pour l’insertion d’événements d’anomalies. Cette limite peut affecter le fonctionnement de l’écran d’accueil et la manière dont les événements sont enregistrés dans le système, car une fois le maximum atteint, certains événements peuvent être ignorés.',
+            'select_language' => 'Sélectionnez la langue par défaut du système.',
+            'timezone_selected' => 'Sélectionnez le fuseau horaire utilisé par le système. En cas de doute sur la configuration du fuseau horaire, consultez les valeurs disponibles : https://www.php.net/manual/en/timezones.php',
+            'use_smart_detector_ia' => 'Lorsque cette option est activée, la classification des événements par l’IA sera effectuée par SmartDetector et non par votre IDS. Remarque : Cette option ne fonctionnera que si l’option "Activer la Réception de Tous les Événements." est activée.'
+        ]
+    ],
     'type_domain' => [
         'add_type_of_threat' => 'Ajouter un Type de Menace',
         'creation_date' => 'Date de Création',
