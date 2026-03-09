@@ -56,5 +56,10 @@
 				this.mountChart();
 			},
 		},
+		beforeUnmount() {
+			if (this.chart) {
+				this.chart.destroy();
+			}
+		}
 	};
 </script>
