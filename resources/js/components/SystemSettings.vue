@@ -106,7 +106,7 @@
         mounted() {
             this.loadList();
             this.loadTimezones();
-            this.loadLlms();
+        //    this.loadLlms();
             this.loadLanguages();
             utils.loadTranslations(this, 'system_settings_domain', 'translations');
         }

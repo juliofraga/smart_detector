@@ -57,7 +57,7 @@ class SystemSettingsSeeder extends Seeder
             'type' => 'select',
             'value' => '0',
             'orderby' => '8',
-            'active' => 1
+            'active' => 0
         ]);
         system_setting::create([
             'attribute' => 'llm_prompt',
@@ -66,7 +66,7 @@ class SystemSettingsSeeder extends Seeder
             'type' => 'textarea',
             'value' => 'Analise os eventos gerados pelo IDS e classifique cada ocorrência, descreva o que pode tê-la causado, avalie o nível de severidade, indique se há indícios de atividade maliciosa e descrevad de forma clara como tratar esse evento e o que deve ser feito para evitar que ele aconteça novamente no futuro.',
             'orderby' => '9',
-            'active' => 1
+            'active' => 0
         ]);
         system_setting::create([
             'attribute' => 'all_events',

@@ -74,14 +74,14 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
             return response()->json($timezones);
         });
     });
-    Route::prefix('llm')->middleware('admin')->group(function () {
+    /*Route::prefix('llm')->middleware('admin')->group(function () {
         Route::post('/', 'LlmController@store');
         Route::get('/', 'LlmController@index');
         Route::get('/identifiers', 'LlmController@getIdentifiers');
         Route::get('/default', 'LlmController@getDefault');
         Route::patch('/{id}', 'LlmController@update');
         Route::delete('/{id}', 'LlmController@destroy');
-    });
+    });*/
     Route::prefix('ids')->middleware('admin')->group(function () {
         Route::post('/', 'IdsAgentController@store');
         Route::get('/', 'IdsAgentController@index');

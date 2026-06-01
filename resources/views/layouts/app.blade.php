@@ -85,7 +85,7 @@
                                             <li><a class="dropdown-item" href="{{ route('event_attributes') }}">{{ __('text.event_attributes') }}</a></li>
                                             <li><a class="dropdown-item" href="{{ route('classifications') }}">{{ __('text.risk_classification') }}</a></li>
                                             <li><a class="dropdown-item" href="{{ route('ids') }}">{{ __('text.idss') }}</a></li>
-                                            <li><a class="dropdown-item" href="{{ route('llm') }}">{{ __('text.llms') }}</a></li>
+                                            <!--<li><a class="dropdown-item" href="{{ route('llm') }}">{{ __('text.llms') }}</a></li>-->
                                             <li><a class="dropdown-item" href="{{ route('types') }}">{{ __('text.type_of_threats') }}</a></li>
                                             <li><a class="dropdown-item" href="{{ route('users') }}">{{ __('text.users') }}</a></li>
                                         </ul>
@@ -149,7 +149,7 @@ function returnActive($menu, $currentPage)
         (in_array($currentPage, ['classifications']) && $menu == 'Cadastros') ||
         (in_array($currentPage, ['types']) && $menu == 'Cadastros') ||
         (in_array($currentPage, ['event_attributes']) && $menu == 'Cadastros') ||
-        (in_array($currentPage, ['llm']) && $menu == 'Cadastros') ||
+        //(in_array($currentPage, ['llm']) && $menu == 'Cadastros') ||
         (in_array($currentPage, ['ids']) && $menu == 'Cadastros') ||
         (in_array($currentPage, ['users']) && $menu == 'Cadastros') ||
         (in_array($currentPage, ['system_settings']) && $menu == 'Configurações do Sistema')
