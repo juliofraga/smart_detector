@@ -63,6 +63,7 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
         Route::delete('/{id}', 'EventAttributeController@destroy');
     });
     Route::get('event-attribute/show-enabled', 'EventAttributeController@getShowEnabled');
+    Route::get('event-attribute/dashboard-filters', 'EventAttributeController@getDashboardFilters');
     Route::prefix('system-settings')->middleware('admin')->group(function () {
         Route::get('/', 'SystemSettingController@index');
         Route::patch('/', 'SystemSettingController@update');

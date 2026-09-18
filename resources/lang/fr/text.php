@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'account_temporarily_blocked' => 'Compte temporairement bloqué, veuillez réessayer plus tard',
@@ -61,6 +61,7 @@ return [
         'description' => 'Description',
         'edit' => 'Modifier',
         'id' => 'id',
+        'inform_dashboard_filter' => 'Indiquez si le champ doit etre utilise comme filtre dans le Tableau de Bord',
         'inform_description' => 'Indiquez la description',
         'last_update' => 'Dernière Mise à Jour',
         'no_risk_found' => 'Aucune classification de risque trouvée',
@@ -85,6 +86,7 @@ return [
     'event_attributes_domain' => [
         'add_event_attribute' => 'Ajouter un Attribut d’Événement',
         'creation_date' => 'Date de Création',
+        'dashboard_filter' => 'Filtre du Tableau de Bord',
         'display_value' => 'Valeur d’Affichage',
         'display_text' => 'Texte d’Affichage',
         'edit' => 'Modifier',

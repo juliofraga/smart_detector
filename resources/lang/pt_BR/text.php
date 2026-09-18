@@ -85,6 +85,7 @@ return [
     'event_attributes_domain' => [
         'add_event_attribute' => 'Adicionar Atributo de Evento',
         'creation_date' => 'Data de Criação',
+        'dashboard_filter' => 'Filtro de Dashboard',
         'display_value' => 'Valor de Exibição',
         'display_text' => 'Texto de Exibição',
         'edit' => 'Editar',
@@ -94,6 +95,7 @@ return [
         'field_name' => 'Nome do Campo',
         'general_text' => 'Texto Geral',
         'id' => 'id',
+        'inform_dashboard_filter' => 'Informe se o campo deve ser usado como filtro no Dashboard',
         'inform_display_text' => 'Informe o Texto de Exibição',
         'inform_enable_field' => 'Informe se o campo deve ser habilitado',
         'inform_show_field' => 'Informe se o campo deve ser exibido',

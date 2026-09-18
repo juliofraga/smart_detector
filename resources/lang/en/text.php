@@ -85,6 +85,7 @@ return [
     'event_attributes_domain' => [
         'add_event_attribute' => 'Add Event Attribute',
         'creation_date' => 'Creation Date',
+        'dashboard_filter' => 'Dashboard Filter',
         'display_value' => 'Display Value',
         'display_text' => 'Display Text',
         'edit' => 'Edit',
@@ -94,6 +95,7 @@ return [
         'field_name' => 'Field Name',
         'general_text' => 'General Text',
         'id' => 'ID',
+        'inform_dashboard_filter' => 'Specify whether the field should be used as a Dashboard filter',
         'inform_display_text' => 'Enter the Display Text',
         'inform_enable_field' => 'Specify whether the field should be enabled',
         'inform_show_field' => 'Specify whether the field should be displayed',

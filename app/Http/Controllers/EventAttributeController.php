@@ -54,7 +54,8 @@ class EventAttributeController extends BaseController
         EventController::updateColumn($request->type_field, $request->field_name);
         if ($request->enabled == 0) {
             $request->merge([
-                'show' => 0
+                'show' => 0,
+                'dashboard_filter' => 0,
             ]);
         }
         return parent::update($request, $id);
@@ -68,6 +69,16 @@ class EventAttributeController extends BaseController
                     ->orderBy('type_field', 'asc')
                     ->orderBy('display_value', 'asc')
                     ->get();
+        return parent::responseGeneric($data);
+    }
+
+    public function getDashboardFilters(Request $request): JsonResponse
+    {
+        $data = $this->model
+                    ->where('dashboard_filter', 1)
+                    ->where('enabled', 1)
+                    ->orderBy('display_value', 'asc')
+                    ->get(['id', 'field_name', 'display_value']);
         return parent::responseGeneric($data);
     }
 

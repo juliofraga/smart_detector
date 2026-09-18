@@ -85,6 +85,7 @@ return [
     'event_attributes_domain' => [
         'add_event_attribute' => 'Agregar Atributo de Evento',
         'creation_date' => 'Fecha de Creación',
+        'dashboard_filter' => 'Filtro de Panel',
         'display_value' => 'Valor de Visualización',
         'display_text' => 'Texto de Visualización',
         'edit' => 'Editar',
@@ -94,6 +95,7 @@ return [
         'field_name' => 'Nombre del Campo',
         'general_text' => 'Texto General',
         'id' => 'id',
+        'inform_dashboard_filter' => 'Informe si el campo debe usarse como filtro en el Panel',
         'inform_display_text' => 'Informe el texto de visualización',
         'inform_enable_field' => 'Informe si el campo debe estar habilitado',
         'inform_show_field' => 'Informe si el campo debe ser mostrado',

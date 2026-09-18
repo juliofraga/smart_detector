@@ -163,13 +163,22 @@ class EventController extends BaseController
         $from = $request->query('from');
         $to   = $request->query('to');
         $ids  = $request->query('ids');
+
+        // Coleta filtros customizados: qualquer query param além dos reservados
+        $reserved = ['from', 'to', 'ids'];
+        $customFilters = array_filter(
+            $request->query(),
+            function($key) use ($reserved) { return !in_array($key, $reserved); },
+            ARRAY_FILTER_USE_KEY
+        );
+
         $data = [
-            'totalEvents' => $this->getTotalEvents($from, $to, $ids),
-            'totalIntrusions' => $this->getTotalIntrusionsNormal($from, $to, $ids, 'Intrusion'),
-            'totalNormal' => $this->getTotalIntrusionsNormal($from, $to, $ids, 'Normal'),
-            'totalsByDay' => $this->getTotalsByDay($from, $to, $ids),
-            'classifications'  => $this->getTotalsByClassification($from, $to, $ids),
-            'types' => $this->getTotalsByTypes($from, $to, $ids)
+            'totalEvents' => $this->getTotalEvents($from, $to, $ids, $customFilters),
+            'totalIntrusions' => $this->getTotalIntrusionsNormal($from, $to, $ids, 'Intrusion', $customFilters),
+            'totalNormal' => $this->getTotalIntrusionsNormal($from, $to, $ids, 'Normal', $customFilters),
+            'totalsByDay' => $this->getTotalsByDay($from, $to, $ids, $customFilters),
+            'classifications'  => $this->getTotalsByClassification($from, $to, $ids, $customFilters),
+            'types' => $this->getTotalsByTypes($from, $to, $ids, $customFilters)
         ];
         return response()->json($data, 201);
     }
@@ -263,7 +272,7 @@ class EventController extends BaseController
         ];
     }
 
-    private function getTotalEvents($from = null, $to = null, $ids = null): int
+    private function getTotalEvents($from = null, $to = null, $ids = null, array $customFilters = []): int
     {
         $count = $this->model->query()
             ->when(!empty($from), function ($query) use ($from) {
@@ -274,12 +283,19 @@ class EventController extends BaseController
             })
             ->when(!empty($ids), function ($query) use ($ids) {
                 $query->where('ids_id', $ids);
+            })
+            ->when(!empty($customFilters), function ($query) use ($customFilters) {
+                foreach ($customFilters as $field => $value) {
+                    if ($value !== null && $value !== '') {
+                        $query->where($field, 'LIKE', '%' . $value . '%');
+                    }
+                }
             })
             ->count();
         return $count;
     }
 
-    private function getTotalIntrusionsNormal($from = null, $to = null, $ids = null, $intrusion_normal): int
+    private function getTotalIntrusionsNormal($from = null, $to = null, $ids = null, $intrusion_normal, array $customFilters = []): int
     {
         $count = $this->model->query()
             ->when(!empty($from), function ($query) use ($from) {
@@ -290,13 +306,20 @@ class EventController extends BaseController
             })
             ->when(!empty($ids), function ($query) use ($ids) {
                 $query->where('ids_id', $ids);
+            })
+            ->when(!empty($customFilters), function ($query) use ($customFilters) {
+                foreach ($customFilters as $field => $value) {
+                    if ($value !== null && $value !== '') {
+                        $query->where($field, 'LIKE', '%' . $value . '%');
+                    }
+                }
             })
             ->where('intrusion_normal', $intrusion_normal)
             ->count();
         return $count;
     }
 
-    private function getTotalsByDay($from = null, $to = null, $ids = null)
+    private function getTotalsByDay($from = null, $to = null, $ids = null, array $customFilters = [])
     {
         return $this->model->query()
             ->when(!empty($from), function ($query) use ($from) {
@@ -307,6 +330,13 @@ class EventController extends BaseController
             })
             ->when(!empty($ids), function ($query) use ($ids) {
                 $query->where('ids_id', $ids);
+            })
+            ->when(!empty($customFilters), function ($query) use ($customFilters) {
+                foreach ($customFilters as $field => $value) {
+                    if ($value !== null && $value !== '') {
+                        $query->where($field, 'LIKE', '%' . $value . '%');
+                    }
+                }
             })
             ->selectRaw("
                 DATE(event_date_time) as day,
@@ -319,7 +349,7 @@ class EventController extends BaseController
             ->get();
     }
 
-    private function getTotalsByClassification($from = null, $to = null, $ids = null)
+    private function getTotalsByClassification($from = null, $to = null, $ids = null, array $customFilters = [])
     {
         return $this->model->query()
             ->join('classifications', 'events.classifications_id', '=', 'classifications.id')
@@ -332,6 +362,13 @@ class EventController extends BaseController
             ->when(!empty($ids), function ($query) use ($ids) {
                 $query->where('events.ids_id', $ids);
             })
+            ->when(!empty($customFilters), function ($query) use ($customFilters) {
+                foreach ($customFilters as $field => $value) {
+                    if ($value !== null && $value !== '') {
+                        $query->where('events.' . $field, 'LIKE', '%' . $value . '%');
+                    }
+                }
+            })
             ->selectRaw('
                 classifications.description as description,
                 COUNT(events.id) as total
@@ -340,7 +377,7 @@ class EventController extends BaseController
             ->pluck('total', 'description'); 
     }
 
-    private function getTotalsByTypes($from = null, $to = null, $ids = null)
+    private function getTotalsByTypes($from = null, $to = null, $ids = null, array $customFilters = [])
     {
         return $this->model->query()
             ->join('types', 'events.types_id', '=', 'types.id')
@@ -352,6 +389,13 @@ class EventController extends BaseController
             })
             ->when(!empty($ids), function ($query) use ($ids) {
                 $query->where('events.ids_id', $ids);
+            })
+            ->when(!empty($customFilters), function ($query) use ($customFilters) {
+                foreach ($customFilters as $field => $value) {
+                    if ($value !== null && $value !== '') {
+                        $query->where('events.' . $field, 'LIKE', '%' . $value . '%');
+                    }
+                }
             })
             ->where('events.intrusion_normal', '=', 'Intrusion')
             ->selectRaw('

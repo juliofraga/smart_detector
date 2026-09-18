@@ -30,6 +30,7 @@
                     type_field:{title: translations.type, hidden: 'false', type: 'text'},
                     show:{title: translations.show, hidden: 'false', type: 'yesno'},
                     enabled:{title: translations.enabled, hidden: 'false', type: 'yesno'},
+                    dashboard_filter:{title: translations.dashboard_filter, hidden: 'false', type: 'yesno'},
                     editar: {title: translations.edit, hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
                     updated_at: {title: translations.last_update, hidden: 'true', type: 'datetime'},
                     created_at: {title: translations.creation_date, hidden: 'true', type: 'datetime'},
@@ -87,6 +88,17 @@
                                 <div id="invalidFeedbackTypeField" class="invalid-feedback">
                                     {{ translations.inform_type_field }}
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <select class="form-control" id="dashboard_filter" name="dashboard_filter" v-model="dashboard_filter" style="background-color: white;">
+                                    <option value="0">{{ translations.no }}</option>
+                                    <option value="1">{{ translations.yes }}</option>
+                                </select>
+                                <label class="form-label">{{ translations.dashboard_filter }}</label>
                             </div>
                         </div>
                     </div>
@@ -165,6 +177,17 @@
                         </div>
                     </div>
                     <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <select class="form-control" id="dashboard_filterUpdate" name="dashboard_filterUpdate" v-model="$store.state.item.dashboard_filter" style="background-color: white;">
+                                    <option value="0">{{ translations.no }}</option>
+                                    <option value="1">{{ translations.yes }}</option>
+                                </select>
+                                <label class="form-label">{{ translations.dashboard_filter }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
                         <div class="col-sm-12">
                             <label class="form-label text-light"><i>{{ translations.creation_date }}: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
                         </div>
@@ -205,6 +228,7 @@
                 display_valueUpdate: '',
                 field_nameUpdate: '',
                 type_fieldUpdate: '',
+                dashboard_filter: '0',
                 loaded: false,
             }
         },
@@ -214,7 +238,8 @@
                     let data = {
                         display_value: this.display_value,
                         field_name: this.field_name,
-                        type_field: this.type_field
+                        type_field: this.type_field,
+                        dashboard_filter: this.dashboard_filter
                     };
                     let url = this.urlBase;
                     utils.axiosPost(url, data, this);                        
@@ -233,7 +258,8 @@
                         field_name: this.$store.state.item.field_name,
                         type_field: this.$store.state.item.type_field,
                         show: this.$store.state.item.show,
-                        enabled: this.$store.state.item.enabled
+                        enabled: this.$store.state.item.enabled,
+                        dashboard_filter: this.$store.state.item.dashboard_filter
                     };
                     let url = this.urlBase + '/' + this.$store.state.item.id;
                     utils.axiosPatch(url, data, this);
@@ -252,7 +278,8 @@
                 this.urlFilter = url;
             },
             cleanAddFormData() {
-                utils.cleanAddFormData(this, ['display_value', 'field_name', 'type_field']);
+                utils.cleanAddFormData(this, ['display_value', 'field_name', 'type_field', 'dashboard_filter']);
+                this.dashboard_filter = '0';
             },
             showModal(modal) {
                 utils.showModal(modal);

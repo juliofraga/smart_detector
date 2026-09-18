@@ -14,7 +14,8 @@ class event_attribute extends BaseModel
         'display_value',
         'type_field',
         'show',
-        'enabled'
+        'enabled',
+        'dashboard_filter'
     ];
 
     public function rules(): array 

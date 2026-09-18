@@ -27,6 +27,12 @@
                             <label class="form-label">{{ translations.ids }}</label>
                         </div>
                     </div>
+                    <div v-for="filter in customFilters" :key="filter.field_name" class="col-sm-2 mt-2">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" :id="'cf_' + filter.field_name" v-model="customFilterValues[filter.field_name]" placeholder=" ">
+                            <label class="form-label">{{ filter.display_value }}</label>
+                        </div>
+                    </div>
                     <div class="col-sm-3 mt-2">
                         <button class="w-100 btn btn-info btn-lg" @click="getData()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -96,8 +102,11 @@
                 idsInput: '',
                 urlBaseEvent: utils.API_URL + '/api/v1/event',
                 urlBaseIds: utils.API_URL + '/api/v1/ids',
+                urlBaseEventAttr: utils.API_URL + '/api/v1/event-attribute',
                 startDate: utils.getDateTimeOneWeekAgo(),
                 endDate: utils.getCurrentDateTime(),
+                customFilters: [],
+                customFilterValues: {},
                 totals: {
                     totalEvents: 0,
                     totalIntrusions: 0,
@@ -113,6 +122,12 @@
         methods: {
             getData() {
                 let url = this.urlBaseEvent + '/get/dashboards?from=' + this.startDate + '&to=' + this.endDate + '&ids=' + this.idsInput;
+                // Append custom filter values
+                for (const [field, value] of Object.entries(this.customFilterValues)) {
+                    if (value !== null && value !== '') {
+                        url += '&' + encodeURIComponent(field) + '=' + encodeURIComponent(value);
+                    }
+                }
                 utils.axiosGet(url, this, 'data', (data) => {
                     this.totals.totalEvents = data.totalEvents;
                     this.totals.totalIntrusions = data.totalIntrusions;
@@ -123,17 +138,30 @@
                 });
                 let urlIds = this.urlBaseIds + '/identifiers';
                 utils.axiosGet(urlIds, this, 'ids');
-
+            },
+            loadDashboardFilters() {
+                utils.axiosGet(this.urlBaseEventAttr + '/dashboard-filters', this, null, (data) => {
+                    this.customFilters = data;
+                    // Initialize values object
+                    data.forEach(f => {
+                        this.$set(this.customFilterValues, f.field_name, '');
+                    });
+                });
             },
             resetValues() {
                 this.startDate = utils.getDateTimeOneWeekAgo();
                 this.endDate = utils.getCurrentDateTime();
                 this.idsInput = '';
+                // Reset custom filters
+                this.customFilters.forEach(f => {
+                    this.$set(this.customFilterValues, f.field_name, '');
+                });
                 this.getData();
             },
         },
         mounted() {
             utils.loadTranslations(this, 'dashboards_domain__buttons', 'translations');
+            this.loadDashboardFilters();
             this.getData();
         }
     }
