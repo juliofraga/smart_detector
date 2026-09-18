@@ -43,7 +43,7 @@ export default {
             this.chart = new Chart(document.getElementById("overviewChart"), {
                 type: "bar",
                 data: {
-                    labels: filtered.map(e => e.day),
+                    labels: filtered.map(e => e.day.split('-').reverse().join('/')),
                     datasets: [
                         { label: "Eventos", data: filtered.map(e => e.totalEvents), backgroundColor: 'grey' },
                         { label: "Intrusões", data: filtered.map(e => e.totalIntrusions), backgroundColor: 'red' },
