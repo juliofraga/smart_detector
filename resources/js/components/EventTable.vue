@@ -24,7 +24,7 @@
         },
         methods: {
             getEventMetadata() {
-                let url = this.urlBaseEventMetadata + '/show-enabled';
+                let url = this.urlBaseEventMetadata + '/table-columns';
                 utils.axiosGet(url, this, 'eventMetadata');
             },
             loadSettings() {
@@ -48,17 +48,41 @@
         computed: {
             mergedTitle() {
                 const dynamicTitles = this.eventMetadata.reduce((acc, meta) => {
-                acc[meta.field_name] = {
-                    title: meta.display_value,
-                    hidden: 'true',
-                    type: meta.type_field
-                };
-                return acc;
+                    acc[meta.field_name] = {
+                        title: meta.display_value,
+                        hidden: 'false',
+                        type: meta.type_field
+                    };
+                    return acc;
                 }, {});
 
-                return { ...this.baseTitle, ...dynamicTitles };
+                // Monta na ordem: colunas base sem classification/detalhes
+                // → colunas dinâmicas → classification (condicional) → detalhes
+                const ordered = { ...this.baseTitle };
+                // Remove classification e detalhes do lugar original
+                const { classification, detalhes, ...baseWithout } = ordered;
+
+                const result = { ...baseWithout, ...dynamicTitles };
+
+                if (this.allEvents) {
+                    const t = this.currentTranslations;
+                    result.intrusion_normal = {
+                        title: t.intrusion_normal,
+                        hidden: 'false',
+                        type: 'badge'
+                    };
+                }
+
+                if (classification) {
+                    result.classification = classification;
+                }
+                if (detalhes) {
+                    result.detalhes = detalhes;
+                }
+
+                return result;
             },
-            baseTitle() {
+            currentTranslations() {
                 const translations = {
                     pt_BR: {
                         description: 'Descrição',
@@ -101,10 +125,12 @@
                         details: 'Détails'
                     }
                 };
+                return translations[this.locale] || translations.pt_BR;
+            },
+            baseTitle() {
+                const t = this.currentTranslations;
 
-                const t = translations[this.locale] || translations.pt_BR;
-
-                const base = {
+                return {
                     description: { title: t.description, hidden: 'false', type: 'text' },
                     ip_address: { title: t.ip_address, hidden: 'false', type: 'text' },
                     type: { title: t.type, hidden: 'false', type: 'text' },
@@ -121,16 +147,6 @@
                         buttonType: 'view'
                     }
                 };
-
-                if (this.allEvents) {
-                    base.intrusion_normal = {
-                        title: t.intrusion_normal,
-                        hidden: 'false',
-                        type: 'badge'
-                    };
-                }
-
-                return base;
             }
         },
         mounted() {

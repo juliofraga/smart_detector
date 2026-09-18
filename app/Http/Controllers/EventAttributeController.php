@@ -56,6 +56,7 @@ class EventAttributeController extends BaseController
             $request->merge([
                 'show' => 0,
                 'dashboard_filter' => 0,
+                'table_column' => 0,
             ]);
         }
         return parent::update($request, $id);
@@ -79,6 +80,17 @@ class EventAttributeController extends BaseController
                     ->where('enabled', 1)
                     ->orderBy('display_value', 'asc')
                     ->get(['id', 'field_name', 'display_value']);
+        return parent::responseGeneric($data);
+    }
+
+    public function getTableColumns(Request $request): JsonResponse
+    {
+        $data = $this->model
+                    ->where('table_column', 1)
+                    ->where('enabled', 1)
+                    ->orderBy('position', 'asc')
+                    ->orderBy('display_value', 'asc')
+                    ->get(['id', 'field_name', 'display_value', 'type_field']);
         return parent::responseGeneric($data);
     }
 

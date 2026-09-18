@@ -64,6 +64,7 @@ Route::prefix('v1')->middleware('jwt.auth')->group(function() {
     });
     Route::get('event-attribute/show-enabled', 'EventAttributeController@getShowEnabled');
     Route::get('event-attribute/dashboard-filters', 'EventAttributeController@getDashboardFilters');
+    Route::get('event-attribute/table-columns', 'EventAttributeController@getTableColumns');
     Route::prefix('system-settings')->middleware('admin')->group(function () {
         Route::get('/', 'SystemSettingController@index');
         Route::patch('/', 'SystemSettingController@update');

@@ -31,6 +31,7 @@
                     show:{title: translations.show, hidden: 'false', type: 'yesno'},
                     enabled:{title: translations.enabled, hidden: 'false', type: 'yesno'},
                     dashboard_filter:{title: translations.dashboard_filter, hidden: 'false', type: 'yesno'},
+                    table_column:{title: translations.table_column, hidden: 'false', type: 'yesno'},
                     editar: {title: translations.edit, hidden: 'false', type: 'buttonModal', modalId: '#modalUpdate', buttonType: 'edit'},
                     updated_at: {title: translations.last_update, hidden: 'true', type: 'datetime'},
                     created_at: {title: translations.creation_date, hidden: 'true', type: 'datetime'},
@@ -99,6 +100,17 @@
                                     <option value="1">{{ translations.yes }}</option>
                                 </select>
                                 <label class="form-label">{{ translations.dashboard_filter }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <select class="form-control" id="table_column" name="table_column" v-model="table_column" style="background-color: white;">
+                                    <option value="0">{{ translations.no }}</option>
+                                    <option value="1">{{ translations.yes }}</option>
+                                </select>
+                                <label class="form-label">{{ translations.table_column }}</label>
                             </div>
                         </div>
                     </div>
@@ -188,6 +200,17 @@
                         </div>
                     </div>
                     <div class="row mt-2">
+                        <div class="col-sm-12 mt-2">
+                            <div class="form-floating">
+                                <select class="form-control" id="table_columnUpdate" name="table_columnUpdate" v-model="$store.state.item.table_column" style="background-color: white;">
+                                    <option value="0">{{ translations.no }}</option>
+                                    <option value="1">{{ translations.yes }}</option>
+                                </select>
+                                <label class="form-label">{{ translations.table_column }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
                         <div class="col-sm-12">
                             <label class="form-label text-light"><i>{{ translations.creation_date }}: {{ $store.state.item.created_at | formatDateTimeStamp}}</i></label>
                         </div>
@@ -229,6 +252,7 @@
                 field_nameUpdate: '',
                 type_fieldUpdate: '',
                 dashboard_filter: '0',
+                table_column: '0',
                 loaded: false,
             }
         },
@@ -239,7 +263,8 @@
                         display_value: this.display_value,
                         field_name: this.field_name,
                         type_field: this.type_field,
-                        dashboard_filter: this.dashboard_filter
+                        dashboard_filter: this.dashboard_filter,
+                        table_column: this.table_column
                     };
                     let url = this.urlBase;
                     utils.axiosPost(url, data, this);                        
@@ -259,7 +284,8 @@
                         type_field: this.$store.state.item.type_field,
                         show: this.$store.state.item.show,
                         enabled: this.$store.state.item.enabled,
-                        dashboard_filter: this.$store.state.item.dashboard_filter
+                        dashboard_filter: this.$store.state.item.dashboard_filter,
+                        table_column: this.$store.state.item.table_column
                     };
                     let url = this.urlBase + '/' + this.$store.state.item.id;
                     utils.axiosPatch(url, data, this);
@@ -278,8 +304,9 @@
                 this.urlFilter = url;
             },
             cleanAddFormData() {
-                utils.cleanAddFormData(this, ['display_value', 'field_name', 'type_field', 'dashboard_filter']);
+                utils.cleanAddFormData(this, ['display_value', 'field_name', 'type_field', 'dashboard_filter', 'table_column']);
                 this.dashboard_filter = '0';
+                this.table_column = '0';
             },
             showModal(modal) {
                 utils.showModal(modal);
