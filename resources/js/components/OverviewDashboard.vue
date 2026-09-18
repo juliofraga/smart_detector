@@ -11,6 +11,7 @@
 
 <script>
 import Chart from "chart.js/auto";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import * as utils from '../utils/functions';
 export default {
     props: ['startdate', 'enddate', 'totalbyday'],
@@ -42,6 +43,7 @@ export default {
             if (this.chart) this.chart.destroy();
             this.chart = new Chart(document.getElementById("overviewChart"), {
                 type: "bar",
+                plugins: [ChartDataLabels],
                 data: {
                     labels: filtered.map(e => e.day.split('-').reverse().join('/')),
                     datasets: [
@@ -49,6 +51,17 @@ export default {
                         { label: "Intrusões", data: filtered.map(e => e.totalIntrusions), backgroundColor: 'red' },
                         { label: "Normais", data: filtered.map(e => e.totalNormal), backgroundColor: 'green' }
                     ]
+                },
+                options: {
+                    plugins: {
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'top',
+                            color: '#fff',
+                            font: { weight: 'bold' },
+                            formatter: (value) => value === 0 ? '' : value
+                        }
+                    }
                 }
             });
         }
