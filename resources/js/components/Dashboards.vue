@@ -33,6 +33,8 @@
                             <label class="form-label">{{ filter.display_value }}</label>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-3 mt-2">
                         <button class="w-100 btn btn-info btn-lg" @click="getData()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
