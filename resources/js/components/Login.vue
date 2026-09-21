@@ -76,7 +76,7 @@
                             }
                         } else {
                             if (data.token) {
-                                document.cookie = 'token=' + data.token + ':SameSite=Lax';
+                                document.cookie = 'token=' + data.token + '; path=/; max-age=86400; SameSite=Lax';
                             }
                             e.target.submit();
                         }

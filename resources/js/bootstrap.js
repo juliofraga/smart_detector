@@ -74,7 +74,7 @@ axios.interceptors.response.use(
             axios.post('http://localhost/api/refresh')
                 .then(response => {
                     if (response.data.token) {
-                        document.cookie = 'token='+response.data.token+':SameSite=Lax';
+                        document.cookie = 'token='+response.data.token+'; path=/; max-age=86400; SameSite=Lax';
                         window.location.reload();
                     }
                 })

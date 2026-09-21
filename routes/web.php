@@ -15,6 +15,14 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
+    try {
+        $token = request()->cookie('token');
+        if ($token && \Tymon\JWTAuth\Facades\JWTAuth::setToken($token)->check()) {
+            return redirect('/home');
+        }
+    } catch (\Exception $e) {
+        // token inválido ou expirado — segue para welcome
+    }
     return view('welcome');
 });
 
