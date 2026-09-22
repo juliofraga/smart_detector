@@ -28,7 +28,7 @@ class SystemSettingController extends BaseController
         return parent::responseGeneric($data);
     }
 
-    public function show(int $id = null)
+    public function show(int $id = null, string $domain = '', string $route = '')
     {
         return view('/system-settings');
     }

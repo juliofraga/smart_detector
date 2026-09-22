@@ -52,10 +52,11 @@ class UserController extends BaseController
         return parent::responseGeneric($data);
     }
 
-    public function show(int $id = null)
+    public function show(int $id = null, string $domain = '', string $route = '')
     {
-        $translations = Lang::get('text.user_domain');
-        return view('/users', ['translations' => $translations]);
+        $domain = !empty($domain) ? $domain : 'user_domain';
+        $route = !empty($route) ? $route : '/users';
+        return parent::show($id, $domain, $route);
     }
 
     public function showMyAccount()

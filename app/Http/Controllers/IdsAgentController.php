@@ -20,10 +20,11 @@ class IdsAgentController extends BaseController
         return parent::index($request, ['id', 'asc']);
     }
 
-    public function show(int $id = null)
+    public function show(int $id = null, string $domain = '', string $route = '')
     {
-        $translations = Lang::get('text.ids_domain');
-        return view('/ids', ['translations' => $translations]);
+        $domain = !empty($domain) ? $domain : 'ids_domain';
+        $route = !empty($route) ? $route : '/ids';
+        return parent::show($id, $domain, $route);
     }
 
     public function getIdentifiers(): JsonResponse

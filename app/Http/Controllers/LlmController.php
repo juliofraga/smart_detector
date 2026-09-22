@@ -43,10 +43,11 @@ class LlmController extends BaseController
         return parent::store($request);
     }
 
-    public function show(int $id = null)
+    public function show(int $id = null, string $domain = '', string $route = '')
     {
-        $translations = Lang::get('text.llm_domain');
-        return view('/llm', ['translations' => $translations]);
+        $domain = !empty($domain) ? $domain : 'llm_domain';
+        $route = !empty($route) ? $route : '/llm';
+        return parent::show($id, $domain, $route);
     }
 
     public function update(Request $request, int $id): JsonResponse

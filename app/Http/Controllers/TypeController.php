@@ -20,9 +20,10 @@ class TypeController extends BaseController
         return parent::index($request, ['id', 'asc']);
     }
 
-    public function show(int $id = null)
+    public function show(int $id = null, string $domain = '', string $route = '')
     {
-        $translations = Lang::get('text.type_domain');
-        return view('/types', ['translations' => $translations]);
+        $domain = !empty($domain) ? $domain : 'type_domain';
+        $route = !empty($route) ? $route : '/types';
+        return parent::show($id, $domain, $route);
     }
 }

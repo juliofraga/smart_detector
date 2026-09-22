@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Traits\PasswordValidationTrait;
+use Illuminate\Support\Facades\Lang;
 
 Class BaseController extends Controller
 {
@@ -103,9 +104,15 @@ Class BaseController extends Controller
         return parent::responseGeneric($data);
     }
 
-    public function show(int $id = null)
+    public function show(int $id = null, string $domain = '', string $route = '')
     {
-        return null;
+        $text = $buttons = [];
+        if ($domain) {
+            $text = Lang::get('text.' . $domain);
+        }
+        $buttons = Lang::get('text.buttons');
+        $translations = array_merge($text, $buttons);
+        return view($route, ['translations' => $translations]);
     }
 
     private function resolveFilterDate(string $filtersDate): void
