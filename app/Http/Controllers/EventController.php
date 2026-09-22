@@ -123,7 +123,7 @@ class EventController extends BaseController
         return view('/events');
     }
 
-    public function get(int $id)
+    public function get(int $id): JsonResponse
     {
         $event = $this->model
                     ->with('classification')
